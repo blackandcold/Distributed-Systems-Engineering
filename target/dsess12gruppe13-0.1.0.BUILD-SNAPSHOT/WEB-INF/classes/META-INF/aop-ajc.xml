@@ -1,0 +1,13 @@
+<aspectj>
+<aspects>
+<aspect name="dsess12gruppe13.domain.Post_Roo_JavaBean"/>
+<aspect name="dsess12gruppe13.service.PostServiceImpl_Roo_Service"/>
+<aspect name="dsess12gruppe13.domain.Post_Roo_Mongo_Entity"/>
+<aspect name="dsess12gruppe13.web.ApplicationConversionServiceFactoryBean_Roo_ConversionService"/>
+<aspect name="dsess12gruppe13.domain.Post_Roo_ToString"/>
+<aspect name="dsess12gruppe13.web.PostController_Roo_Controller"/>
+<aspect name="dsess12gruppe13.repository.PostRepository_Roo_Mongo_Repository"/>
+<aspect name="dsess12gruppe13.service.PostService_Roo_Service"/>
+</aspects>
+</aspectj>
+

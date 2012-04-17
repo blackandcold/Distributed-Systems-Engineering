@@ -3,3 +3,22 @@ project --topLevelPackage dsess12gruppe13 --projectName dsess12gruppe13 --java 6
 // Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-03-27 18:15:56
 // Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-03-27 18:16:06
 // Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-03-27 18:20:18
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-03-27 18:25:56
+hint
+mongo setup
+hint
+hint
+hint
+hint
+hint
+mongo setup
+help
+entity mongo --class ~.domain.Post
+field string --fieldName body --notNull --sizeMax 4000
+repository mongo --interface ~.repository.PostRepository
+service --interface ~.service.PostService
+web mvc setup
+web mvc all --package ~.web
+web mvc all --package ~.web
+gwt setup
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-03-27 19:57:45
