@@ -1,0 +1,29 @@
+<aspectj>
+<aspects>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.NotificationDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PatientIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.AdminIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.HospitalIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlotDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.DoctorDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.NotificationIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.HospitalDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PublicPersonDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PatientDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.NotificationIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.HospitalDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlotIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.DoctorIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PatientDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.NotificationDataOnDemand_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PatientIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PublicPersonIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.DoctorDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlotIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.HospitalIntegrationTest_Roo_Configurable"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlotDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.DoctorIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.AdminDataOnDemand_Roo_Configurable"/>
+</aspects>
+</aspectj>
+

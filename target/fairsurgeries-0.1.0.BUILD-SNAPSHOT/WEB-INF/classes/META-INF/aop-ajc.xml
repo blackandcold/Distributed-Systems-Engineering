@@ -1,0 +1,48 @@
+<aspectj>
+<aspects>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.OPSlotServiceImpl_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlot_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.ApplicationConversionServiceFactoryBean_Roo_ConversionService"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.PublicPersonController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.OPSlotService_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Notification_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.repository.DoctorRepository_Roo_Mongo_Repository"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlot_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.DoctorService_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Admin_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.OPSlot_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.AdminController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.repository.HospitalRepository_Roo_Mongo_Repository"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Patient_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Notification_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Admin_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.NotificationController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.PatientService_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.repository.NotificationRepository_Roo_Mongo_Repository"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.PatientServiceImpl_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Patient_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.repository.PatientRepository_Roo_Mongo_Repository"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.DoctorServiceImpl_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.DoctorController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Admin_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Notification_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.NotificationServiceImpl_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Doctor_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.PatientController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Doctor_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Hospital_Roo_JavaBean"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.NotificationService_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.HospitalController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.HospitalService_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Hospital_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.service.HospitalServiceImpl_Roo_Service"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Doctor_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Hospital_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.Patient_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.web.OPSlotController_Roo_Controller"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PublicPerson_Roo_Mongo_Entity"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.domain.PublicPerson_Roo_ToString"/>
+<aspect name="at.ac.tuwien.dse.fairsurgeries.repository.OPSlotRepository_Roo_Mongo_Repository"/>
+</aspects>
+</aspectj>
+
