@@ -68,7 +68,8 @@ service --interface ~.service.HospitalService --entity ~.domain.Hospital
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 
-web mvc setup
-web mvc all --package ~.web
+// Commented out in domain project
+// web mvc setup
+// web mvc all --package ~.web
 
 perform package
