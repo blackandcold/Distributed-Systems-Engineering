@@ -7,7 +7,7 @@
 *.o
 *.so
 *.war
-/target
+*/target
 
 # Packages #
 ############

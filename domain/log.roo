@@ -51,3 +51,5 @@ web mvc setup
 web mvc all --package ~.web
 perform package
 // script --file fairsurgeries.roo
+exit
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-04-23 17:13:25
