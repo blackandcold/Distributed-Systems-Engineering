@@ -60,6 +60,18 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
+		<!--  Dependencies für Rabbit MQ -->
+		<dependency>
+          <groupId>cglib</groupId>
+          <artifactId>cglib-nodep</artifactId>
+          <version>2.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.amqp</groupId>
+          <artifactId>spring-rabbit</artifactId>
+          <version>1.0.0.RC2</version>
+      </dependency>
+      
 		<!-- General dependencies for standard applications -->
 		<dependency>
 			<groupId>junit</groupId>

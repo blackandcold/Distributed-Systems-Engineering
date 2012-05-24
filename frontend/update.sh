@@ -1,5 +1,5 @@
 mvn compile
 mvn war:war
 cd target
-vmc update
+vmc update dse_frontend
 cd ..
