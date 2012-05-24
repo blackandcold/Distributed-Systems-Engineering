@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
+import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
+import at.ac.tuwien.dse.fairsurgeries.service.HospitalServiceImpl;
 
 @RequestMapping("/hospitals")
 @Controller
@@ -32,6 +34,11 @@ public class HospitalController {
 	
 	@RequestMapping(value = "/gerhard/{message}", produces = "text/html")
     public String gerhard(@PathVariable String message, Model uiModel) {
+		
+		Hospital hospital = new Hospital();
+		hospital.setName(message);
+		hospitalService.saveHospital(hospital);
+		
         uiModel.addAttribute("myFreakinMessage", new String(message));
         uiModel.addAttribute("myFreakinTitle", new String("I can output whatever i want"));
         return "hospitals/gerhard";
