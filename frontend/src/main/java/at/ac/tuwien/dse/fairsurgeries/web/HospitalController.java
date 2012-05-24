@@ -34,11 +34,6 @@ public class HospitalController {
 	
 	@RequestMapping(value = "/gerhard/{message}", produces = "text/html")
     public String gerhard(@PathVariable String message, Model uiModel) {
-		
-		Hospital hospital = new Hospital();
-		hospital.setName(message);
-		hospitalService.saveHospital(hospital);
-		
         uiModel.addAttribute("myFreakinMessage", new String(message));
         uiModel.addAttribute("myFreakinTitle", new String("I can output whatever i want"));
         return "hospitals/gerhard";
@@ -64,6 +59,15 @@ public class HospitalController {
             model.addAttribute("got_queue_empty", true);
 
         return "hospitals/message_test";
+    }
+	
+	/**
+     * This method is invoked when a RabbitMQ Message is received.
+     */
+    public void handleMessage(String message) {
+    	Hospital hospital = new Hospital();
+		hospital.setName(message);
+		hospitalService.saveHospital(hospital);
     }
 	
 }

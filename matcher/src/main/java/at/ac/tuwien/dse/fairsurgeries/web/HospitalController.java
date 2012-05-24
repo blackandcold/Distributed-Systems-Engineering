@@ -59,5 +59,15 @@ public class HospitalController {
         return "hospitals/message_test";
     }
 	
+	/**
+     * This method is invoked when a RabbitMQ Message is received.
+     */
+    public void handleMessage(String message) {
+    	Hospital hospital = new Hospital();
+		hospital.setName(message);
+		hospitalService.saveHospital(hospital);
+    }
+
+	
 }
 

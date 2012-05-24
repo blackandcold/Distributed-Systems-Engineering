@@ -62,6 +62,12 @@
     
     <!--  Rabbit MQ stuff -->
     <!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
+    
+	<!--  queue listener funktioniert noch nicht -->
+    <!--<rabbit:listener-container>
+    	<rabbit:listener queues="MatcherInQueue" ref="hospitalController" method="handleMessage"/>
+	</rabbit:listener-container>-->
+    
     <cloud:rabbit-connection-factory id="connectionFactory"/>
 
     <!-- Set up the AmqpTemplate/RabbitTemplate: -->
@@ -73,5 +79,8 @@
 
     <!-- Declare the "messages" queue: -->
     <rabbit:queue name="MatcherInQueue" durable="true"/>
+    
+    
+    
 
 </beans>
