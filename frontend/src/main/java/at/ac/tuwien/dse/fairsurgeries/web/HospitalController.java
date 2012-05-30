@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
+import at.ac.tuwien.dse.fairsurgeries.dto.PatientDTO;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalServiceImpl;
 
@@ -43,7 +44,7 @@ public class HospitalController {
     public String publish(Model model) {
         // Send a message to the "messages" queue
 		String message = "i published da freakin message";
-        amqpTemplate.convertAndSend("MatcherInQueue", message);
+        amqpTemplate.convertAndSend("MatcherInQueue", new PatientDTO(53));
         model.addAttribute("published", true);
         model.addAttribute("message", message);
         return "hospitals/message_test";

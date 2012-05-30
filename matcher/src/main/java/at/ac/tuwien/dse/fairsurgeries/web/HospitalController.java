@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
+import at.ac.tuwien.dse.fairsurgeries.dto.NotificationDTO;
+import at.ac.tuwien.dse.fairsurgeries.dto.PatientDTO;
 
 @RequestMapping("/hospitals")
 @Controller(value="hospitalController")
@@ -41,7 +44,7 @@ public class HospitalController {
     public String publish(Model model) {
         // Send a message to the "messages" queue
 		String message = "i published da freakin message";
-        amqpTemplate.convertAndSend("MatcherInQueue", message);
+        amqpTemplate.convertAndSend("MatcherInQueue", new NotificationDTO(47));
         model.addAttribute("published", true);
         model.addAttribute("message", message);
         return "hospitals/message_test";
@@ -50,9 +53,9 @@ public class HospitalController {
 	@RequestMapping(value = "/receiveMessage", produces="text/html")
     public String get(Model model) {
         // Receive a message from the "messages" queue
-        String message = (String)amqpTemplate.receiveAndConvert("MatcherInQueue");
+        PatientDTO message = (PatientDTO)amqpTemplate.receiveAndConvert("MatcherInQueue");
         if (message != null)
-            model.addAttribute("message", message);
+            model.addAttribute("message", message.getPatientId());
         else
             model.addAttribute("got_queue_empty", true);
 
