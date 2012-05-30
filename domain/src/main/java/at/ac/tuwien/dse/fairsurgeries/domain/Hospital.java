@@ -17,6 +17,10 @@ public class Hospital {
     @NotNull
     private String name;
 
+    private Double latitude;
+
+    private Double longitude;
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();
 }

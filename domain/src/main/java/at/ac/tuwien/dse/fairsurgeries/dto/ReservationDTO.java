@@ -17,16 +17,16 @@ public class ReservationDTO implements Serializable{
 		this.setOpslot(opslot);
 		this.setPatient(pationt);
 	}
-	private OPSlotDTO getOpslot() {
+	public OPSlotDTO getOpslot() {
 		return opslot;
 	}
-	private void setOpslot(OPSlotDTO opslot) {
+	public void setOpslot(OPSlotDTO opslot) {
 		this.opslot = opslot;
 	}
-	private PatientDTO getPatient() {
+	public PatientDTO getPatient() {
 		return patient;
 	}
-	private void setPatient(PatientDTO patient) {
+	public void setPatient(PatientDTO patient) {
 		this.patient = patient;
 	}
 }

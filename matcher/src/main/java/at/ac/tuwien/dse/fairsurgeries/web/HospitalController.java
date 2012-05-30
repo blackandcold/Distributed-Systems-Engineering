@@ -23,26 +23,26 @@ import at.ac.tuwien.dse.fairsurgeries.dto.PatientDTO;
 @Controller(value="hospitalController")
 @RooWebScaffold(path = "hospitals", formBackingObject = Hospital.class)
 public class HospitalController {
-	
+
 	@Autowired AmqpTemplate amqpTemplate;
-	
+
 	@RequestMapping(value = "/matthias", produces = "application/json")
 	public void matthias(HttpServletResponse response) throws Exception {
 		PrintWriter out = response.getWriter();
-		
+
 		out.println("Matthias as a Service");
 	}
-	
+
 	@RequestMapping(value = "/gerhard/{message}", produces = "text/html")
-    public String gerhard(@PathVariable String message, Model uiModel) {
-        uiModel.addAttribute("myFreakinMessage", new String(message));
-        uiModel.addAttribute("myFreakinTitle", new String("I can output whatever i want"));
-        return "hospitals/gerhard";
-    }
-	
+	public String gerhard(@PathVariable String message, Model uiModel) {
+		uiModel.addAttribute("myFreakinMessage", new String(message));
+		uiModel.addAttribute("myFreakinTitle", new String("I can output whatever i want"));
+		return "hospitals/gerhard";
+	}
+
 	@RequestMapping(value = "/sendMessage", produces="text/html")
-    public String publish(Model model) {
-        // Send a message to the "messages" queue
+	public String publish(Model model) {
+		// Send a message to the "messages" queue
 		String message = "i published da freakin message";
         amqpTemplate.convertAndSend("MatcherInQueue", new NotificationDTO(47));
         model.addAttribute("published", true);
@@ -63,14 +63,14 @@ public class HospitalController {
     }
 	
 	/**
-     * This method is invoked when a RabbitMQ Message is received.
-     */
-    public void handleMessage(String message) {
-    	Hospital hospital = new Hospital();
+	 * This method is invoked when a RabbitMQ Message is received.
+	 */
+	public void handleMessage(String message) {
+		Hospital hospital = new Hospital();
 		hospital.setName(message);
 		hospitalService.saveHospital(hospital);
-    }
+	}
 
-	
+
 }
 

@@ -15,11 +15,11 @@ public class OPSlotDTO implements Serializable{
 		this.setOpslotId(opslotId);
 	}
 
-	private int getOpslotId() {
+	public int getOpslotId() {
 		return opslotId;
 	}
 
-	private void setOpslotId(int opslotId) {
+	public void setOpslotId(int opslotId) {
 		this.opslotId = opslotId;
 	}
 

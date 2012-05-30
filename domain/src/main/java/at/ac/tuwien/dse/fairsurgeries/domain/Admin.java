@@ -23,5 +23,4 @@ public class Admin {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date dateOfBirth;
-    
 }

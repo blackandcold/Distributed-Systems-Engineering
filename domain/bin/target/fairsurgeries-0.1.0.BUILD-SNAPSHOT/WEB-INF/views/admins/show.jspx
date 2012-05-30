@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_at_ac_tuwien_dse_fairsurgeries_domain_Admin" object="${admin}" path="/admins" z="tkUdTVhQ4Rzvm/thUY6RgqlxbwY=">
+        <field:display field="firstName" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Admin_firstName" object="${admin}" z="+1I9Ir6M6LtSWgqLRgkF8luQJZs="/>
+        <field:display field="lastName" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Admin_lastName" object="${admin}" z="s+Jf2klOPOD9P9NuPjaJeapX8gQ="/>
+        <field:display date="true" dateTimePattern="${admin_dateofbirth_date_format}" field="dateOfBirth" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Admin_dateOfBirth" object="${admin}" z="46V5Dvx7S2tNHQIRZ981O9uCCyI="/>
+    </page:show>
+</div>

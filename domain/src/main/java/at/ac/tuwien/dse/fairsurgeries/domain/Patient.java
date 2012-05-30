@@ -30,4 +30,8 @@ public class Patient {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date dateOfBirth;
+
+    private Double latitude;
+
+    private Double longitude;
 }

@@ -10,6 +10,7 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.PublicPerson;
+import at.ac.tuwien.dse.fairsurgeries.service.AdminService;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
@@ -25,6 +26,9 @@ import org.springframework.format.FormatterRegistry;
 privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService {
     
     declare @type: ApplicationConversionServiceFactoryBean: @Configurable;
+    
+    @Autowired
+    AdminService ApplicationConversionServiceFactoryBean.adminService;
     
     @Autowired
     DoctorService ApplicationConversionServiceFactoryBean.doctorService;
@@ -45,6 +49,14 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Admin, java.lang.String>() {
             public String convert(Admin admin) {
                 return new StringBuilder().append(admin.getFirstName()).append(" ").append(admin.getLastName()).append(" ").append(admin.getDateOfBirth()).toString();
+            }
+        };
+    }
+    
+    public Converter<BigInteger, Admin> ApplicationConversionServiceFactoryBean.getIdToAdminConverter() {
+        return new org.springframework.core.convert.converter.Converter<java.math.BigInteger, at.ac.tuwien.dse.fairsurgeries.domain.Admin>() {
+            public at.ac.tuwien.dse.fairsurgeries.domain.Admin convert(java.math.BigInteger id) {
+                return adminService.findAdmin(id);
             }
         };
     }
@@ -84,7 +96,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Hospital, String> ApplicationConversionServiceFactoryBean.getHospitalToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Hospital, java.lang.String>() {
             public String convert(Hospital hospital) {
-                return new StringBuilder().append(hospital.getName()).toString();
+                return new StringBuilder().append(hospital.getName()).append(" ").append(hospital.getLatitude()).append(" ").append(hospital.getLongitude()).toString();
             }
         };
     }
@@ -156,7 +168,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Patient, String> ApplicationConversionServiceFactoryBean.getPatientToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Patient, java.lang.String>() {
             public String convert(Patient patient) {
-                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).append(" ").append(patient.getDateOfBirth()).toString();
+                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).append(" ").append(patient.getDateOfBirth()).append(" ").append(patient.getLatitude()).toString();
             }
         };
     }
@@ -195,6 +207,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     public void ApplicationConversionServiceFactoryBean.installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(getAdminToStringConverter());
+        registry.addConverter(getIdToAdminConverter());
         registry.addConverter(getStringToAdminConverter());
         registry.addConverter(getDoctorToStringConverter());
         registry.addConverter(getIdToDoctorConverter());

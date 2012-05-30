@@ -22,6 +22,10 @@
 *.tar
 *.zip
 
+# Metadata #
+#############
+lib/at/ac/tuwien/dse/fairsurgeries/domain/maven-metadata-local.xml
+
 # Logs and databases #
 ######################
 *.log
