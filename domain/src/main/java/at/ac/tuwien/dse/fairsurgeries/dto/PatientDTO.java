@@ -1,7 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.dto;
 import java.io.Serializable;
 
-public class PatientDTO implements Serializable{
+public class PatientDTO implements Serializable {
 
 	/**
 	 * 

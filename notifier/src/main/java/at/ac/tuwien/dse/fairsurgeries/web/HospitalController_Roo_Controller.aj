@@ -5,7 +5,6 @@ package at.ac.tuwien.dse.fairsurgeries.web;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
-import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.web.HospitalController;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -25,9 +24,6 @@ privileged aspect HospitalController_Roo_Controller {
     
     @Autowired
     HospitalService HospitalController.hospitalService;
-    
-    @Autowired
-    OPSlotService HospitalController.oPSlotService;
     
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String HospitalController.create(@Valid Hospital hospital, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -96,7 +92,6 @@ privileged aspect HospitalController_Roo_Controller {
     
     void HospitalController.populateEditForm(Model uiModel, Hospital hospital) {
         uiModel.addAttribute("hospital", hospital);
-        uiModel.addAttribute("opslots", oPSlotService.findAllOPSlots());
     }
     
     String HospitalController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

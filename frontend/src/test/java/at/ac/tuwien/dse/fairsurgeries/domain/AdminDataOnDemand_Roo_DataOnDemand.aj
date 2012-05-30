@@ -3,9 +3,9 @@
 
 package at.ac.tuwien.dse.fairsurgeries.domain;
 
-import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
-import at.ac.tuwien.dse.fairsurgeries.domain.PatientDataOnDemand;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
+import at.ac.tuwien.dse.fairsurgeries.domain.Admin;
+import at.ac.tuwien.dse.fairsurgeries.domain.AdminDataOnDemand;
+import at.ac.tuwien.dse.fairsurgeries.service.AdminService;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -20,53 +20,41 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
+privileged aspect AdminDataOnDemand_Roo_DataOnDemand {
     
-    declare @type: PatientDataOnDemand: @Component;
+    declare @type: AdminDataOnDemand: @Component;
     
-    private Random PatientDataOnDemand.rnd = new SecureRandom();
+    private Random AdminDataOnDemand.rnd = new SecureRandom();
     
-    private List<Patient> PatientDataOnDemand.data;
+    private List<Admin> AdminDataOnDemand.data;
     
     @Autowired
-    PatientService PatientDataOnDemand.patientService;
+    AdminService AdminDataOnDemand.adminService;
     
-    public Patient PatientDataOnDemand.getNewTransientPatient(int index) {
-        Patient obj = new Patient();
+    public Admin AdminDataOnDemand.getNewTransientAdmin(int index) {
+        Admin obj = new Admin();
         setDateOfBirth(obj, index);
         setFirstName(obj, index);
         setLastName(obj, index);
-        setLatitude(obj, index);
-        setLongitude(obj, index);
         return obj;
     }
     
-    public void PatientDataOnDemand.setDateOfBirth(Patient obj, int index) {
+    public void AdminDataOnDemand.setDateOfBirth(Admin obj, int index) {
         Date dateOfBirth = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setDateOfBirth(dateOfBirth);
     }
     
-    public void PatientDataOnDemand.setFirstName(Patient obj, int index) {
+    public void AdminDataOnDemand.setFirstName(Admin obj, int index) {
         String firstName = "firstName_" + index;
         obj.setFirstName(firstName);
     }
     
-    public void PatientDataOnDemand.setLastName(Patient obj, int index) {
+    public void AdminDataOnDemand.setLastName(Admin obj, int index) {
         String lastName = "lastName_" + index;
         obj.setLastName(lastName);
     }
     
-    public void PatientDataOnDemand.setLatitude(Patient obj, int index) {
-        Double latitude = new Integer(index).doubleValue();
-        obj.setLatitude(latitude);
-    }
-    
-    public void PatientDataOnDemand.setLongitude(Patient obj, int index) {
-        Double longitude = new Integer(index).doubleValue();
-        obj.setLongitude(longitude);
-    }
-    
-    public Patient PatientDataOnDemand.getSpecificPatient(int index) {
+    public Admin AdminDataOnDemand.getSpecificAdmin(int index) {
         init();
         if (index < 0) {
             index = 0;
@@ -74,38 +62,38 @@ privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
         if (index > (data.size() - 1)) {
             index = data.size() - 1;
         }
-        Patient obj = data.get(index);
+        Admin obj = data.get(index);
         BigInteger id = obj.getId();
-        return patientService.findPatient(id);
+        return adminService.findAdmin(id);
     }
     
-    public Patient PatientDataOnDemand.getRandomPatient() {
+    public Admin AdminDataOnDemand.getRandomAdmin() {
         init();
-        Patient obj = data.get(rnd.nextInt(data.size()));
+        Admin obj = data.get(rnd.nextInt(data.size()));
         BigInteger id = obj.getId();
-        return patientService.findPatient(id);
+        return adminService.findAdmin(id);
     }
     
-    public boolean PatientDataOnDemand.modifyPatient(Patient obj) {
+    public boolean AdminDataOnDemand.modifyAdmin(Admin obj) {
         return false;
     }
     
-    public void PatientDataOnDemand.init() {
+    public void AdminDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = patientService.findPatientEntries(from, to);
+        data = adminService.findAdminEntries(from, to);
         if (data == null) {
-            throw new IllegalStateException("Find entries implementation for 'Patient' illegally returned null");
+            throw new IllegalStateException("Find entries implementation for 'Admin' illegally returned null");
         }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<Patient>();
+        data = new ArrayList<Admin>();
         for (int i = 0; i < 10; i++) {
-            Patient obj = getNewTransientPatient(i);
+            Admin obj = getNewTransientAdmin(i);
             try {
-                patientService.savePatient(obj);
+                adminService.saveAdmin(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
