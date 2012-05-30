@@ -65,9 +65,10 @@ public class HospitalController {
 	/**
 	 * This method is invoked when a RabbitMQ Message is received.
 	 */
-	public void handleMessage(String message) {
+	public void handleMessage(Object message) {
+		PatientDTO patient = (PatientDTO)message;
 		Hospital hospital = new Hospital();
-		hospital.setName(message);
+		hospital.setName(String.valueOf(patient.getPatientId()));
 		hospitalService.saveHospital(hospital);
 	}
 
