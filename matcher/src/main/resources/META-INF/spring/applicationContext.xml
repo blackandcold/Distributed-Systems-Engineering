@@ -64,7 +64,7 @@
     
 	<!--  queue listener funktioniert noch nicht -->
     <rabbit:listener-container id="container1" connection-factory="connectionFactory">
-    	<rabbit:listener queues="MatcherInQueue" ref="hospitalController" method="handleMessage"/>
+    	<rabbit:listener queues="MatcherInQueue" ref="reservationController" method="handleReservation"/>
 	</rabbit:listener-container>
     
     <cloud:rabbit-connection-factory id="connectionFactory"/>
@@ -79,6 +79,6 @@
     <!-- Declare the "messages" queue: -->
     <rabbit:queue name="MatcherInQueue" durable="true"/>
     
-    <bean id="hospitalController" class="at.ac.tuwien.dse.fairsurgeries.web.HospitalController" />
+    <bean id="reservationController" class="at.ac.tuwien.dse.fairsurgeries.web.ReservationController" />
 
 </beans>
