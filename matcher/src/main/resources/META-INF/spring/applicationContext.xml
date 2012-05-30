@@ -50,5 +50,27 @@
         <context:exclude-filter expression=".*_Roo_.*" type="regex"/>
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
+    
+    <!--  Rabbit MQ stuff -->
+    <!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
+    
+	<!--  queue listener funktioniert noch nicht -->
+    <rabbit:listener-container id="container1" connection-factory="connectionFactory">
+    	<rabbit:listener queues="MatcherInQueue" ref="hospitalController" method="handleMessage"/>
+	</rabbit:listener-container>
+    
+    <cloud:rabbit-connection-factory id="connectionFactory"/>
+
+    <!-- Set up the AmqpTemplate/RabbitTemplate: -->
+    <rabbit:template connection-factory="connectionFactory"/>
+
+    <!-- Request that queues, exchanges and bindings be automatically
+         declared on the broker: -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- Declare the "messages" queue: -->
+    <rabbit:queue name="MatcherInQueue" durable="true"/>
+    
+    <bean id="hospitalController" class="at.ac.tuwien.dse.fairsurgeries.web.HospitalController" />
 
 </beans>

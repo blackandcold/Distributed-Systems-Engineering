@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Persistent;
 
 privileged aspect OPSlot_Roo_Mongo_Entity {
     
-    declare @type: OPSlot: @Persistent;
+    declare @type: OPSlotDTO: @Persistent;
     
     @Id
     private BigInteger OPSlot.id;
