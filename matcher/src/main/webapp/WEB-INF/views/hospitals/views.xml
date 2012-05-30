@@ -13,10 +13,4 @@
 <definition extends="default" name="hospitals/update">
         <put-attribute name="body" value="/WEB-INF/views/hospitals/update.jspx"/>
     </definition>
-<definition extends="default" name="hospitals/gerhard">
-	    <put-attribute name="body" value="/WEB-INF/views/hospitals/gerhard.jspx"/>
-	</definition>
-	<definition extends="default" name="hospitals/message_test">
-		    <put-attribute name="body" value="/WEB-INF/views/hospitals/message_test.jspx"/>
-		</definition>
 </tiles-definitions>
