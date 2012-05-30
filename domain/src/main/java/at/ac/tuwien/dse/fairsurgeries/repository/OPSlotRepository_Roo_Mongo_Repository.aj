@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 privileged aspect OPSlotRepository_Roo_Mongo_Repository {
     
-    declare parents: OPSlotRepository extends PagingAndSortingRepository<OPSlotDTO, BigInteger>;
+    declare parents: OPSlotRepository extends PagingAndSortingRepository<OPSlot, BigInteger>;
     
     declare @type: OPSlotRepository: @Repository;
     
