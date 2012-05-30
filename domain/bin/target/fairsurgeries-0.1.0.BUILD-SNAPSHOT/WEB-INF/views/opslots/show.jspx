@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" object="${opslot}" path="/opslots" z="SKawE7cu6lynM1zNKWShBscNkTw=">
+        <field:display date="true" dateTimePattern="${OPSlot_datefrom_date_format}" field="dateFrom" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom" object="${opslot}" z="Vf7aYQTMAaTKSXiK7vdZ+1rfTRI="/>
+        <field:display date="true" dateTimePattern="${OPSlot_dateto_date_format}" field="dateTo" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo" object="${opslot}" z="N9zOu8uMTUOeApVxhnDi6j4ghmk="/>
+        <field:display field="surgeryType" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType" object="${opslot}" z="BqRUWb8Mrhr3uymCKx7qq3F4YmA="/>
+        <field:display field="patient" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient" object="${opslot}" z="PYM7JPUGaqvv2ViVuf2lKFU85KA="/>
+        <field:display field="doctor" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor" object="${opslot}" z="AgBJrv45faEhiwrxbPYyobRfs0c="/>
+        <field:display field="hospital" id="s_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" object="${opslot}" z="4685BeVjUU0fz2UpHl4jqrFy53k="/>
+    </page:show>
+</div>

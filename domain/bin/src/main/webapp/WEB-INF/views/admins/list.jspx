@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Admin" items="${admins}" z="qXkLEzpanE9ISwNE6tH99FCC1W4=">
+        <table:table data="${admins}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_Admin" path="/admins" z="Ff3LD+Bc3Gc0XId00NmYj79ofxs=">
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Admin_firstName" property="firstName" z="tookgeYsKRbblbFOxtR7rNL0+iI="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Admin_lastName" property="lastName" z="InjIz7uKaGNlnsmKVv+Ir08N7DY="/>
+            <table:column date="true" dateTimePattern="${admin_dateofbirth_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Admin_dateOfBirth" property="dateOfBirth" z="7QCkcOztOZ/1DzhYNpvRx6Hmsvk="/>
+        </table:table>
+    </page:list>
+</div>

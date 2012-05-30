@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_at_ac_tuwien_dse_fairsurgeries_domain_Patient" modelAttribute="patient" path="/patients" versionField="none" z="ANYrXLVjJd5Z42Nqnt1iGwQHLoY=">
+        <field:simple field="opSlots" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_opSlots" messageCode="entity_reference_not_managed" messageCodeAttribute="O P Slot" z="n1saF3/r0yDfbA2UVr1t69+AiC0="/>
+        <field:input field="firstName" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_firstName" required="true" z="QWCs+eaRqRs2t9F5TElpxKCjK24="/>
+        <field:input field="lastName" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_lastName" required="true" z="4ZvaKtL38ODhaXi4HoPOQvUad9k="/>
+        <field:datetime dateTimePattern="${patient_dateofbirth_date_format}" field="dateOfBirth" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_dateOfBirth" z="nSTmaDlXNWeGSVneCeMQhmV8bvU="/>
+        <field:input field="latitude" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_latitude" validationMessageCode="field_invalid_number" z="crJO/PFjukaooxVEVppu055TnL8="/>
+        <field:input field="longitude" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_longitude" validationMessageCode="field_invalid_number" z="E4JSpP8hOvOCUV79mYRQ6+4lV/Q="/>
+    </form:update>
+</div>
