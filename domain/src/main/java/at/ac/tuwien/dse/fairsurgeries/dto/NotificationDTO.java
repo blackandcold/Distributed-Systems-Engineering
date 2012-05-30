@@ -15,11 +15,11 @@ public class NotificationDTO implements Serializable {
 		this.setNotificationId(notificationId);
 	}
 
-	private int getNotificationId() {
+	public int getNotificationId() {
 		return notificationId;
 	}
 
-	private void setNotificationId(int notificationId) {
+	public void setNotificationId(int notificationId) {
 		this.notificationId = notificationId;
 	}
 
