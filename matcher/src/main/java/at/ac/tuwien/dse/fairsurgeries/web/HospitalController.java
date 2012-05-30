@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 
 @RequestMapping("/hospitals")
-@Controller
+@Controller(value="hospitalController")
 @RooWebScaffold(path = "hospitals", formBackingObject = Hospital.class)
 public class HospitalController {
 	
