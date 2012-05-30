@@ -27,6 +27,8 @@ field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY -
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
+field number --fieldName latitude --type java.lang.Double
+field number --fieldName longitude --type java.lang.Double
 
 // fields for Doctor
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Doctor
@@ -41,6 +43,8 @@ field date --fieldName dateOfBirth --type java.util.Date
 
 // fields for Hospital
 field string --fieldName name --notNull --class ~.domain.Hospital
+field number --fieldName latitude --type java.lang.Double
+field number --fieldName longitude --type java.lang.Double
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY
 
 // fields for OPSlot
@@ -59,17 +63,20 @@ field reference --fieldName opSlot --type ~.domain.OPSlot
 // add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
 repository mongo --interface ~.repository.DoctorRepository --entity ~.domain.Doctor
+repository mongo --interface ~.repository.AdminRepository --entity ~.domain.Admin
 repository mongo --interface ~.repository.HospitalRepository --entity ~.domain.Hospital
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
+
 service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
+service --interface ~.service.AdminService --entity ~.domain.Admin
 service --interface ~.service.HospitalService --entity ~.domain.Hospital
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 
 // Commented out in domain project
-// web mvc setup
-// web mvc all --package ~.web
+web mvc setup
+web mvc all --package ~.web
 
 perform package
