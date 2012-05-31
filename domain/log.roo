@@ -59,3 +59,10 @@ perform package
 // script --file fairsurgeries.roo
 exit
 // Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-05-30 11:16:51
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-05-31 15:23:54
+help
+// [failed] * entity jpa - Creates a new JPA persistent entity in SRC_MAIN_JAVA
+focus --class ~.domain.LogEntry
+exit
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-05-31 15:34:33
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-05-31 15:34:39
