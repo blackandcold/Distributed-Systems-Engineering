@@ -1,26 +1,11 @@
 package at.ac.tuwien.dse.fairsurgeries.dto;
 
-import java.io.Serializable;
+import java.math.BigInteger;
 
-public class NotificationDTO implements Serializable {
-
-	/**
-	 * 
-	 */
+public class NotificationDTO extends BaseDTO {
 	private static final long serialVersionUID = 1L;
-
-	private int notificationId;
 	
-	public NotificationDTO(int notificationId){
-		this.setNotificationId(notificationId);
+	public NotificationDTO(BigInteger id) {
+		super(id);
 	}
-
-	public int getNotificationId() {
-		return notificationId;
-	}
-
-	public void setNotificationId(int notificationId) {
-		this.notificationId = notificationId;
-	}
-
 }

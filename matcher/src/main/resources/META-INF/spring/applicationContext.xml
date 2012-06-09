@@ -62,7 +62,6 @@
     <!--  Rabbit MQ stuff -->
     <!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
     
-	<!--  queue listener funktioniert noch nicht -->
     <rabbit:listener-container id="container1" connection-factory="connectionFactory">
     	<rabbit:listener queues="MatcherInQueue" ref="reservationController" method="handleReservation"/>
 	</rabbit:listener-container>

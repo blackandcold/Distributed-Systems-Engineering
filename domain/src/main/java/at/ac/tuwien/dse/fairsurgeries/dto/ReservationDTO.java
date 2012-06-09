@@ -1,32 +1,48 @@
 package at.ac.tuwien.dse.fairsurgeries.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class ReservationDTO implements Serializable{
-
-	/**
-	 * 
-	 */
+public class ReservationDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	private OPSlotDTO opslot;
+
+	private DoctorDTO doctor;
 	private PatientDTO patient;
+	private HospitalDTO hospital;
+	private Double radius;
+	private Date dateFrom;
+	private Date dateTo;
 	
-	public ReservationDTO(OPSlotDTO opslot, PatientDTO pationt)
-	{
-		this.setOpslot(opslot);
-		this.setPatient(pationt);
+	public ReservationDTO(DoctorDTO doctor, PatientDTO patient, HospitalDTO hospital, Double radius, Date dateFrom, Date dateTo) {
+		this.doctor = doctor;
+		this.patient = patient;
+		this.hospital = hospital;
+		this.radius = radius;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
 	}
-	public OPSlotDTO getOpslot() {
-		return opslot;
+
+	public DoctorDTO getDoctor() {
+		return doctor;
 	}
-	public void setOpslot(OPSlotDTO opslot) {
-		this.opslot = opslot;
-	}
+
 	public PatientDTO getPatient() {
 		return patient;
 	}
-	public void setPatient(PatientDTO patient) {
-		this.patient = patient;
+
+	public HospitalDTO getHospital() {
+		return hospital;
+	}
+
+	public Double getRadius() {
+		return radius;
+	}
+
+	public Date getDateFrom() {
+		return dateFrom;
+	}
+
+	public Date getDateTo() {
+		return dateTo;
 	}
 }

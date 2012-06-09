@@ -1,27 +1,10 @@
 package at.ac.tuwien.dse.fairsurgeries.dto;
 
-import java.io.Serializable;
+import java.math.BigInteger;
 
-public class OPSlotDTO implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private int opslotId;
-	
-	public OPSlotDTO(int opslotId){
-		this.setOpslotId(opslotId);
+public class OPSlotDTO extends BaseDTO {
+	public OPSlotDTO(BigInteger id) {
+		super(id);
 	}
-
-	public int getOpslotId() {
-		return opslotId;
-	}
-
-	public void setOpslotId(int opslotId) {
-		this.opslotId = opslotId;
-	}
-
 
 }
