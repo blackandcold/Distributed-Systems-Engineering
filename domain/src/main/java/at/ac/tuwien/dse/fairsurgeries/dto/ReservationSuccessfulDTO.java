@@ -6,12 +6,17 @@ public class ReservationSuccessfulDTO implements Serializable {
 private static final long serialVersionUID = 1L;
 	
 	private ReservationDTO reservation;
+	private OPSlotDTO slot;
 
-	public ReservationSuccessfulDTO(ReservationDTO reservation) {
+	public ReservationSuccessfulDTO(ReservationDTO reservation, OPSlotDTO slot) {
 		this.reservation = reservation;
 	}
 
 	public ReservationDTO getReservation() {
 		return reservation;
+	}
+	
+	public OPSlotDTO getSlot() {
+		return slot;
 	}
 }

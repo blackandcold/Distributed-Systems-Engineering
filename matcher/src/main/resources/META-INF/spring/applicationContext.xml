@@ -63,7 +63,7 @@
     <!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
     
     <rabbit:listener-container id="container1" connection-factory="connectionFactory">
-    	<rabbit:listener queues="MatcherInQueue" ref="reservationController" method="handleReservation"/>
+    	<rabbit:listener queues="fairsurgeries.queue.matcherIn" ref="reservationController" method="handleReservation"/>
 	</rabbit:listener-container>
     
     <cloud:rabbit-connection-factory id="connectionFactory"/>
@@ -75,8 +75,10 @@
          declared on the broker: -->
     <rabbit:admin connection-factory="connectionFactory"/>
 
-    <!-- Declare the "messages" queue: -->
-    <rabbit:queue name="MatcherInQueue" durable="true"/>
+    <!-- The queue the matcher is listening to for ReservationRequests -->
+    <rabbit:queue name="fairsurgeries.queue.matcherIn" durable="true" />
+    <!-- The queue the matcher posts the notification to whether the reservation was successful or not -->
+    <rabbit:queue name="fairsurgeries.queue.notifierIn" durable="true" />
     
     <bean id="reservationController" class="at.ac.tuwien.dse.fairsurgeries.web.ReservationController" />
 
