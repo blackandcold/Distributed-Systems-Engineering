@@ -42,11 +42,11 @@ public class HospitalController {
 
 	@RequestMapping(value = "/sendMessage", produces="text/html")
 	public String publish(Model model) {
-		// Send a message to the "messages" queue
+		/*// Send a message to the "messages" queue
 		String message = "i published da freakin message";
         amqpTemplate.convertAndSend("MatcherInQueue", new PatientDTO(53));
         model.addAttribute("published", true);
-        model.addAttribute("message", message);
+        model.addAttribute("message", message);*/
         return "hospitals/message_test";
     }
 	
