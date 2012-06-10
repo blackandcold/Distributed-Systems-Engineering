@@ -50,8 +50,7 @@
 	<!-- Rabbit MQ stuff -->
 	<!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
 
-	<rabbit:listener-container id="container1"
-		connection-factory="connectionFactory">
+	<rabbit:listener-container id="notifierContainer" connection-factory="connectionFactory">
 		<rabbit:listener queues="fairsurgeries.queue.notifierIn" ref="notifierController" method="handleNotification" />
 	</rabbit:listener-container>
 
