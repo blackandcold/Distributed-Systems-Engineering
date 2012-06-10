@@ -62,7 +62,7 @@
     <!--  Rabbit MQ stuff -->
     <!-- Obtain a connection to the RabbitMQ via cloudfoundry-runtime: -->
     
-    <rabbit:listener-container id="container1" connection-factory="connectionFactory">
+    <rabbit:listener-container id="matcherContainer" connection-factory="connectionFactory">
     	<rabbit:listener queues="fairsurgeries.queue.matcherIn" ref="reservationController" method="handleReservation"/>
 	</rabbit:listener-container>
     
