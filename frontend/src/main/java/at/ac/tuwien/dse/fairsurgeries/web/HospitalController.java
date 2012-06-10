@@ -1,6 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.web;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,20 +12,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
+import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
+import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
+import at.ac.tuwien.dse.fairsurgeries.dto.DoctorDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.PatientDTO;
-import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
-import at.ac.tuwien.dse.fairsurgeries.service.HospitalServiceImpl;
+import at.ac.tuwien.dse.fairsurgeries.dto.ReservationDTO;
+import at.ac.tuwien.dse.fairsurgeries.general.Constants;
+import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
+import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
+import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @RequestMapping("/hospitals")
 @Controller
 @RooWebScaffold(path = "hospitals", formBackingObject = Hospital.class)
 public class HospitalController {
 
-	@Autowired AmqpTemplate amqpTemplate;
+	@Autowired 
+	AmqpTemplate amqpTemplate;
+	
+	@Autowired
+	DoctorService doctorService;
+	@Autowired
+	PatientService patientService;
+	@Autowired
+	OPSlotService slotService;
+	
 
 	@RequestMapping(value = "/matthias", produces = "application/json")
 	public void matthias(HttpServletResponse response) throws Exception {
@@ -42,11 +56,26 @@ public class HospitalController {
 
 	@RequestMapping(value = "/sendMessage", produces="text/html")
 	public String publish(Model model) {
-		/*// Send a message to the "messages" queue
-		String message = "i published da freakin message";
-        amqpTemplate.convertAndSend("MatcherInQueue", new PatientDTO(53));
-        model.addAttribute("published", true);
-        model.addAttribute("message", message);*/
+		// TODO: temporary because addSlot website doesn't work
+		if (slotService.findAllOPSlots().isEmpty()) {
+			Hospital hospital = hospitalService.findAllHospitals().get(0);
+			OPSlot slot = new OPSlot();
+			
+			slot.setSurgeryType(SurgeryType.Cardiology);
+			slot.setDateFrom(Date.valueOf("2012-04-12"));
+			slot.setDateTo(Date.valueOf("2012-04-13"));
+			slot.setHospital(hospital);
+			
+			slotService.saveOPSlot(slot);
+		}
+		
+		// Sample code to post a reservation
+		DoctorDTO doctorDTO = new DoctorDTO(doctorService.findAllDoctors().get(0).getId());
+		PatientDTO patientDTO = new PatientDTO(patientService.findAllPatients().get(0).getId());
+		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology,100., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
+		
+		amqpTemplate.convertAndSend(Constants.Queue.MatcherIn.toString(), reservationDTO);
+		
         return "hospitals/message_test";
     }
 	
