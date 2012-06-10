@@ -21,7 +21,7 @@ entity mongo --class ~.domain.Hospital --testAutomatically
 entity mongo --class ~.domain.PublicPerson --testAutomatically
 entity mongo --class ~.domain.OPSlot --testAutomatically
 entity mongo --class ~.domain.Notification --testAutomatically
-entity mongo --class ~.domain.LogEntry
+entity mongo --class ~.domain.LogEntry --testAutomatically
 
 // fields for Patient
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Patient
@@ -64,13 +64,14 @@ field reference --fieldName opSlot --type ~.domain.OPSlot
 // fields for LogEntry
 field string --fieldName component --notNull --class ~.domain.LogEntry
 field string --fieldName message --notNull
-field date --fieldName timestamp --notNull --type java.util.Date
+field date --fieldName executionTimestamp --notNull --type java.util.Date
 
 // add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
 repository mongo --interface ~.repository.DoctorRepository --entity ~.domain.Doctor
 repository mongo --interface ~.repository.AdminRepository --entity ~.domain.Admin
 repository mongo --interface ~.repository.HospitalRepository --entity ~.domain.Hospital
+repository mongo --interface ~.repository.PublicPersonRepository --entity ~.domain.PublicPerson
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
 repository mongo --interface ~.repository.LogEntryRepository --entity ~.domain.LogEntry
@@ -79,8 +80,10 @@ service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
 service --interface ~.service.AdminService --entity ~.domain.Admin
 service --interface ~.service.HospitalService --entity ~.domain.Hospital
+service --interface ~.service.PublicPersonService --entity ~.domain.PublicPerson
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
+service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
 
 // Commented out in domain project
 web mvc setup
