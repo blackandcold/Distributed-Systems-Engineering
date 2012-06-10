@@ -60,7 +60,7 @@ field reference --fieldName opSlot --type ~.domain.OPSlot
 // fields for LogEntry
 field string --fieldName component --notNull --class ~.domain.LogEntry
 field string --fieldName message --notNull
-field date --fieldName timestamp --notNull --type java.util.Date
+field date --fieldName executionTimestamp --notNull --type java.util.Date
 
 // add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
@@ -68,14 +68,14 @@ repository mongo --interface ~.repository.DoctorRepository --entity ~.domain.Doc
 repository mongo --interface ~.repository.HospitalRepository --entity ~.domain.Hospital
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
-repository mongo --interface ~.repository.LogEntry --entity ~.domain.LogEntry
+repository mongo --interface ~.repository.LogEntryRepository --entity ~.domain.LogEntry
 
 service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
 service --interface ~.service.HospitalService --entity ~.domain.Hospital
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
-service --interface ~.service.LogEntry --entity ~.domain.LogEntry
+service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
 
 web mvc setup
 web mvc all --package ~.web
