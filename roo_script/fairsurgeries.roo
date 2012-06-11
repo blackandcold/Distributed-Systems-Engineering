@@ -64,7 +64,7 @@ field reference --fieldName opSlot --type ~.domain.OPSlot
 // fields for LogEntry
 field string --fieldName component --notNull --class ~.domain.LogEntry
 field string --fieldName message --notNull
-field date --fieldName executionTimestamp --notNull --type java.util.Date
+field date --fieldName executionTimestamp --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat MEDIUM
 
 // add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
