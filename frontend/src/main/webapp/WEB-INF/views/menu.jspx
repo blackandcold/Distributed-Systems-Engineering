@@ -31,5 +31,62 @@
             <menu:item id="i_opslot_new" messageCode="global_menu_new" url="/opslots?form" z="zpdObixoR1zPGzY7VX/iyX57RTI="/>
             <menu:item id="i_opslot_list" messageCode="global_menu_list" url="/opslots?page=1&amp;size=${empty param.size ? 10 : param.size}" z="PuPz7/Cfj3HyHeU34RXq9unzJD4="/>
         </menu:category>
+        
+        <!-- Custom menu section -->
+	    <li id="c_actor_public">
+	    	<h2>Actor Public Person</h2>
+	    	<ul>
+	    		<li id="i_actor_public_list_slots">
+	    			<a title="List OP-Slots" href="/actors/public/slots">List OP-Slots</a>
+	    		</li>
+	    	</ul>
+	    </li>
+	    <li id="c_actor_patient">
+	    	<h2>Actor Patient</h2>
+	    	<ul>
+	    		<li id="i_actor_patient_list_slots">
+	    			<a title="List OP-Slots" href="/actors/patient/slots">List OP-Slots</a>
+	    		</li>
+	    		<li id="i_actor_patient_list_notifications">
+	    			<a title="List Notifications" href="/actors/patient/notifications">List Notifications</a>
+	    		</li>
+	    	</ul>
+	    </li>
+	    <li id="c_actor_doctor">
+	    	<h2>Actor Doctor</h2>
+	    	<ul>
+	    		<li id="i_actor_doctor_list_slots">
+	    			<a title="List OP-Slots" href="/actors/doctor/slots">List OP-Slots</a>
+	    		</li>
+	    		<li id="i_actor_doctor_list_notifications">
+	    			<a title="List Notifications" href="/actors/doctor/notifications">List Notifications</a>
+	    		</li>
+	    		<li id="i_actor_doctor_manage_reservations">
+	    			<a title="Manage reservations" href="/actors/doctor/reservations">Manage Reservations</a>
+	    		</li>
+	    	</ul>
+	    </li>
+	    <li id="c_actor_hospital">
+	    	<h2>Actor Hospital</h2>
+	    	<ul>
+	    		<li id="i_actor_hospital_list_slots">
+	    			<a title="List OP-Slots" href="/actors/hospital/slots">List OP-Slots</a>
+	    		</li>
+	    		<li id="i_actor_hospital_list_notifications">
+	    			<a title="List Notifications" href="/actors/hospital/notifications">List Notifications</a>
+	    		</li>
+	    		<li id="i_actor_hospital_manage_slots">
+	    			<a title="Manage OP-Slots" href="/actors/hospital/slots">Manage OP-Slots</a>
+	    		</li>
+	    	</ul>
+	    </li>
+	    <li id="c_actor_admin">
+	    	<h2>Actor Admin</h2>
+	    	<ul>
+	    		<li id="i_actor_admin_list_slots">
+	    			<a title="List OP-Slots" href="/actors/admin/slots">List OP-Slots</a>
+	    		</li>
+	    	</ul>
+	    </li>
     </menu:menu>
 </div>
