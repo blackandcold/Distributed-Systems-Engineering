@@ -1,3 +1,4 @@
+mvn clean
 mvn compile
 mvn war:war
 cd target

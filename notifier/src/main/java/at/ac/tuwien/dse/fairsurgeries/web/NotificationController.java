@@ -9,6 +9,8 @@ import at.ac.tuwien.dse.fairsurgeries.domain.NotificationReason;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationFailedDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationSuccessfulDTO;
+import at.ac.tuwien.dse.fairsurgeries.general.Constants;
+import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 
@@ -21,8 +23,12 @@ public class NotificationController {
 	private NotificationService notificationService;
 	@Autowired
 	private OPSlotService slotService;
+	@Autowired
+	private LogEntryService logEntryService;
 
 	public void handleNotification(Object object) {
+		logEntryService.log(Constants.Component.Notifier.toString(), "Starting handleNotification()");
+		logEntryService.log(Constants.Component.Notifier.toString(), "Notification is of type " + object.getClass().getSimpleName());
 		if (object instanceof ReservationSuccessfulDTO) {
 			ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
 			OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
@@ -37,11 +43,16 @@ public class NotificationController {
 				notificationService.saveNotification(notification);
 			}
 		}
-
 		else if (object instanceof ReservationFailedDTO) {
 			ReservationFailedDTO notificationDTO = (ReservationFailedDTO) object;
 
-			// TODO: What to do now?
+			Notification notification = new Notification();
+
+			notification.setReason(NotificationReason.ReservationFailed);
+			notification.setDescription("Do hot irgendwo wos ned hinghaut");
+			
+			notificationService.saveNotification(notification);
 		}
+		logEntryService.log(Constants.Component.Notifier.toString(), "Finished handleNotification()");
 	}
 }

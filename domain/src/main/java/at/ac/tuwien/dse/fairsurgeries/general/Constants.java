@@ -14,4 +14,18 @@ public abstract class Constants {
 	    	return this.name;
 	    }
 	}
+	
+	public enum Component {
+		Frontend("fairsurgeries.component.frontend"), Matcher("fairsurgeries.component.matcher"), Notifier("fairsurgeries.component.notifier");
+		
+		private String name;
+		
+	    Component(String name) {
+	    	this.name = name;
+	    }
+	    
+	    public String toString() {
+	    	return this.name;
+	    }
+	}
 }

@@ -22,6 +22,6 @@ public class LogEntry {
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "L")
     private Date executionTimestamp;
 }

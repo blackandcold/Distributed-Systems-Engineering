@@ -1,3 +1,4 @@
+mvn clean
 rm -Rf ~/.m2/repository/at
 mvn compile
 mvn jar:jar -DclassesDirectory=target/classes/ 
