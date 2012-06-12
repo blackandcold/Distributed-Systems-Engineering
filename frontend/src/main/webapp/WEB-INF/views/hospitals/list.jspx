@@ -5,8 +5,7 @@
     <page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" items="${hospitals}" z="vwaKdDNk5LUh+ISkvjZwkRo8dAo=">
         <table:table data="${hospitals}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" path="/hospitals" z="G0KPcl7L7LlGeFrAE3pPoE4C1iM=">
             <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_name" property="name" z="aKUrCEegu4fjCkSM/egOkIaNpao="/>
-            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_latitude" property="latitude" z="nqjDh43LGypKVYFxwvpBsJyqBrg="/>
-            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_longitude" property="longitude" z="P26YflceAwOZh7uUOu0h1+Om6pU="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_position" property="position" z="fxN7WtdbG3ouOP0IwxqI3stLuVk="/>
         </table:table>
     </page:list>
 </div>
