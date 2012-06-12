@@ -23,7 +23,7 @@ public class ActorPatientController {
 	private OPSlotService opSlotService;
 	
 	@Autowired
-	private NotifiactionService notificationService;
+	private NotificationService notificationService;
 	
 	@Autowired
 	private LogEntryService logEntryService;
@@ -40,7 +40,7 @@ public class ActorPatientController {
 	public String listNotifications(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . listNotifications()");
 		uiModel.addAttribute("heading", "List all Notifications (private)");
-		uiModel.addAttribute("notifications", notificationService.findAllOPSlots());
+		uiModel.addAttribute("notifications", notificationService.findAllNotifications());
 		return "actors/public/notifications";
 	}
 	

@@ -29,7 +29,8 @@ public class ActorDoctorController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . manageReservations()");
 		//uiModel.addAttribute("heading", "List all feckin Slots");
 		//uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
-		uiModel.addAttribute("reservation", new ReservationDTO(null, null, null, null, null, null));
+		ReservationDTO reservation = new ReservationDTO(null, null, null, 27., null, null);
+		uiModel.addAttribute("reservation", reservation);
 		return "actors/doctor/reservations";
 	}
 	
