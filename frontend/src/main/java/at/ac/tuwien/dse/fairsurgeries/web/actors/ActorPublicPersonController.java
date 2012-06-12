@@ -31,10 +31,4 @@ public class ActorPublicPersonController {
 		return "actors/public/slots";
 	}
 	
-	/*@RequestMapping(value="/slots", method = RequestMethod.GET, produces = "text/html")
-	public void listSlots(HttpServletResponse response) throws Exception {
-		PrintWriter out = response.getWriter();
-
-		out.println("feckin shit");
-	}*/
 }
