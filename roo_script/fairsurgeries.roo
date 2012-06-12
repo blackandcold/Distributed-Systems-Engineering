@@ -24,13 +24,13 @@ entity mongo --class ~.domain.Notification --testAutomatically
 entity mongo --class ~.domain.LogEntry --testAutomatically
 
 // fields for Patient
-field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Patient
+field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy patient --class ~.domain.Patient
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
 
 // fields for Doctor
-field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Doctor
+field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy doctor --class ~.domain.Doctor
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
@@ -42,7 +42,7 @@ field date --fieldName dateOfBirth --type java.util.Date
 
 // fields for Hospital
 field string --fieldName name --notNull --class ~.domain.Hospital
-field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY
+field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy hospital
 
 // fields for OPSlot
 field date --fieldName dateFrom --notNull --type java.util.Date --class ~.domain.OPSlot

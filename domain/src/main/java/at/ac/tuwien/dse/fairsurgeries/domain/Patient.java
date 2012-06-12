@@ -22,7 +22,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJson(deepSerialize = true)
 public class Patient {
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="patient")
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();
 
     @NotNull
