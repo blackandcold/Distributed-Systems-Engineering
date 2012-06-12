@@ -25,6 +25,6 @@ public class Hospital {
     @GeoSpatialIndexed
     private double[] position;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="hospital")
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();
 }
