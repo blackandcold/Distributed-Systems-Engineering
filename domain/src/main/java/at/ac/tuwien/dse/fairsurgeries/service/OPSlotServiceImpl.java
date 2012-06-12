@@ -1,7 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.service;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
@@ -25,19 +25,18 @@ public class OPSlotServiceImpl implements OPSlotService {
 			Date to = slot.getDateTo();
 			SurgeryType type = slot.getSurgeryType();
 			
-			
 			for (OPSlot s : slots) {
-				if (hospital != null && s.getHospital().getId() != hospital.getId()) {
+				if (hospital != null && !s.getHospital().getId().equals(hospital.getId())) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (patient != null && s.getPatient().getId() != patient.getId()) {
+				if (patient != null && !s.getPatient().getId().equals(patient.getId())) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (doctor != null && s.getDoctor().getId() != doctor.getId()) {
+				if (doctor != null && !s.getDoctor().getId().equals(doctor.getId())) {
 					matchingSlots.remove(s);
 					continue;
 				}
@@ -61,5 +60,26 @@ public class OPSlotServiceImpl implements OPSlotService {
 		}
 		
 		return matchingSlots;
+	}
+	
+	public List<OPSlot> findByPatient(Patient patient) {
+		OPSlot example = new OPSlot();
+		
+		example.setPatient(patient);
+		return this.findByExample(example);
+	}
+	
+	public List<OPSlot> findByDoctor(Doctor doctor) {
+		OPSlot example = new OPSlot();
+		
+		example.setDoctor(doctor);
+		return this.findByExample(example);
+	}
+	
+	public List<OPSlot> findByHospital(Hospital hospital) {
+		OPSlot example = new OPSlot();
+		
+		example.setHospital(hospital);
+		return this.findByExample(example);
 	}
 }

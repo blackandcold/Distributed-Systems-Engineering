@@ -2,7 +2,6 @@ package at.ac.tuwien.dse.fairsurgeries.web;
 
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.HashSet;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -79,14 +78,10 @@ public class HospitalController {
 		// Sample code to post a reservation
 		DoctorDTO doctorDTO = new DoctorDTO(doctorService.findAllDoctors().get(0).getId());
 		PatientDTO patientDTO = new PatientDTO(patientService.findAllPatients().get(0).getId());
-		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology,250., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
+		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology, 50., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
 		
-		//amqpTemplate.convertAndSend(Constants.Queue.MatcherIn.toString(), reservationDTO);
-		SimpleMessageConverter messageConverter = new SimpleMessageConverter();
-		MessageProperties properties = new MessageProperties();
-		properties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-		Message message = messageConverter.toMessage(reservationDTO, properties);
-		amqpTemplate.send(Constants.Queue.MatcherIn.toString(), message);
+		// send persistent message
+		MessageController.sendMessage(amqpTemplate, Constants.Queue.MatcherIn, reservationDTO);
 		
         return "hospitals/message_test";
     }

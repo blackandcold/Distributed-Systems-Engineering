@@ -26,6 +26,7 @@ import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
+import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @Controller
@@ -46,6 +47,8 @@ public class ReservationController {
 	private PatientService patientService;
 	@Autowired
 	private DoctorService doctorService;
+	@Autowired
+	private OPSlotService slotService;
 	@Autowired
 	private LogEntryService logEntryService;
 
@@ -88,8 +91,9 @@ public class ReservationController {
 					// search for the first matching slot of a hospital (sorted by distance)
 					for (Hospital hospital : hospitals) {
 						logEntryService.log(Constants.Component.Matcher.toString(), "Found hospital: " + hospital);
-						Set<OPSlot> slots = hospital.getOpSlots();
-
+						List<OPSlot> slots = slotService.findByHospital(hospital); 
+						logEntryService.log(Constants.Component.Matcher.toString(), "Found slots: " + slots);
+						
 						for (OPSlot slot : slots) {
 							if (slot.getSurgeryType().equals(surgeryType) && slot.getDateFrom().after(dateFrom) && slot.getDateTo().before(dateTo)) {
 								foundSlot = slot;
