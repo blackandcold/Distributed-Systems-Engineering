@@ -1,20 +1,14 @@
 package at.ac.tuwien.dse.fairsurgeries.web;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
-import at.ac.tuwien.dse.fairsurgeries.domain.LogEntry;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
@@ -35,12 +29,6 @@ public class ReservationController {
 	@Autowired
 	AmqpTemplate template;
 
-	@Autowired(required = false)
-	MongoDbFactory mongoDbFactory;
-
-	@Autowired(required = false)
-	MongoTemplate mongoTemplate;
-
 	@Autowired
 	private HospitalService hospitalService;
 	@Autowired
@@ -53,25 +41,7 @@ public class ReservationController {
 	private LogEntryService logEntryService;
 
 	public void handleReservation(Object message) {
-		// delete old logentries
-		for (LogEntry entry : logEntryService.findAllLogEntrys()) {
-			logEntryService.deleteLogEntry(entry);
-		}
-
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
-
-		try {
-			String log = "MongoDB Collections: ";
-			for (String collectionName : mongoTemplate.getCollectionNames()) {
-				log += collectionName + ", ";
-			}
-			logEntryService.log(Constants.Component.Matcher.toString(), log);
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			String stacktrace = sw.toString();
-			logEntryService.log(Constants.Component.Matcher.toString(), stacktrace);
-		}
 
 		if (message instanceof ReservationDTO) {
 			ReservationDTO reservationDTO = (ReservationDTO) message;
