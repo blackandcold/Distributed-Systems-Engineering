@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:dse_field="urn:jsptagdir:/WEB-INF/tags/dse_form/dse_fields" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <h1>${heading}</h1>
+    
+    <h1>Public Slots View</h1>
+    
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots" modelAttribute="opSlotExample" path="/actors/public/slots" render="${empty dependencies}">
+    	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype" items="${opSlots}" itemLabel="surgeryType" itemValue="surgeryType" path="opSlots" />
+    </dse_form:create>
+    
     <form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" items="${slots}" >
         <table:table data="${slots}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" path="/opslots" >
             <table:column date="true" dateTimePattern="${OPSlot_datefrom_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom" property="dateFrom" />
