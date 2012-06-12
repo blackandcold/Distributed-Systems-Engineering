@@ -95,7 +95,7 @@ privileged aspect LogEntryController_Roo_Controller {
     }
     
     void LogEntryController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("logEntry_executiontimestamp_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("logEntry_executiontimestamp_date_format", DateTimeFormat.patternForStyle("MM", LocaleContextHolder.getLocale()));
     }
     
     void LogEntryController.populateEditForm(Model uiModel, LogEntry logEntry) {

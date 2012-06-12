@@ -11,21 +11,21 @@
             <menu:item id="i_doctor_new" messageCode="global_menu_new" url="/doctors?form" z="H2mXVD1wm4YfgSXqE6cZxN76eww="/>
             <menu:item id="i_doctor_list" messageCode="global_menu_list" url="/doctors?page=1&amp;size=${empty param.size ? 10 : param.size}" z="nlQosh9IBqyF4rLMv+ifW1gxGeE="/>
         </menu:category>
-        <menu:category id="c_patient" z="eF9KM9LmRl+DN4yo3LTRDZuTkik=">
-            <menu:item id="i_patient_new" messageCode="global_menu_new" url="/patients?form" z="/FWw96bQNbLZGfOq6+cGeWYQz8Y="/>
-            <menu:item id="i_patient_list" messageCode="global_menu_list" url="/patients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mnvxypr4za1eNqrO8/rSPpLv4/U="/>
+        <menu:category id="c_admin" z="yJekxb7XuSQP9KBD9S6wbwLaHZY=">
+            <menu:item id="i_admin_new" messageCode="global_menu_new" url="/admins?form" z="TPmBX+1lfAP8gYU/pX/jcYwsTfM="/>
+            <menu:item id="i_admin_list" messageCode="global_menu_list" url="/admins?page=1&amp;size=${empty param.size ? 10 : param.size}" z="JRwUq6a+WGX2NnSSZCd4lcreuMk="/>
         </menu:category>
         <menu:category id="c_logentry" z="XNYIopU825tCtMq7BlvgfyzpMzA=">
             <menu:item id="i_logentry_new" messageCode="global_menu_new" url="/logentrys?form" z="3VAmgBn9kMw0fsWfXoD7Mfqq4iM="/>
             <menu:item id="i_logentry_list" messageCode="global_menu_list" url="/logentrys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mc9pexFqvA6t1nQuiK/IuKk7zDQ="/>
         </menu:category>
-        <menu:category id="c_admin" z="yJekxb7XuSQP9KBD9S6wbwLaHZY=">
-            <menu:item id="i_admin_new" messageCode="global_menu_new" url="/admins?form" z="TPmBX+1lfAP8gYU/pX/jcYwsTfM="/>
-            <menu:item id="i_admin_list" messageCode="global_menu_list" url="/admins?page=1&amp;size=${empty param.size ? 10 : param.size}" z="JRwUq6a+WGX2NnSSZCd4lcreuMk="/>
-        </menu:category>
         <menu:category id="c_hospital" z="GmKVbDKQZAGcYq/cyofqT5ywMWA=">
             <menu:item id="i_hospital_new" messageCode="global_menu_new" url="/hospitals?form" z="b3+x4cyFKd6MkEsQnu1exIIOKF0="/>
             <menu:item id="i_hospital_list" messageCode="global_menu_list" url="/hospitals?page=1&amp;size=${empty param.size ? 10 : param.size}" z="eJhFH3vwQaNVNDARYEeYrR0KENw="/>
+        </menu:category>
+        <menu:category id="c_patient" z="eF9KM9LmRl+DN4yo3LTRDZuTkik=">
+            <menu:item id="i_patient_new" messageCode="global_menu_new" url="/patients?form" z="/FWw96bQNbLZGfOq6+cGeWYQz8Y="/>
+            <menu:item id="i_patient_list" messageCode="global_menu_list" url="/patients?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mnvxypr4za1eNqrO8/rSPpLv4/U="/>
         </menu:category>
         <menu:category id="c_opslot" z="ehDgzHKBXHZ9IBi5pwEEOiYzDUg=">
             <menu:item id="i_opslot_new" messageCode="global_menu_new" url="/opslots?form" z="zpdObixoR1zPGzY7VX/iyX57RTI="/>
