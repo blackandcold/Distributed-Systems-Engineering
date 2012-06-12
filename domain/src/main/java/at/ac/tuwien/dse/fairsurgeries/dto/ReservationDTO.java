@@ -15,6 +15,9 @@ public class ReservationDTO implements Serializable {
 	private Date dateFrom;
 	private Date dateTo;
 	
+	public ReservationDTO() {
+	}
+	
 	public ReservationDTO(DoctorDTO doctor, PatientDTO patient, SurgeryType surgeryType, Double radius, Date dateFrom, Date dateTo) {
 		this.doctor = doctor;
 		this.patient = patient;
@@ -53,4 +56,13 @@ public class ReservationDTO implements Serializable {
 		return this.doctor != null && this.patient != null && this.surgeryType != null && 
 			   this.radius > 0. && this.dateFrom != null && this.dateTo != null;
 	}
+
+	@Override
+	public String toString() {
+		return "ReservationDTO [doctor=" + doctor + ", patient=" + patient
+				+ ", surgeryType=" + surgeryType + ", radius=" + radius
+				+ ", dateFrom=" + dateFrom + ", dateTo=" + dateTo + "]";
+	}
+	
+	
 }

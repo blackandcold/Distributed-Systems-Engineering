@@ -4,8 +4,8 @@
     <jsp:output omit-xml-declaration="yes"/>
     
 	<h3>Manage reservations</h3>
-	<form:create id="fc_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" modelAttribute="reservation" path="/actors/doctor/doreservation">
-		<field:input field="radius" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_name" />
+	<form:create id="fc_at_ac_tuwien_dse_fairsurgeries_domain_Reservations" modelAttribute="reservation" path="/actors/doctor/doreservation" render="${empty dependencies}">
+		<field:input field="radius" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_radius" />
 	</form:create> 
-	
+	<form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Reservations" render="${not empty dependencies}"/>
 </div>
