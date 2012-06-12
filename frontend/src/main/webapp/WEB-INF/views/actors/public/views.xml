@@ -4,4 +4,7 @@
     <definition extends="default" name="actors/public/slots">
         <put-attribute name="body" value="/WEB-INF/views/actors/public/slots.jspx"/>
     </definition>
+    <definition extends="default" name="actors/public/notifications">
+        <put-attribute name="body" value="/WEB-INF/views/actors/public/notifications.jspx"/>
+    </definition>
 </tiles-definitions>
