@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <h1>${Heading}</h1>
+    <page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Notification" items="${notifications}" z="PeVrQ2VavRkwXfnR/0dZ1u24Ndw=">
+        <table:table data="${notifications}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_Notification" path="/notifications" z="NBStBUhKofJbqYcrUztGiBtqErY=">
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_reason" property="reason" z="PV+MIHJHjr2saTVEXeJXJYfAae8="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_description" property="description" z="uUxtXbd8Htez594Kl4OxBD0WdJ0="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_opSlot" property="opSlot" z="JVO2l0kj8OGhwoe5Kmx/GJD7XQ4="/>
+        </table:table>
+    </page:list>
+</div>
