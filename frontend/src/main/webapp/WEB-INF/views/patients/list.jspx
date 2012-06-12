@@ -7,8 +7,7 @@
             <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_firstName" property="firstName" z="vDYB+GNrMHGWJ9GCkuG+RUFUaxo="/>
             <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_lastName" property="lastName" z="RaZAz0yB4nUrud6ks6u5VWjFK1o="/>
             <table:column date="true" dateTimePattern="${patient_dateofbirth_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_dateOfBirth" property="dateOfBirth" z="Kh3ExPzI40C5kjT2VW/HBtM3/ZM="/>
-            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_latitude" property="latitude" z="I/VkMJVF91adUDelFcerdOI/9YU="/>
-            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_longitude" property="longitude" z="f0tGMjA8JoI3NGFOKdLVx8BTFTY="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_position" property="position" z="Kw+/w7PCAXQJ/btGvtr3B7D94MA="/>
         </table:table>
     </page:list>
 </div>

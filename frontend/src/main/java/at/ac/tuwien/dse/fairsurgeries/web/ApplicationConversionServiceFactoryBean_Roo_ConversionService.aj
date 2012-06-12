@@ -105,7 +105,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Hospital, String> ApplicationConversionServiceFactoryBean.getHospitalToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Hospital, java.lang.String>() {
             public String convert(Hospital hospital) {
-                return new StringBuilder().append(hospital.getName()).append(" ").append(hospital.getLatitude()).append(" ").append(hospital.getLongitude()).toString();
+                return new StringBuilder().append(hospital.getName()).toString();
             }
         };
     }
@@ -201,7 +201,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Patient, String> ApplicationConversionServiceFactoryBean.getPatientToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Patient, java.lang.String>() {
             public String convert(Patient patient) {
-                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).append(" ").append(patient.getDateOfBirth()).append(" ").append(patient.getLatitude()).toString();
+                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).append(" ").append(patient.getDateOfBirth()).toString();
             }
         };
     }

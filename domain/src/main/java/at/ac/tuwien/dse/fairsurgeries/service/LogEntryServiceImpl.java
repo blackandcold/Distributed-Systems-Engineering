@@ -12,6 +12,8 @@ public class LogEntryServiceImpl implements LogEntryService {
 		entry.setComponent(component);
 		entry.setMessage(message);
 		entry.setExecutionTimestamp(Calendar.getInstance().getTime());
+		
 		this.saveLogEntry(entry);
 	}
+	
 }

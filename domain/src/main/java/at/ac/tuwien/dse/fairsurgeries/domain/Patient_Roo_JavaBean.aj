@@ -34,28 +34,20 @@ privileged aspect Patient_Roo_JavaBean {
         this.lastName = lastName;
     }
     
+    public double[] Patient.getPosition() {
+        return this.position;
+    }
+    
+    public void Patient.setPosition(double[] position) {
+        this.position = position;
+    }
+    
     public Date Patient.getDateOfBirth() {
         return this.dateOfBirth;
     }
     
     public void Patient.setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-    
-    public Double Patient.getLatitude() {
-        return this.latitude;
-    }
-    
-    public void Patient.setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-    
-    public Double Patient.getLongitude() {
-        return this.longitude;
-    }
-    
-    public void Patient.setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
     
 }

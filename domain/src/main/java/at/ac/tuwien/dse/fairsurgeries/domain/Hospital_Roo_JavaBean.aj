@@ -17,20 +17,12 @@ privileged aspect Hospital_Roo_JavaBean {
         this.name = name;
     }
     
-    public Double Hospital.getLatitude() {
-        return this.latitude;
+    public double[] Hospital.getPosition() {
+        return this.position;
     }
     
-    public void Hospital.setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-    
-    public Double Hospital.getLongitude() {
-        return this.longitude;
-    }
-    
-    public void Hospital.setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void Hospital.setPosition(double[] position) {
+        this.position = position;
     }
     
     public Set<OPSlot> Hospital.getOpSlots() {

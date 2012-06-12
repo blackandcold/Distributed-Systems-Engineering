@@ -4,9 +4,8 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" modelAttribute="hospital" path="/hospitals" render="${empty dependencies}" z="B21sAk4FKC058/34Kjx6Nl8Xn9A=">
         <field:input field="name" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_name" required="true" z="AictkoGI/mZjG6cLGTh2q3Gpl6w="/>
-        <field:input field="latitude" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_latitude" validationMessageCode="field_invalid_number" z="zINrJr8pxZ3lYeoKlbYC/BKVCoI="/>
-        <field:input field="longitude" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_longitude" validationMessageCode="field_invalid_number" z="XHYVg3GDP0M0itZF1rqT4tDBqAk="/>
         <field:simple field="opSlots" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_opSlots" messageCode="entity_reference_not_managed" messageCodeAttribute="O P Slot" z="VNeJYzuaraI8/c6lpf7VhjgI42o="/>
+        <field:input field="position" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_position" z="aDFRq/cM5TY08NsOkXrdRHl88jc="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" render="${not empty dependencies}" z="SjSDWhYeEw93s4cIC1LUJiKt/BA="/>
 </div>
