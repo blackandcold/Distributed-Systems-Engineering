@@ -15,7 +15,7 @@ public class HospitalServiceImpl implements HospitalService {
 			return null;
 		}
 		
-		return hospitalRepository.findByPositionWithin(new Circle(position[0]/DEGREES_TO_KM, position[1]/DEGREES_TO_KM, radius));
+		return hospitalRepository.findByPositionWithin(new Circle(position[0], position[1], radius/DEGREES_TO_KM));
 	}
 	
 	public List<Hospital> findHospitalsWithinRadius(double latitude, double longitude, double radius) {
