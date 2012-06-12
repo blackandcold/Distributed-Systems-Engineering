@@ -28,8 +28,6 @@ field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY -
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
-field number --fieldName latitude --type java.lang.Double
-field number --fieldName longitude --type java.lang.Double
 
 // fields for Doctor
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Doctor
@@ -44,8 +42,6 @@ field date --fieldName dateOfBirth --type java.util.Date
 
 // fields for Hospital
 field string --fieldName name --notNull --class ~.domain.Hospital
-field number --fieldName latitude --type java.lang.Double
-field number --fieldName longitude --type java.lang.Double
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY
 
 // fields for OPSlot
