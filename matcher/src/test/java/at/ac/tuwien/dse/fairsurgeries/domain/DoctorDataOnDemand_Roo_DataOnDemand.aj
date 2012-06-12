@@ -3,9 +3,9 @@
 
 package at.ac.tuwien.dse.fairsurgeries.domain;
 
-import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
-import at.ac.tuwien.dse.fairsurgeries.domain.PatientDataOnDemand;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
+import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
+import at.ac.tuwien.dse.fairsurgeries.domain.DoctorDataOnDemand;
+import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -20,47 +20,41 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
+privileged aspect DoctorDataOnDemand_Roo_DataOnDemand {
     
-    declare @type: PatientDataOnDemand: @Component;
+    declare @type: DoctorDataOnDemand: @Component;
     
-    private Random PatientDataOnDemand.rnd = new SecureRandom();
+    private Random DoctorDataOnDemand.rnd = new SecureRandom();
     
-    private List<Patient> PatientDataOnDemand.data;
+    private List<Doctor> DoctorDataOnDemand.data;
     
     @Autowired
-    PatientService PatientDataOnDemand.patientService;
+    DoctorService DoctorDataOnDemand.doctorService;
     
-    public Patient PatientDataOnDemand.getNewTransientPatient(int index) {
-        Patient obj = new Patient();
+    public Doctor DoctorDataOnDemand.getNewTransientDoctor(int index) {
+        Doctor obj = new Doctor();
         setDateOfBirth(obj, index);
         setFirstName(obj, index);
         setLastName(obj, index);
-        setPosition(obj, index);
         return obj;
     }
     
-    public void PatientDataOnDemand.setDateOfBirth(Patient obj, int index) {
+    public void DoctorDataOnDemand.setDateOfBirth(Doctor obj, int index) {
         Date dateOfBirth = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setDateOfBirth(dateOfBirth);
     }
     
-    public void PatientDataOnDemand.setFirstName(Patient obj, int index) {
+    public void DoctorDataOnDemand.setFirstName(Doctor obj, int index) {
         String firstName = "firstName_" + index;
         obj.setFirstName(firstName);
     }
     
-    public void PatientDataOnDemand.setLastName(Patient obj, int index) {
+    public void DoctorDataOnDemand.setLastName(Doctor obj, int index) {
         String lastName = "lastName_" + index;
         obj.setLastName(lastName);
     }
     
-    public void PatientDataOnDemand.setPosition(Patient obj, int index) {
-        double[] position = { new Integer(index).doubleValue(), new Integer(index).doubleValue() };
-        obj.setPosition(position);
-    }
-    
-    public Patient PatientDataOnDemand.getSpecificPatient(int index) {
+    public Doctor DoctorDataOnDemand.getSpecificDoctor(int index) {
         init();
         if (index < 0) {
             index = 0;
@@ -68,38 +62,38 @@ privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
         if (index > (data.size() - 1)) {
             index = data.size() - 1;
         }
-        Patient obj = data.get(index);
+        Doctor obj = data.get(index);
         BigInteger id = obj.getId();
-        return patientService.findPatient(id);
+        return doctorService.findDoctor(id);
     }
     
-    public Patient PatientDataOnDemand.getRandomPatient() {
+    public Doctor DoctorDataOnDemand.getRandomDoctor() {
         init();
-        Patient obj = data.get(rnd.nextInt(data.size()));
+        Doctor obj = data.get(rnd.nextInt(data.size()));
         BigInteger id = obj.getId();
-        return patientService.findPatient(id);
+        return doctorService.findDoctor(id);
     }
     
-    public boolean PatientDataOnDemand.modifyPatient(Patient obj) {
+    public boolean DoctorDataOnDemand.modifyDoctor(Doctor obj) {
         return false;
     }
     
-    public void PatientDataOnDemand.init() {
+    public void DoctorDataOnDemand.init() {
         int from = 0;
         int to = 10;
-        data = patientService.findPatientEntries(from, to);
+        data = doctorService.findDoctorEntries(from, to);
         if (data == null) {
-            throw new IllegalStateException("Find entries implementation for 'Patient' illegally returned null");
+            throw new IllegalStateException("Find entries implementation for 'Doctor' illegally returned null");
         }
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new ArrayList<Patient>();
+        data = new ArrayList<Doctor>();
         for (int i = 0; i < 10; i++) {
-            Patient obj = getNewTransientPatient(i);
+            Doctor obj = getNewTransientDoctor(i);
             try {
-                patientService.savePatient(obj);
+                doctorService.saveDoctor(obj);
             } catch (ConstraintViolationException e) {
                 StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {

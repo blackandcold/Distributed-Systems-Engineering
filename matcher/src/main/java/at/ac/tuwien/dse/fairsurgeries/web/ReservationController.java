@@ -28,9 +28,6 @@ import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-
 @Controller
 public class ReservationController {
 
@@ -83,7 +80,8 @@ public class ReservationController {
 				Doctor doctor = doctorService.findDoctor(reservationDTO.getDoctor().getId());
 
 				if (patient != null && doctor != null) {
-					List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(patient.getLatitude(), patient.getLongitude(), reservationDTO.getRadius());
+					double[] position = patient.getPosition();
+					List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservationDTO.getRadius());
 					SurgeryType surgeryType = reservationDTO.getSurgeryType();
 					Date dateFrom = reservationDTO.getDateFrom();
 					Date dateTo = reservationDTO.getDateTo();
