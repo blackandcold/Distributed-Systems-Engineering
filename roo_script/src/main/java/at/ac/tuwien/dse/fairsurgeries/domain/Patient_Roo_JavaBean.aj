@@ -34,6 +34,14 @@ privileged aspect Patient_Roo_JavaBean {
         this.lastName = lastName;
     }
     
+    public double[] Patient.getPosition() {
+        return this.position;
+    }
+    
+    public void Patient.setPosition(double[] position) {
+        this.position = position;
+    }
+    
     public Date Patient.getDateOfBirth() {
         return this.dateOfBirth;
     }

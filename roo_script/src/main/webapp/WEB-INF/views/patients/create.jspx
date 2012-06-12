@@ -7,6 +7,7 @@
         <field:input field="firstName" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_firstName" required="true" z="QWCs+eaRqRs2t9F5TElpxKCjK24="/>
         <field:input field="lastName" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_lastName" required="true" z="4ZvaKtL38ODhaXi4HoPOQvUad9k="/>
         <field:datetime dateTimePattern="${patient_dateofbirth_date_format}" field="dateOfBirth" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_dateOfBirth" z="nSTmaDlXNWeGSVneCeMQhmV8bvU="/>
+        <field:input field="position" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Patient_position" z="RS5pSH6ee0fMeSDO5OdMJbdv55E="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Patient" render="${not empty dependencies}" z="IRRjWUYpkUn4D3CUA6BTCQWtHCA="/>
 </div>

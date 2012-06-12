@@ -6,5 +6,6 @@
         <field:display field="firstName" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Patient_firstName" object="${patient}" z="/lLlddO7kuv/pvZJ9k/AtfjUdX8="/>
         <field:display field="lastName" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Patient_lastName" object="${patient}" z="XlrAveYQvY17RGucEh4so56Cnmo="/>
         <field:display date="true" dateTimePattern="${patient_dateofbirth_date_format}" field="dateOfBirth" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Patient_dateOfBirth" object="${patient}" z="3p0lXuBHbGKJnX78ZHpUBhsUF/k="/>
+        <field:display field="position" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Patient_position" object="${patient}" z="und4yrfMlk3EoKqWU9JaUrZiO68="/>
     </page:show>
 </div>

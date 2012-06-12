@@ -4,5 +4,6 @@
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_at_ac_tuwien_dse_fairsurgeries_domain_Hospital" object="${hospital}" path="/hospitals" z="i6eXbxk2CUpCJHt6ROWs5jQpapA=">
         <field:display field="name" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_name" object="${hospital}" z="674VU+8dYK+NsvkIl4WM3mZ/auQ="/>
+        <field:display field="position" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Hospital_position" object="${hospital}" z="GB2p2qDYzcO8F5oJuIF4GakcL18="/>
     </page:show>
 </div>

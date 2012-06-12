@@ -17,6 +17,14 @@ privileged aspect Hospital_Roo_JavaBean {
         this.name = name;
     }
     
+    public double[] Hospital.getPosition() {
+        return this.position;
+    }
+    
+    public void Hospital.setPosition(double[] position) {
+        this.position = position;
+    }
+    
     public Set<OPSlot> Hospital.getOpSlots() {
         return this.opSlots;
     }

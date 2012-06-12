@@ -8,6 +8,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
@@ -28,6 +30,9 @@ public class Patient {
 
     @NotNull
     private String lastName;
+    
+    @GeoSpatialIndexed
+    private double[] position;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")

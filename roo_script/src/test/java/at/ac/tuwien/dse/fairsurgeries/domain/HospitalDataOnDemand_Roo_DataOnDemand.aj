@@ -31,12 +31,18 @@ privileged aspect HospitalDataOnDemand_Roo_DataOnDemand {
     public Hospital HospitalDataOnDemand.getNewTransientHospital(int index) {
         Hospital obj = new Hospital();
         setName(obj, index);
+        setPosition(obj, index);
         return obj;
     }
     
     public void HospitalDataOnDemand.setName(Hospital obj, int index) {
         String name = "name_" + index;
         obj.setName(name);
+    }
+    
+    public void HospitalDataOnDemand.setPosition(Hospital obj, int index) {
+        double[] position = { new Integer(index).doubleValue(), new Integer(index).doubleValue() };
+        obj.setPosition(position);
     }
     
     public Hospital HospitalDataOnDemand.getSpecificHospital(int index) {
