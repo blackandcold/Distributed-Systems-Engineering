@@ -16,7 +16,11 @@ import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
+import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
+import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
+import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
+
 
 @Controller
 @RequestMapping("/actors/public")
@@ -29,7 +33,7 @@ public class ActorPublicPersonController {
 	private HospitalService hospitalService;
 	
 	@Autowired
-	private DoctorsService doctorsService;
+	private DoctorService doctorService;
 	
 	@Autowired
 	private PatientService patientService;
@@ -44,8 +48,8 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("opSlots", opSlotService.findAllOPSlots());
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllHospitals());
-		uiModel.addAttribute("patients", patientService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("patients", patientService.findAllPatients());
 		
 		uiModel.addAttribute("opSlotExample", new OPSlot());
 		return "actors/public/slots";
@@ -57,8 +61,8 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("opSlots", opSlotService.findByExample(opSlot));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllHospitals());
-		uiModel.addAttribute("patients", patientService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("patients", patientService.findAllPatients());
 		
 		uiModel.addAttribute("opSlotExample", opSlot);
 		return "actors/public/slots";
