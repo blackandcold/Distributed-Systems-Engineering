@@ -39,8 +39,7 @@ public class ActorPublicPersonController {
 	@RequestMapping(value="/slots", method = RequestMethod.POST, produces = "text/html")
 	public String listFilteredSlots(@ModelAttribute OPSlot opSlot, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listFilteredSlots() example=" + opSlot);
-		uiModel.addAttribute("opSlotExample", opSlotService.findByExample(opSlot));
-		//uiModel.addAttribute("opSlots", opSlotService.findAllOPSlots());
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(opSlot));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("opSlotExample", opSlot);
 		return "actors/public/slots";

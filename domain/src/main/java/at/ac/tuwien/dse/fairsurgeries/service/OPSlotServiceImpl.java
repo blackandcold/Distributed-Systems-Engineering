@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
@@ -13,9 +15,15 @@ import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 
 public class OPSlotServiceImpl implements OPSlotService {
 	
+	@Autowired
+	LogEntryService logentryService;
+	
 	public List<OPSlot> findByExample(OPSlot slot) {
 		List<OPSlot> slots = oPSlotRepository.findAll();
 		List<OPSlot> matchingSlots = new ArrayList<OPSlot>(slots);
+		
+		logentryService.log("slot", "All slots: " + slots);
+		logentryService.log("slot", "Example: " + slot);
 		
 		if (slots != null && slot != null) {
 			Hospital hospital = slot.getHospital();
@@ -58,6 +66,8 @@ public class OPSlotServiceImpl implements OPSlotService {
 				}
 			}
 		}
+		
+		logentryService.log("slot", "Matching Slots: " + matchingSlots);
 		
 		return matchingSlots;
 	}
