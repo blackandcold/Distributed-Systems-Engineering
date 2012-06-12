@@ -26,7 +26,7 @@ public class ActorPublicPersonController {
 	@RequestMapping(value="/slots", method = RequestMethod.GET, produces = "text/html")
 	public String listSlots(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlots()");
-		uiModel.addAttribute("heading", "List all feckin Slots");
+		uiModel.addAttribute("heading", "List all Slots (public)");
 		uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
 		return "actors/public/slots";
 	}
