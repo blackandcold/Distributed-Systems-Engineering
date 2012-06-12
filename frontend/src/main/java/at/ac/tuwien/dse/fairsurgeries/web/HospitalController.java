@@ -6,10 +6,6 @@ import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageDeliveryMode;
-import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.support.converter.SimpleMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.json.RooWebJson;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
@@ -18,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
+import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.dto.DoctorDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.PatientDTO;
@@ -62,6 +60,9 @@ public class HospitalController {
 
 	@RequestMapping(value = "/sendMessage", produces="text/html")
 	public String publish(Model model) {
+		Doctor doctor = doctorService.findAllDoctors().get(0);
+		Patient patient = patientService.findAllPatients().get(0);
+		
 		// TODO: temporary because addSlot website doesn't work
 		if (slotService.findAllOPSlots().isEmpty()) {
 			Hospital hospital = hospitalService.findAllHospitals().get(0);
@@ -71,13 +72,15 @@ public class HospitalController {
 			slot.setDateFrom(Date.valueOf("2012-04-12"));
 			slot.setDateTo(Date.valueOf("2012-04-13"));
 			slot.setHospital(hospital);
+			slot.setDoctor(doctor);
+			slot.setPatient(patient);
 		
 			slotService.saveOPSlot(slot);
 		}
 		
 		// Sample code to post a reservation
-		DoctorDTO doctorDTO = new DoctorDTO(doctorService.findAllDoctors().get(0).getId());
-		PatientDTO patientDTO = new PatientDTO(patientService.findAllPatients().get(0).getId());
+		DoctorDTO doctorDTO = new DoctorDTO(doctor.getId());
+		PatientDTO patientDTO = new PatientDTO(patient.getId());
 		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology, 50., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
 		
 		// send persistent message
