@@ -30,20 +30,8 @@ privileged aspect HospitalDataOnDemand_Roo_DataOnDemand {
     
     public Hospital HospitalDataOnDemand.getNewTransientHospital(int index) {
         Hospital obj = new Hospital();
-        setLatitude(obj, index);
-        setLongitude(obj, index);
         setName(obj, index);
         return obj;
-    }
-    
-    public void HospitalDataOnDemand.setLatitude(Hospital obj, int index) {
-        Double latitude = new Integer(index).doubleValue();
-        obj.setLatitude(latitude);
-    }
-    
-    public void HospitalDataOnDemand.setLongitude(Hospital obj, int index) {
-        Double longitude = new Integer(index).doubleValue();
-        obj.setLongitude(longitude);
     }
     
     public void HospitalDataOnDemand.setName(Hospital obj, int index) {

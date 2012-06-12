@@ -42,20 +42,4 @@ privileged aspect Patient_Roo_JavaBean {
         this.dateOfBirth = dateOfBirth;
     }
     
-    public Double Patient.getLatitude() {
-        return this.latitude;
-    }
-    
-    public void Patient.setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-    
-    public Double Patient.getLongitude() {
-        return this.longitude;
-    }
-    
-    public void Patient.setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-    
 }

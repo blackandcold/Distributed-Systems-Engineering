@@ -36,8 +36,6 @@ privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
         setDateOfBirth(obj, index);
         setFirstName(obj, index);
         setLastName(obj, index);
-        setLatitude(obj, index);
-        setLongitude(obj, index);
         return obj;
     }
     
@@ -54,16 +52,6 @@ privileged aspect PatientDataOnDemand_Roo_DataOnDemand {
     public void PatientDataOnDemand.setLastName(Patient obj, int index) {
         String lastName = "lastName_" + index;
         obj.setLastName(lastName);
-    }
-    
-    public void PatientDataOnDemand.setLatitude(Patient obj, int index) {
-        Double latitude = new Integer(index).doubleValue();
-        obj.setLatitude(latitude);
-    }
-    
-    public void PatientDataOnDemand.setLongitude(Patient obj, int index) {
-        Double longitude = new Integer(index).doubleValue();
-        obj.setLongitude(longitude);
     }
     
     public Patient PatientDataOnDemand.getSpecificPatient(int index) {

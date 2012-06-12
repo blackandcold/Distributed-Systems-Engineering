@@ -1,4 +1,4 @@
-// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-06-12 09:51:32
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-06-12 10:00:39
 project at.ac.tuwien.dse.fairsurgeries
 mongo setup --cloudFoundry true
 enum type --class ~.domain.SurgeryType
@@ -20,8 +20,6 @@ field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY -
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
-field number --fieldName latitude --type java.lang.Double
-field number --fieldName longitude --type java.lang.Double
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --class ~.domain.Doctor
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
@@ -30,8 +28,6 @@ field string --fieldName firstName --notNull --class ~.domain.Admin
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
 field string --fieldName name --notNull --class ~.domain.Hospital
-field number --fieldName latitude --type java.lang.Double
-field number --fieldName longitude --type java.lang.Double
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY
 field date --fieldName dateFrom --notNull --type java.util.Date --class ~.domain.OPSlot
 field date --fieldName dateTo --notNull --type java.util.Date
@@ -68,3 +64,5 @@ web mvc setup
 web mvc all --package ~.web
 perform package
 // script --file fairsurgeries.roo
+exit
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log closed at 2012-06-12 10:04:16
