@@ -10,6 +10,8 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
+import org.springframework.roo.addon.web.mvc.controller.json.RooWebJson;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
+@RooWebJson(jsonObject = Hospital.class)
 @RequestMapping("/hospitals")
 @Controller
 @RooWebScaffold(path = "hospitals", formBackingObject = Hospital.class)
