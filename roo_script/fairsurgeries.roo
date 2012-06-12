@@ -85,6 +85,11 @@ service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
 
+// Offer JSON remoting for all domain types through Spring MVC
+json all --deepSerialize
+web mvc json setup
+web mvc json all --package ~.web
+
 // Commented out in domain project
 web mvc setup
 web mvc all --package ~.web

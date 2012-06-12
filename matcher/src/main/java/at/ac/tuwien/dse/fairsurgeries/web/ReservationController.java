@@ -8,10 +8,9 @@ import java.util.Set;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
-
-import com.mongodb.DB;
-import com.mongodb.Mongo;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
@@ -29,11 +28,20 @@ import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+
 @Controller
 public class ReservationController {
 
 	@Autowired
 	AmqpTemplate template;
+	
+	@Autowired(required = false)
+	MongoDbFactory mongoDbFactory;
+
+	@Autowired(required = false)
+	MongoTemplate mongoTemplate;
 
 	@Autowired
 	private HospitalService hospitalService;
@@ -45,28 +53,16 @@ public class ReservationController {
 	private LogEntryService logEntryService;
 
 	public void handleReservation(Object message) {
-		// lösche alle LogEntries
+		// delete old logentries
 		for(LogEntry entry : logEntryService.findAllLogEntrys()) {
 			logEntryService.deleteLogEntry(entry);
 		}
 		
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
 		
-		// "can't call something", gibts eine blödere exception message???
-		/*try {
-			Mongo mongo = new Mongo("127.0.0.1", 27017);
-			DB mongoDB = mongo.getDB("fairsurgeries");
-			
-			logEntryService.log(Constants.Component.Matcher.toString(), "Trying to authenticate...");
-			
-			mongoDB.authenticate(new String(""), new String("").toCharArray());
-			
-			if(mongoDB.isAuthenticated())
-				logEntryService.log(Constants.Component.Matcher.toString(), "Authenticated");
-			else
-				logEntryService.log(Constants.Component.Matcher.toString(), "Not authenticated");
-			log = "MongoDB Collections: ";
-			for(String collectionName : mongoDB.getCollectionNames()) {
+		try {
+			String log = "MongoDB Collections: ";
+			for(String collectionName : mongoTemplate.getCollectionNames()) {
 				log += collectionName + ", ";
 			}
 			logEntryService.log(Constants.Component.Matcher.toString(), log);
@@ -75,7 +71,7 @@ public class ReservationController {
 			e.printStackTrace(new PrintWriter(sw));
 			String stacktrace = sw.toString();
 			logEntryService.log(Constants.Component.Matcher.toString(), stacktrace);
-		}*/
+		}
 		
 		
 		if (message instanceof ReservationDTO) {

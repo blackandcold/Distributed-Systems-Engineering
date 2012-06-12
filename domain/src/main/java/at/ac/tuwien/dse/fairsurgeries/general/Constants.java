@@ -16,7 +16,7 @@ public abstract class Constants {
 	}
 	
 	public enum Component {
-		Frontend("fairsurgeries.component.frontend"), Matcher("fairsurgeries.component.matcher"), Notifier("fairsurgeries.component.notifier");
+		Frontend("component.frontend"), Matcher("component.matcher"), Notifier("component.notifier");
 		
 		private String name;
 		
