@@ -6,6 +6,10 @@ import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.support.converter.SimpleMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -74,7 +78,12 @@ public class HospitalController {
 		PatientDTO patientDTO = new PatientDTO(patientService.findAllPatients().get(0).getId());
 		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology,100., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
 		
-		amqpTemplate.convertAndSend(Constants.Queue.MatcherIn.toString(), reservationDTO);
+		//amqpTemplate.convertAndSend(Constants.Queue.MatcherIn.toString(), reservationDTO);
+		SimpleMessageConverter messageConverter = new SimpleMessageConverter();
+		MessageProperties properties = new MessageProperties();
+		properties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+		Message message = messageConverter.toMessage(reservationDTO, properties);
+		amqpTemplate.send(Constants.Queue.MatcherIn.toString(), message);
 		
         return "hospitals/message_test";
     }
