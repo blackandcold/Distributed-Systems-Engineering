@@ -24,14 +24,29 @@ public class ActorPublicPersonController {
 	
 	@Autowired
 	private OPSlotService opSlotService;
+	
+	@Autowired
+	private HospitalService hospitalService;
+	
+	@Autowired
+	private DoctorsService doctorsService;
+	
+	@Autowired
+	private PatientService patientService;
+	
 	@Autowired
 	private LogEntryService logEntryService;
 
 	@RequestMapping(value="/slots", method = RequestMethod.GET, produces = "text/html")
 	public String listSlots(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlots()");
+		
 		uiModel.addAttribute("opSlots", opSlotService.findAllOPSlots());
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllHospitals());
+		uiModel.addAttribute("patients", patientService.findAllHospitals());
+		
 		uiModel.addAttribute("opSlotExample", new OPSlot());
 		return "actors/public/slots";
 	}
@@ -42,6 +57,10 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("opSlotExample", opSlotService.findByExample(opSlot));
 		//uiModel.addAttribute("opSlots", opSlotService.findAllOPSlots());
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllHospitals());
+		uiModel.addAttribute("patients", patientService.findAllHospitals());
+		
 		uiModel.addAttribute("opSlotExample", opSlot);
 		return "actors/public/slots";
 	}

@@ -57,7 +57,7 @@
 		<!-- Custom menu section -->
 
 		<menu:category id="c_actor_login">
-			<menu:item id="i_actor_login_go" messageCode="global_menu_manage" url="/actors/login" />
+			<menu:item id="i_actor_login_go" url="/actors/login" />
 		</menu:category>
 
 
