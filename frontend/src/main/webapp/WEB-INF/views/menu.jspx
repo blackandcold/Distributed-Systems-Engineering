@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
-    <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
 		<menu:category id="c_notification" z="B8gnLr78HMcEHBns2jIZHdO6Ujg=">
 			<menu:item id="i_notification_new" messageCode="global_menu_new"
 				url="/notifications?form" z="dx0cs7x82Yp4ND+ACpJgJ7QcpXk=" />
@@ -52,38 +53,52 @@
 				url="/opslots?page=1&amp;size=${empty param.size ? 10 : param.size}"
 				z="PuPz7/Cfj3HyHeU34RXq9unzJD4=" />
 		</menu:category>
-        
-        <!-- Custom menu section -->
-        
-        
-        <menu:category id="c_actor_public">
-            <menu:item id="i_actor_public_list_slots" messageCode="global_menu_list" url="/actors/public/slots" />
-        </menu:category>
-        
-        <menu:category id="c_actor_patient">
-            <menu:item id="i_actor_patient_list_slots" messageCode="global_menu_list" url="/actors/patient/slots" />
-            <menu:item id="i_actor_patient_list_notifications" messageCode="global_menu_list" url="/actors/patient/notifications" />
-        </menu:category>
 
-        <menu:category id="c_actor_doctor">
-            <menu:item id="i_actor_doctor_list_slots" messageCode="global_menu_list" url="/actors/doctor/slots" />
-            <menu:item id="i_actor_doctor_list_notifications" messageCode="global_menu_list" url="/actors/doctor/notifications" />
-            <menu:item id="i_actor_doctor_manage_reservations" messageCode="global_menu_manage" url="/actors/doctor/reservations" />
-        </menu:category>	  
-        
-         <menu:category id="c_actor_hospital">
-            <menu:item id="i_actor_hospital_list_slots" messageCode="global_menu_list" url="/actors/hospital/slots" />
-            <menu:item id="i_actor_hospital_list_notifications" messageCode="global_menu_list" url="/actors/hospital/notifications" />
-            <menu:item id="i_actor_hospital_manage_slots" messageCode="global_menu_manage" url="/actors/hospital/slots" />
-        </menu:category>	       
-        
-        <menu:category id="c_actor_admin">
-            <menu:item id="i_actor_admin_list_slots" messageCode="global_menu_list" url="/actors/admin/slots" />
-        </menu:category>
-        
+		<!-- Custom menu section -->
 
-	    <!-- Custom menu section end -->
-	    
-	    
-    </menu:menu>
+		<menu:category id="c_actor_login">
+			<menu:item id="i_actor_login_go" messageCode="global_menu_manage" url="/actors/login" />
+		</menu:category>
+
+
+		<menu:category id="c_actor_public">
+			<menu:item id="i_actor_public_list_slots"
+				messageCode="global_menu_list" url="/actors/public/slots" />
+		</menu:category>
+
+		<menu:category id="c_actor_patient">
+			<menu:item id="i_actor_patient_list_slots"
+				messageCode="global_menu_list" url="/actors/patient/slots" />
+			<menu:item id="i_actor_patient_list_notifications"
+				messageCode="global_menu_list" url="/actors/patient/notifications" />
+		</menu:category>
+
+		<menu:category id="c_actor_doctor">
+			<menu:item id="i_actor_doctor_list_slots"
+				messageCode="global_menu_list" url="/actors/doctor/slots" />
+			<menu:item id="i_actor_doctor_list_notifications"
+				messageCode="global_menu_list" url="/actors/doctor/notifications" />
+			<menu:item id="i_actor_doctor_manage_reservations"
+				messageCode="global_menu_manage" url="/actors/doctor/reservations" />
+		</menu:category>
+
+		<menu:category id="c_actor_hospital">
+			<menu:item id="i_actor_hospital_list_slots"
+				messageCode="global_menu_list" url="/actors/hospital/slots" />
+			<menu:item id="i_actor_hospital_list_notifications"
+				messageCode="global_menu_list" url="/actors/hospital/notifications" />
+			<menu:item id="i_actor_hospital_manage_slots"
+				messageCode="global_menu_manage" url="/actors/hospital/slots" />
+		</menu:category>
+
+		<menu:category id="c_actor_admin">
+			<menu:item id="i_actor_admin_list_slots"
+				messageCode="global_menu_list" url="/actors/admin/slots" />
+		</menu:category>
+
+
+		<!-- Custom menu section end -->
+
+
+	</menu:menu>
 </div>
