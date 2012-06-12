@@ -1,5 +1,8 @@
 package at.ac.tuwien.dse.fairsurgeries.web;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +33,30 @@ public class NotificationController {
 		logEntryService.log(Constants.Component.Notifier.toString(), "Starting handleNotification()");
 		logEntryService.log(Constants.Component.Notifier.toString(), "Notification is of type " + object.getClass().getSimpleName());
 		if (object instanceof ReservationSuccessfulDTO) {
-			ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
-			OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
-
-			if (slot != null) {
-				Notification notification = new Notification();
-
-				notification.setReason(NotificationReason.ReservationSuccessful);
-				notification.setDescription("Slot was reserved sucessfully");
-				notification.setOpSlot(slot);
+			try {
+				ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
 				
-				notificationService.saveNotification(notification);
+				if(notificationDTO == null)
+					logEntryService.log(Constants.Component.Notifier.toString(), "notificationDTO ist null");
+				if(notificationDTO.getSlot() == null)
+					logEntryService.log(Constants.Component.Notifier.toString(), "notificationDTO.getSlot() ist null");
+				OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
+	
+				if (slot != null) {
+					Notification notification = new Notification();
+	
+					notification.setReason(NotificationReason.ReservationSuccessful);
+					notification.setDescription("Slot was reserved sucessfully");
+					notification.setOpSlot(slot);
+					
+					notificationService.saveNotification(notification);
+				}
+			} catch(Exception e) {
+				logEntryService.log(Constants.Component.Notifier.toString(), "UIJE!!! " + e.getMessage());
+				StringWriter sw = new StringWriter();
+				e.printStackTrace(new PrintWriter(sw));
+				String stacktrace = sw.toString();
+				logEntryService.log(Constants.Component.Matcher.toString(), stacktrace);
 			}
 		}
 		else if (object instanceof ReservationFailedDTO) {

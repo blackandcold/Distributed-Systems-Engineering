@@ -10,6 +10,7 @@ private static final long serialVersionUID = 1L;
 
 	public ReservationSuccessfulDTO(ReservationDTO reservation, OPSlotDTO slot) {
 		this.reservation = reservation;
+		this.slot = slot;
 	}
 
 	public ReservationDTO getReservation() {
