@@ -33,6 +33,13 @@
         </menu:category>
         
         <!-- Custom menu section -->
+        
+        
+        <menu:category id="c_actor_public">
+            <menu:item id="i_actor_public_list_slots" messageCode="global_menu_list" url="/actors/public/slots" />
+        </menu:category> 
+       
+        <!-- 
 	    <li id="c_actor_public">
 	    	<h2>Actor Public Person</h2>
 	    	<ul>
@@ -41,6 +48,8 @@
 	    		</li>
 	    	</ul>
 	    </li>
+	     -->
+	     
 	    <li id="c_actor_patient">
 	    	<h2>Actor Patient</h2>
 	    	<ul>
@@ -88,5 +97,9 @@
 	    		</li>
 	    	</ul>
 	    </li>
+	    
+	    <!-- Custom menu section end -->
+	    
+	    
     </menu:menu>
 </div>
