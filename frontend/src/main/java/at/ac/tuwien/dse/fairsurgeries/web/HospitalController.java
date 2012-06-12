@@ -72,11 +72,7 @@ public class HospitalController {
 			slot.setDateFrom(Date.valueOf("2012-04-12"));
 			slot.setDateTo(Date.valueOf("2012-04-13"));
 			slot.setHospital(hospital);
-			HashSet<OPSlot> set = new HashSet<OPSlot>();
-			set.add(slot);
-			hospital.setOpSlots(set);
-			
-			hospitalService.saveHospital(hospital);
+		
 			slotService.saveOPSlot(slot);
 		}
 		
