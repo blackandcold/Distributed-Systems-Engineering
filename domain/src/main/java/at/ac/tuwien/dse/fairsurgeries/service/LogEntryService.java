@@ -7,4 +7,6 @@ public interface LogEntryService {
 	
 	public void log(String component, String message);
 	
+	public void clearLog();
+	
 }

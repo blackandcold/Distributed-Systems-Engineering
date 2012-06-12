@@ -16,4 +16,10 @@ public class LogEntryServiceImpl implements LogEntryService {
 		this.saveLogEntry(entry);
 	}
 	
+	public void clearLog() {
+		for (LogEntry entry : this.findAllLogEntrys()) {
+			this.deleteLogEntry(entry);
+		}
+	}
+	
 }

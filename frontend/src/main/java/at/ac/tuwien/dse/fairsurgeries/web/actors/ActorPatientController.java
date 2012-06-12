@@ -1,10 +1,14 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
+import java.io.PrintWriter;
 import java.math.BigInteger;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,17 +39,24 @@ public class ActorPatientController {
 		Patient patient = patientService.findPatient(patientId);
 
 		if (patient != null) {
-			uiModel.addAttribute("heading", "Slots of Patient " + patient.getId());
-			uiModel.addAttribute("slots", patient.getSlots());
+			uiModel.addAttribute("heading", "Slots of Patient " + patient.getLastName());
+			uiModel.addAttribute("slots", patient.getOpSlots());
 
 			return "actors/public/slots";
 		} else {
 			return "redirect:/resourceNotFound";
 		}
 	}
+	
+	@RequestMapping(value = "{patientId}/test", method = RequestMethod.GET, produces = "text/html")
+	public void test(@PathVariable BigInteger patientId, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+
+		out.println("Patient id is " + patientId);
+	}
 
 	@RequestMapping(value = "/notifications", method = RequestMethod.GET, produces = "text/html")
-	public String listNotifications(Model uiModel) {
+	public String listNotifications(Model uiModel, BindingResult binding) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . listNotifications()");
 		uiModel.addAttribute("heading", "List all Notifications (private)");
 		uiModel.addAttribute("notifications", notificationService.findAllNotifications());
