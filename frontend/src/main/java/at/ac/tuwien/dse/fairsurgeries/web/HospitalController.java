@@ -2,6 +2,7 @@ package at.ac.tuwien.dse.fairsurgeries.web;
 
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,9 +11,8 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
-import org.springframework.roo.addon.web.mvc.controller.json.RooWebJson;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.roo.addon.web.mvc.controller.json.RooWebJson;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,14 +72,18 @@ public class HospitalController {
 			slot.setDateFrom(Date.valueOf("2012-04-12"));
 			slot.setDateTo(Date.valueOf("2012-04-13"));
 			slot.setHospital(hospital);
+			HashSet<OPSlot> set = new HashSet<OPSlot>();
+			set.add(slot);
+			hospital.setOpSlots(set);
 			
+			hospitalService.saveHospital(hospital);
 			slotService.saveOPSlot(slot);
 		}
 		
 		// Sample code to post a reservation
 		DoctorDTO doctorDTO = new DoctorDTO(doctorService.findAllDoctors().get(0).getId());
 		PatientDTO patientDTO = new PatientDTO(patientService.findAllPatients().get(0).getId());
-		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology,100., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
+		ReservationDTO reservationDTO = new ReservationDTO(doctorDTO, patientDTO, SurgeryType.Cardiology,250., Date.valueOf("2012-01-01"), Date.valueOf("2012-12-31"));
 		
 		//amqpTemplate.convertAndSend(Constants.Queue.MatcherIn.toString(), reservationDTO);
 		SimpleMessageConverter messageConverter = new SimpleMessageConverter();
