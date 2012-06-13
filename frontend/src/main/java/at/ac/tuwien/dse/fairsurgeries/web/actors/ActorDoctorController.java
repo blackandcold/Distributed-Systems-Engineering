@@ -103,7 +103,6 @@ public class ActorDoctorController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "doctor: " + doctor);
 
 		Reservation reservation = new Reservation();
-		reservation.setRadius(34.);
 
 		uiModel.addAttribute("doctors", Arrays.asList(doctor));
 		uiModel.addAttribute("reservation", reservation);
