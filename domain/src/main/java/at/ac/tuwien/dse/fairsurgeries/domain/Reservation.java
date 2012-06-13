@@ -35,12 +35,12 @@ public class Reservation implements Serializable {
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "MS")
     private Date dateFrom;
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "MS")
     private Date dateTo;
     
     public boolean isValid() {
