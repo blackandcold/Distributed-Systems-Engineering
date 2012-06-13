@@ -34,33 +34,33 @@ public class OPSlotServiceImpl implements OPSlotService {
 			SurgeryType type = slot.getSurgeryType();
 			
 			for (OPSlot s : slots) {
-				if (hospital != null && !s.getHospital().getId().equals(hospital.getId())) {
+				if (hospital != null && (s.getHospital() == null || !s.getHospital().getId().equals(hospital.getId()))) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (patient != null && !s.getPatient().getId().equals(patient.getId())) {
+				if (patient != null && (s.getPatient() == null || !s.getPatient().getId().equals(patient.getId()))) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (doctor != null && !s.getDoctor().getId().equals(doctor.getId())) {
+				if (doctor != null && (s.getDoctor() == null || !s.getDoctor().getId().equals(doctor.getId()))) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
 				// TODO: Better date comparison
-				if (from != null && !s.getDateFrom().equals(from)) {
+				if (from != null && (s.getDateFrom() == null || !s.getDateFrom().equals(from))) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (to != null && !s.getDateTo().equals(to)) {
+				if (to != null && (s.getDateTo() == null || !s.getDateTo().equals(to))) {
 					matchingSlots.remove(s);
 					continue;
 				}
 				
-				if (type != null && !s.getSurgeryType().equals(type)) {
+				if (type != null && (s.getSurgeryType() == null || !s.getSurgeryType().equals(type))) {
 					matchingSlots.remove(s);
 					continue;
 				}
