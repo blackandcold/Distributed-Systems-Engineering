@@ -81,7 +81,7 @@ public class ActorHospitalController {
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         
-        uiModel.addAttribute("slotsDeleteList", opSlotService.findAllOPSlots());
+        uiModel.addAttribute("slotsDeleteList", opSlotService.findAllFreeSlotsByHospital(hospital));
 		
 		return "actors/hospital/manageslots";
 	}
@@ -101,13 +101,29 @@ public class ActorHospitalController {
 	@RequestMapping(value = "/deleteslot", method = RequestMethod.POST)
 	public String deleteSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . deleteSlot() for opSlot: " + opSlot);
+		
+		/*if(id == null)
+			logEntryService.log("DEL STR", "STR is null");
+		else
+			logEntryService.log("DEL STR", "STR ID=" + id);
+		
+		if(opSlot.getId() == null)
+			logEntryService.log("DEL ID", "opSlot is null");
+		else
+			logEntryService.log("DEL ID", "OPSLOT ID=" + opSlot.getId());
+		
+		if(opSlot.getHospital() == null)
+			logEntryService.log("DEL HO", "opSlot is null");
+		else
+			logEntryService.log("DEL HO", "Hospital = " + hospital);*/
 
 		//opSlotService.deleteOpSlot(opSlot);
+		opSlotService.deleteOPSlot(opSlot);
 		
-		//String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
-		//logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
+		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
+		logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
 		
-		//return "redirect:" + redirectUrl;
-		return "redirect:/";
+		return "redirect:" + redirectUrl;
+		//return "redirect:/";
 	}
 }
