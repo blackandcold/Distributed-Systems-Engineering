@@ -92,9 +92,10 @@ public class ActorDoctorController {
 		return "actors/doctor/manageslots";
 	}
 
-	@RequestMapping(value="/reservations", method = RequestMethod.GET, produces = "text/html")
-	public String manageReservation(Model uiModel) {
+	@RequestMapping(value="/reservations", method = RequestMethod.POST)
+	public String manageReservation(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . manageReservations()");
+		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		//uiModel.addAttribute("heading", "List all feckin Slots");
 		//uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
 		ReservationDTO reservation = new ReservationDTO(null, null, null, 27., null, null);
