@@ -73,7 +73,7 @@ public class LoginController {
 	public String loginAsDoctor(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		return "redirect:/actors/doctor/" + doctor.getId() + "/slots";
+		return "redirect:/actors/doctor/" + doctor.getId();
 	}
 	
 	@RequestMapping(value="/loginAsHospital", method = RequestMethod.POST)

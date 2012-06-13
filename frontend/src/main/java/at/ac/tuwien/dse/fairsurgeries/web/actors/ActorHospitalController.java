@@ -30,16 +30,12 @@ public class ActorHospitalController {
 	
 	@Autowired
 	private LogEntryService logEntryService;
-	
 	@Autowired
 	private HospitalService hospitalService;
-	
 	@Autowired
 	private OPSlotService opSlotService;
-	
 	@Autowired
 	private DoctorService doctorService;
-	
 	@Autowired
 	private PatientService patientService;
 
