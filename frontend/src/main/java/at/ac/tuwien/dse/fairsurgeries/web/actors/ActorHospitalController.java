@@ -106,7 +106,7 @@ public class ActorHospitalController {
 	@RequestMapping(value = "/createslot", method = RequestMethod.POST)
 	public void createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for opSlot: " + opSlot);
-		if(opSlot != null)
+		/*if(opSlot != null)
 			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot.hospital: " + opSlot.getHospital());
 		else
 			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot is freakin null");
@@ -120,7 +120,7 @@ public class ActorHospitalController {
 		if(hospital != null)
 			logEntryService.log("FUT", "FUT " + hospital);
 		else
-			logEntryService.log("FUT", "ist null");
+			logEntryService.log("FUT", "ist null");*/
 		//opSlotService.saveOPSlot(OPSlot_)
 		
 		//opSlot.setHospital(hospital);
