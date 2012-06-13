@@ -79,7 +79,15 @@ public class ActorHospitalController {
 		OPSlot opSlot = new OPSlot();
 		opSlot.setHospital(hospital);
 		uiModel.addAttribute("opSlot", opSlot);
-		uiModel.addAttribute("hospitals", Arrays.asList(hospital));
+		
+		logEntryService.log("GAGA", "ID: " + hospital.getId());
+		logEntryService.log("GAGA", "Name: " + hospital.getName());
+		logEntryService.log("GAGA", "ToString: " + hospital);
+		
+		List<Hospital> hospitalList = new ArrayList<Hospital>();
+		hospitalList.add(hospital);
+		uiModel.addAttribute("hospitals", hospitalList);
+		//uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));

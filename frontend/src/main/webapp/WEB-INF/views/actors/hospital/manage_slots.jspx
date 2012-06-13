@@ -16,7 +16,7 @@
         <field:select field="doctor" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor" itemValue="id" items="${doctors}" path="/doctors"/>
         <field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" itemValue="id" items="${hospitals}" path="/hospitals" required="true"/>-->
     	<!--<dse_field:dummy field="hospital" />-->
-    	<field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" items="${hospitals}" itemValue="id" path="/hospitals" required="true" />
+    	<field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" items="${hospitals}" itemValue="id" path="/hospitals" />
     </form:create>
     
     
