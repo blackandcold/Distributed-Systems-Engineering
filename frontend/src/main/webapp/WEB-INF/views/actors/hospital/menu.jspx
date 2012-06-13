@@ -3,10 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
-    <div>
-    	<c:out value="${userMessage}" />
-    </div>
-    
 	<h3>I want to...</h3>
 	
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_hospital_menu_view_slots" modelAttribute="hospital" path="/actors/hospital/viewslots" render="${empty dependencies}" openPane="false">

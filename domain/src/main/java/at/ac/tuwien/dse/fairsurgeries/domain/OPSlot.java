@@ -42,11 +42,11 @@ public class OPSlot {
     private Hospital hospital;
     
     
-    public String getStatus() {
+    public OPSlotStatus getStatus() {
     	if (this.patient != null) {
-    		return "reserved";
+    		return OPSlotStatus.RESERVED;
     	} else {
-    		return "free";
+    		return OPSlotStatus.FREE;
     	}
     }
 }

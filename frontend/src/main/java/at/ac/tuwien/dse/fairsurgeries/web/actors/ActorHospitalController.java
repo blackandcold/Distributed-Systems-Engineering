@@ -2,7 +2,6 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.format.DateTimeFormat;
@@ -18,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
-import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @Controller
 @RequestMapping("/actors/hospital")
@@ -39,24 +36,15 @@ public class ActorHospitalController {
 	@RequestMapping(value = "{hospitalId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger hospitalId, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
-		return prepareMenu(hospitalId, uiModel, null);
+		return prepareMenu(hospitalId, uiModel);
 	}
 	
-	@RequestMapping(value = "{hospitalId}/success", method = RequestMethod.GET)
-	public String showMenuSuccess(@PathVariable BigInteger hospitalId, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
-		return prepareMenu(hospitalId, uiModel, "Successfully finished action");
-	}
-	
-	private String prepareMenu(BigInteger hospitalId, Model uiModel, String message) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
-
+	private String prepareMenu(BigInteger hospitalId, Model uiModel) {
 		Hospital hospital = hospitalService.findHospital(hospitalId);
 
 		if (hospital != null) {
 			
 			uiModel.addAttribute("hospital", hospital);
-			uiModel.addAttribute("userMessage", message);
 
 			return "actors/hospital/showmenu";
 		} else {
@@ -92,6 +80,8 @@ public class ActorHospitalController {
 		
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+        
+        uiModel.addAttribute("slotsDeleteList", opSlotService.findAllOPSlots());
 		
 		return "actors/hospital/manageslots";
 	}
@@ -102,12 +92,22 @@ public class ActorHospitalController {
 
 		opSlotService.saveOPSlot(opSlot);
 		
-		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId() + "/success";
+		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
 		logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
 		
 		return "redirect:" + redirectUrl;
-		//return "redirect:/actors/hospital/viewslots";
-		//return "redirect:/";
-		//viewSlots(hospital, uiModel);
+	}
+	
+	@RequestMapping(value = "/deleteslot", method = RequestMethod.POST)
+	public String deleteSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . deleteSlot() for opSlot: " + opSlot);
+
+		//opSlotService.deleteOpSlot(opSlot);
+		
+		//String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
+		//logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
+		
+		//return "redirect:" + redirectUrl;
+		return "redirect:/";
 	}
 }
