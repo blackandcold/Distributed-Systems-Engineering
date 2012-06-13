@@ -1,7 +1,9 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +76,16 @@ public class ActorHospitalController {
 	public String manageSlots(@ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . manageSlots() for hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		uiModel.addAttribute("opSlot", new OPSlot());
-		uiModel.addAttribute("opSlots", opSlotService.findByHospital(hospital));
+		OPSlot opSlot = new OPSlot();
+		opSlot.setHospital(hospital);
+		uiModel.addAttribute("opSlot", opSlot);
+		//uiModel.addAttribute("opSlots", opSlotService.findByHospital(hospital));
 		
-		uiModel.addAttribute("OPSlot__datefrom_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-        uiModel.addAttribute("OPSlot__dateto_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+
+        //uiModel.addAttribute("OPSlot_datefrom_date_format", "dd.MM.yyyy");
+        //uiModel.addAttribute("OPSlot_dateto_date_format", "dd.MM.yyyy");
         
         /*uiModel.addAttribute("doctors", doctorService.findAllDoctors());
         uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
@@ -89,15 +96,20 @@ public class ActorHospitalController {
 	}
 	
 	@RequestMapping(value = "/createslot", method = RequestMethod.POST)
-	public String createSlot(@ModelAttribute Hospital hospital, @ModelAttribute OPSlot opSlot, Model uiModel) {
+	public void createSlot(@ModelAttribute Hospital hospital, @ModelAttribute OPSlot opSlot, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "opSlot: " + opSlot);
+		if(opSlot != null)
+			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot.hospital: " + opSlot.getHospital());
+		else
+			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot is freakin null");
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		//opSlotService.saveOPSlot(OPSlot_)
 		
-		opSlot.setHospital(hospital);
+		//opSlot.setHospital(hospital);
 		opSlotService.saveOPSlot(opSlot);
 		
-		return "redirect:/actors/hospital/viewslots";
+		//return "redirect:/actors/hospital/viewslots";
+		viewSlots(hospital, uiModel);
 	}
 }

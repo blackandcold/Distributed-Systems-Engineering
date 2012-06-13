@@ -116,8 +116,8 @@ privileged aspect OPSlotController_Roo_Controller {
     }
     
     void OPSlotController.addDateTimeFormatPatterns(Model uiModel) {
-        uiModel.addAttribute("OPSlot__datefrom_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-        uiModel.addAttribute("OPSlot__dateto_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("OPSlot__datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+        uiModel.addAttribute("OPSlot__dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
     }
     
     void OPSlotController.populateEditForm(Model uiModel, OPSlot OPSlot_) {
