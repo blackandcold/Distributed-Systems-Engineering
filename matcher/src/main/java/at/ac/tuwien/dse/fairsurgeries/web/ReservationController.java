@@ -46,26 +46,28 @@ public class ReservationController {
 		if (message instanceof ReservationDTO) {
 			ReservationDTO reservationDTO = (ReservationDTO) message;
 			OPSlot foundSlot = null;
+			Patient patient = null;
+			Doctor doctor = null;
 
 			if (reservationDTO.isValid()) {
-				Patient patient = patientService.findPatient(reservationDTO.getPatient().getId());
-				Doctor doctor = doctorService.findDoctor(reservationDTO.getDoctor().getId());
+				patient = patientService.findPatient(reservationDTO.getPatient().getId());
+				doctor = doctorService.findDoctor(reservationDTO.getDoctor().getId());
 
 				if (patient != null && doctor != null) {
 					double[] position = patient.getPosition();
 					List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservationDTO.getRadius());
-					SurgeryType surgeryType = reservationDTO.getSurgeryType();
 					Date dateFrom = reservationDTO.getDateFrom();
 					Date dateTo = reservationDTO.getDateTo();
 
-					// search for the first matching slot of a hospital (sorted by distance)
+					// search for the first matching slot of a hospital (sorted
+					// by distance)
 					for (Hospital hospital : hospitals) {
 						logEntryService.log(Constants.Component.Matcher.toString(), "Found hospital: " + hospital);
-						List<OPSlot> slots = slotService.findByHospital(hospital); 
+						List<OPSlot> slots = slotService.findByHospital(hospital);
 						logEntryService.log(Constants.Component.Matcher.toString(), "Found slots: " + slots);
-						
+
 						for (OPSlot slot : slots) {
-							if (slot.getSurgeryType().equals(surgeryType) && slot.getDateFrom().after(dateFrom) && slot.getDateTo().before(dateTo)) {
+							if (slot.getDateFrom().after(dateFrom) && slot.getDateTo().before(dateTo)) {
 								foundSlot = slot;
 								break;
 							}
@@ -79,21 +81,33 @@ public class ReservationController {
 					logEntryService.log(Constants.Component.Matcher.toString(), "Didn't find patient or doctor.");
 				}
 			}
-			
+
 			logEntryService.log(Constants.Component.Matcher.toString(), "Found slot: " + foundSlot);
 
 			if (foundSlot != null) {
-				OPSlotDTO slotDTO = new OPSlotDTO(foundSlot.getId());
-				ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(reservationDTO, slotDTO);
+				// Make reservation
+				{
+					SurgeryType surgeryType = reservationDTO.getSurgeryType();
 
-				logEntryService.log(Constants.Component.Matcher.toString(), "Reservation successful, sending notification");
+					foundSlot.setSurgeryType(surgeryType);
+					foundSlot.setPatient(patient);
+					foundSlot.setDoctor(doctor);
+					
+					slotService.saveOPSlot(foundSlot);
+				}
 
-				template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
+				// Post Notification
+				{
+					OPSlotDTO slotDTO = new OPSlotDTO(foundSlot.getId());
+					ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(reservationDTO, slotDTO);
+
+					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation successful, sending notification");
+					template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
+				}
 			} else {
 				ReservationFailedDTO notification = new ReservationFailedDTO(reservationDTO, "No Slot found.");
 
 				logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
-
 				template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
 			}
 		}
