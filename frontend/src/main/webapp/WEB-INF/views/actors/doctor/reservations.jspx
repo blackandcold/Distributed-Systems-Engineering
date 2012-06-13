@@ -10,19 +10,24 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<h3>
-		Manage reservations for
+		Make reservation for
 		<c:out value="${doctor.firstName}" />
 		<c:out value="${doctor.lastName}" />
 	</h3>
 
 	<dse_form:create
 		id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_reservations"
-		modelAttribute="reservation" path="/actors/doctor/doreservation"
+		modelAttribute="doctor" path="/actors/doctor/doreservation"
 		render="${empty dependencies}">
+
+		<dse_field:select field="doctor"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
+			items="${doctors}" itemValue="id" disabled="true" path="patient" />
 
 		<dse_field:select field="patient"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
-			items="${patients}" path="patient" />
+			items="${patients}" itemValue="id" path="patient" />
+		
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
 			items="${surgeryTypes}" path="surgerytype" />

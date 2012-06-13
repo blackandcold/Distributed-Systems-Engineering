@@ -1,6 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
+import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationDTO;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
@@ -91,35 +93,28 @@ public class ActorDoctorController {
 	@RequestMapping(value="/reservations", method = RequestMethod.POST)
 	public String manageReservation(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . manageReservations()");
-		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		//uiModel.addAttribute("heading", "List all feckin Slots");
-		//uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
+		logEntryService.log(Constants.Component.Frontend.toString(), "doctor: " + doctor);
+		
 		ReservationDTO reservation = new ReservationDTO(null, null, null, 27., null, null);
+		
+		uiModel.addAttribute("doctors", Arrays.asList(doctor));
 		uiModel.addAttribute("reservation", reservation);
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("patients", patientService.findAllPatients());
+		
 		return "actors/doctor/reservations";
 	}
 	
 	@RequestMapping(value="/doreservation", method = RequestMethod.POST, produces = "text/html")
-	public String doReservation(@ModelAttribute ReservationDTO reservation, double radius, Model uiModel) {
+	public String doReservation(BigInteger doctorId, BigInteger patientId, SurgeryType surgeryType, double radius, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . doReservation()");
-		//uiModel.addAttribute("heading", "List all feckin Slots");
-		//uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
-		/*for(String key : uiModel.asMap().keySet()) {
-			
-		}*/
-		logEntryService.log(Constants.Component.Frontend.toString(), "Popo: " + radius);	
-		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel.asMap().toString());
 		
-		for(String key : uiModel.asMap().keySet()) {
-			logEntryService.log(Constants.Component.Frontend.toString(), "key: " + key + "=" + uiModel.asMap().get(key));
-		}
+		logEntryService.log("TEST", "doctorId: " + doctorId);
+		logEntryService.log("TEST", "patientId: " + patientId);
+		logEntryService.log("TEST", "SurgeryType: " + surgeryType);
+		logEntryService.log("TEST", "Radius: " + radius);	
+		logEntryService.log("TEST", "uiModel: " + uiModel.asMap().toString());
 		
-		//logEntryService.log(Constants.Component.Frontend.toString(), message)
-		//ReservationDTO reservation = (ReservationDTO)uiModel.asMap().get("reservation");
-		if(reservation != null)
-			logEntryService.log(Constants.Component.Frontend.toString(), "Received POST: radius = " + reservation.getRadius());
-		else
-			logEntryService.log(Constants.Component.Frontend.toString(), "Reservation is null");
 		return "actors/doctor/reservations";
 	}
 }
