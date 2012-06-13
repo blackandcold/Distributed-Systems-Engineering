@@ -38,7 +38,6 @@ public class ReservationController {
 	private LogEntryService logEntryService;
 
 	public void handleReservation(Object message) {
-		logEntryService.clearLog();
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
 		logEntryService.log(Constants.Component.Matcher.toString(), "Message: " + (message == null ? "null" : message));
 		logEntryService.log(Constants.Component.Matcher.toString(), "Message Class: " + message.getClass().getSimpleName());
@@ -101,10 +100,12 @@ public class ReservationController {
 						foundSlot.setDoctor(doctor);
 
 						slotService.saveOPSlot(foundSlot);
+						logEntryService.log(Constants.Component.Matcher.toString(), "Updated slot: " + foundSlot);
 					}
 
 					// Post Notification
 					{
+						logEntryService.log(Constants.Component.Matcher.toString(), "will post success notification");
 						OPSlotDTO slotDTO = new OPSlotDTO(foundSlot.getId());
 						ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(new ReservationDTO(reservation), slotDTO);
 
@@ -112,6 +113,7 @@ public class ReservationController {
 						template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
 					}
 				} else {
+					logEntryService.log(Constants.Component.Matcher.toString(), "will post failed notification");
 					ReservationFailedDTO notification = new ReservationFailedDTO(new ReservationDTO(reservation), "No Slot found.");
 
 					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
@@ -121,7 +123,7 @@ public class ReservationController {
 
 			logEntryService.log(Constants.Component.Matcher.toString(), "Finished handleReservation()");
 		} catch (Exception ex) {
-			logEntryService.log(Constants.Component.Matcher.toString(), ex.getMessage());
+			logEntryService.log("Exception", ex.getMessage());
 		}
 	}
 }
