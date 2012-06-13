@@ -3,6 +3,7 @@ package at.ac.tuwien.dse.fairsurgeries.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 
 public class ReservationDTO implements Serializable {
@@ -15,7 +16,13 @@ public class ReservationDTO implements Serializable {
 	private Date dateFrom;
 	private Date dateTo;
 	
-	public ReservationDTO() {
+	public ReservationDTO(Reservation reservation) {
+		this(new DoctorDTO(reservation.getDoctor().getId()),
+			 new PatientDTO(reservation.getPatient().getId()),
+			 reservation.getSurgeryType(),
+			 reservation.getRadius(),
+			 reservation.getDateFrom(),
+			 reservation.getDateTo());
 	}
 	
 	public ReservationDTO(DoctorDTO doctor, PatientDTO patient, SurgeryType surgeryType, Double radius, Date dateFrom, Date dateTo) {

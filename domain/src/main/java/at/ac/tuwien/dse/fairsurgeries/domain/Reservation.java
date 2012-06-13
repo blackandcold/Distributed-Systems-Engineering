@@ -19,38 +19,32 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooMongoEntity
 @RooJson(deepSerialize = true)
-public class OPSlot implements Serializable {
+public class Reservation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MS")
-    private Date dateFrom;
-
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MS")
-    private Date dateTo;
-
-    @Enumerated
+	@Enumerated
     private SurgeryType surgeryType;
-
-    @ManyToOne
-    private Patient patient;
 
     @ManyToOne
     private Doctor doctor;
 
-    @NotNull
     @ManyToOne
-    private Hospital hospital;
+    private Patient patient;
+
+    private Double radius;
+
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date dateFrom;
+
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "M-")
+    private Date dateTo;
     
-    
-    public String getStatus() {
-    	if (this.patient != null) {
-    		return "reserved";
-    	} else {
-    		return "free";
-    	}
-    }
+    public boolean isValid() {
+		return this.doctor != null && this.patient != null && this.surgeryType != null && 
+			   this.radius > 0. && this.dateFrom != null && this.dateTo != null;
+	}
 }

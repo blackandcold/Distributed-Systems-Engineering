@@ -7,10 +7,6 @@
             <menu:item id="i_notification_new" messageCode="global_menu_new" url="/notifications?form" z="dx0cs7x82Yp4ND+ACpJgJ7QcpXk="/>
             <menu:item id="i_notification_list" messageCode="global_menu_list" url="/notifications?page=1&amp;size=${empty param.size ? 10 : param.size}" z="xPwgM2A9v5ucXchJVWWE6FN309c="/>
         </menu:category>
-        <menu:category id="c_logentry" z="XNYIopU825tCtMq7BlvgfyzpMzA=">
-            <menu:item id="i_logentry_new" messageCode="global_menu_new" url="/logentrys?form" z="3VAmgBn9kMw0fsWfXoD7Mfqq4iM="/>
-            <menu:item id="i_logentry_list" messageCode="global_menu_list" url="/logentrys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mc9pexFqvA6t1nQuiK/IuKk7zDQ="/>
-        </menu:category>
         <menu:category id="c_doctor" z="VN2p5Aytuw4KpwEZ1rOV1dx/Zqo=">
             <menu:item id="i_doctor_new" messageCode="global_menu_new" url="/doctors?form" z="H2mXVD1wm4YfgSXqE6cZxN76eww="/>
             <menu:item id="i_doctor_list" messageCode="global_menu_list" url="/doctors?page=1&amp;size=${empty param.size ? 10 : param.size}" z="nlQosh9IBqyF4rLMv+ifW1gxGeE="/>
@@ -18,6 +14,10 @@
         <menu:category id="c_admin" z="yJekxb7XuSQP9KBD9S6wbwLaHZY=">
             <menu:item id="i_admin_new" messageCode="global_menu_new" url="/admins?form" z="TPmBX+1lfAP8gYU/pX/jcYwsTfM="/>
             <menu:item id="i_admin_list" messageCode="global_menu_list" url="/admins?page=1&amp;size=${empty param.size ? 10 : param.size}" z="JRwUq6a+WGX2NnSSZCd4lcreuMk="/>
+        </menu:category>
+        <menu:category id="c_logentry" z="XNYIopU825tCtMq7BlvgfyzpMzA=">
+            <menu:item id="i_logentry_new" messageCode="global_menu_new" url="/logentrys?form" z="3VAmgBn9kMw0fsWfXoD7Mfqq4iM="/>
+            <menu:item id="i_logentry_list" messageCode="global_menu_list" url="/logentrys?page=1&amp;size=${empty param.size ? 10 : param.size}" z="mc9pexFqvA6t1nQuiK/IuKk7zDQ="/>
         </menu:category>
         <menu:category id="c_hospital" z="GmKVbDKQZAGcYq/cyofqT5ywMWA=">
             <menu:item id="i_hospital_new" messageCode="global_menu_new" url="/hospitals?form" z="b3+x4cyFKd6MkEsQnu1exIIOKF0="/>
@@ -33,6 +33,7 @@
         </menu:category>
         <menu:category id="c_reservation" z="QOKmLQs8mRLEvu7n5roIvJzPgHc=">
             <menu:item id="i_reservation_new" messageCode="global_menu_new" url="/reservations?form" z="VN+vNiuOsWM9mc3+Pnfd51o3YUc="/>
+            <menu:item id="i_reservation_list" messageCode="global_menu_list" url="/reservations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="6zE/15aHij6RKEydLc48wX5Bg80="/>
         </menu:category>
     </menu:menu>
 </div>

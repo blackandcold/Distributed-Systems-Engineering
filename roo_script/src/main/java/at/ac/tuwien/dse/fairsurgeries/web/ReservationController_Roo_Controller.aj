@@ -7,24 +7,102 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
+import at.ac.tuwien.dse.fairsurgeries.service.ReservationService;
 import at.ac.tuwien.dse.fairsurgeries.web.ReservationController;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
 privileged aspect ReservationController_Roo_Controller {
     
     @Autowired
+    ReservationService ReservationController.reservationService;
+    
+    @Autowired
     DoctorService ReservationController.doctorService;
     
     @Autowired
     PatientService ReservationController.patientService;
+    
+    @RequestMapping(method = RequestMethod.POST, produces = "text/html")
+    public String ReservationController.create(@Valid Reservation reservation, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+        if (bindingResult.hasErrors()) {
+            populateEditForm(uiModel, reservation);
+            return "reservations/create";
+        }
+        uiModel.asMap().clear();
+        reservationService.saveReservation(reservation);
+        return "redirect:/reservations/" + encodeUrlPathSegment(reservation.getId().toString(), httpServletRequest);
+    }
+    
+    @RequestMapping(params = "form", produces = "text/html")
+    public String ReservationController.createForm(Model uiModel) {
+        populateEditForm(uiModel, new Reservation());
+        return "reservations/create";
+    }
+    
+    @RequestMapping(value = "/{id}", produces = "text/html")
+    public String ReservationController.show(@PathVariable("id") BigInteger id, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        uiModel.addAttribute("reservation", reservationService.findReservation(id));
+        uiModel.addAttribute("itemId", id);
+        return "reservations/show";
+    }
+    
+    @RequestMapping(produces = "text/html")
+    public String ReservationController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        if (page != null || size != null) {
+            int sizeNo = size == null ? 10 : size.intValue();
+            final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
+            uiModel.addAttribute("reservations", reservationService.findReservationEntries(firstResult, sizeNo));
+            float nrOfPages = (float) reservationService.countAllReservations() / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+        } else {
+            uiModel.addAttribute("reservations", reservationService.findAllReservations());
+        }
+        addDateTimeFormatPatterns(uiModel);
+        return "reservations/list";
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
+    public String ReservationController.update(@Valid Reservation reservation, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
+        if (bindingResult.hasErrors()) {
+            populateEditForm(uiModel, reservation);
+            return "reservations/update";
+        }
+        uiModel.asMap().clear();
+        reservationService.updateReservation(reservation);
+        return "redirect:/reservations/" + encodeUrlPathSegment(reservation.getId().toString(), httpServletRequest);
+    }
+    
+    @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
+    public String ReservationController.updateForm(@PathVariable("id") BigInteger id, Model uiModel) {
+        populateEditForm(uiModel, reservationService.findReservation(id));
+        return "reservations/update";
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
+    public String ReservationController.delete(@PathVariable("id") BigInteger id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        Reservation reservation = reservationService.findReservation(id);
+        reservationService.deleteReservation(reservation);
+        uiModel.asMap().clear();
+        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
+        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+        return "redirect:/reservations";
+    }
     
     void ReservationController.addDateTimeFormatPatterns(Model uiModel) {
         uiModel.addAttribute("reservation_datefrom_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));

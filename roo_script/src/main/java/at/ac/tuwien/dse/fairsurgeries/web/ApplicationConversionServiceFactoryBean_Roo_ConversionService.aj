@@ -20,6 +20,7 @@ import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 import at.ac.tuwien.dse.fairsurgeries.service.PublicPersonService;
+import at.ac.tuwien.dse.fairsurgeries.service.ReservationService;
 import at.ac.tuwien.dse.fairsurgeries.web.ApplicationConversionServiceFactoryBean;
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     @Autowired
     PublicPersonService ApplicationConversionServiceFactoryBean.publicPersonService;
+    
+    @Autowired
+    ReservationService ApplicationConversionServiceFactoryBean.reservationService;
     
     public Converter<Admin, String> ApplicationConversionServiceFactoryBean.getAdminToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Admin, java.lang.String>() {
@@ -255,6 +259,14 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
+    public Converter<BigInteger, Reservation> ApplicationConversionServiceFactoryBean.getIdToReservationConverter() {
+        return new org.springframework.core.convert.converter.Converter<java.math.BigInteger, at.ac.tuwien.dse.fairsurgeries.domain.Reservation>() {
+            public at.ac.tuwien.dse.fairsurgeries.domain.Reservation convert(java.math.BigInteger id) {
+                return reservationService.findReservation(id);
+            }
+        };
+    }
+    
     public Converter<String, Reservation> ApplicationConversionServiceFactoryBean.getStringToReservationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.String, at.ac.tuwien.dse.fairsurgeries.domain.Reservation>() {
             public at.ac.tuwien.dse.fairsurgeries.domain.Reservation convert(String id) {
@@ -289,6 +301,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         registry.addConverter(getIdToPublicPersonConverter());
         registry.addConverter(getStringToPublicPersonConverter());
         registry.addConverter(getReservationToStringConverter());
+        registry.addConverter(getIdToReservationConverter());
         registry.addConverter(getStringToReservationConverter());
     }
     

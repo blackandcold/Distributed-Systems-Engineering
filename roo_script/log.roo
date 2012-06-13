@@ -1,4 +1,4 @@
-// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-06-13 22:43:30
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-06-13 22:55:38
 project at.ac.tuwien.dse.fairsurgeries
 mongo setup --cloudFoundry true
 enum type --class ~.domain.SurgeryType
@@ -56,6 +56,7 @@ repository mongo --interface ~.repository.PublicPersonRepository --entity ~.doma
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
 repository mongo --interface ~.repository.LogEntryRepository --entity ~.domain.LogEntry
+repository mongo --interface ~.repository.ReservationRepository --entity ~.domain.Reservation
 service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
 service --interface ~.service.AdminService --entity ~.domain.Admin
@@ -64,6 +65,7 @@ service --interface ~.service.PublicPersonService --entity ~.domain.PublicPerson
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
+service --interface ~.service.ReservationService --entity ~.domain.Reservation
 json all --deepSerialize
 web mvc json setup
 web mvc json all --package ~.web
