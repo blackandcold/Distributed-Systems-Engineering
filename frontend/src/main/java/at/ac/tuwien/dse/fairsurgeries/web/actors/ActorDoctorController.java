@@ -109,8 +109,8 @@ public class ActorDoctorController {
 		uiModel.addAttribute("reservation", reservation);
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("patients", patientService.findAllPatients());
-		uiModel.addAttribute("OPSlot__datefrom_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("OPSlot__dateto_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 
 		return "actors/doctor/reservations";
 	}
