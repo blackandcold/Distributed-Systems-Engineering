@@ -2,21 +2,17 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
 
-import javax.validation.Valid;
-
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
-import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationDTO;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
@@ -104,20 +100,14 @@ public class ActorDoctorController {
 	}
 	
 	@RequestMapping(value="/doreservation", method = RequestMethod.POST, produces = "text/html")
-	public String doReservation(@Valid ReservationDTO reservation, @Valid double radius, BindingResult bindingResult, Model uiModel) {
+	public String doReservation(@ModelAttribute ReservationDTO reservation, double radius, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . doReservation()");
 		//uiModel.addAttribute("heading", "List all feckin Slots");
 		//uiModel.addAttribute("slots", opSlotService.findAllOPSlots());
 		/*for(String key : uiModel.asMap().keySet()) {
 			
 		}*/
-		logEntryService.log(Constants.Component.Frontend.toString(), "Popo: " + radius);
-		
-		if(bindingResult.hasErrors())
-			logEntryService.log(Constants.Component.Frontend.toString(), "do hots wos");
-		else
-			logEntryService.log(Constants.Component.Frontend.toString(), "passt eh ois");
-		
+		logEntryService.log(Constants.Component.Frontend.toString(), "Popo: " + radius);	
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel.asMap().toString());
 		
 		for(String key : uiModel.asMap().keySet()) {
