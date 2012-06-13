@@ -32,14 +32,10 @@ public class NotificationController {
 	public void handleNotification(Object object) {
 		logEntryService.log(Constants.Component.Notifier.toString(), "Starting handleNotification()");
 		logEntryService.log(Constants.Component.Notifier.toString(), "Notification is of type " + object.getClass().getSimpleName());
+		
 		if (object instanceof ReservationSuccessfulDTO) {
 			try {
 				ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
-				
-				if(notificationDTO == null)
-					logEntryService.log(Constants.Component.Notifier.toString(), "notificationDTO ist null");
-				if(notificationDTO.getSlot() == null)
-					logEntryService.log(Constants.Component.Notifier.toString(), "notificationDTO.getSlot() ist null");
 				OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
 	
 				if (slot != null) {
@@ -51,21 +47,16 @@ public class NotificationController {
 					
 					notificationService.saveNotification(notification);
 				}
-			} catch(Exception e) {
-				logEntryService.log(Constants.Component.Notifier.toString(), "UIJE!!! " + e.getMessage());
-				StringWriter sw = new StringWriter();
-				e.printStackTrace(new PrintWriter(sw));
-				String stacktrace = sw.toString();
-				logEntryService.log(Constants.Component.Matcher.toString(), stacktrace);
+			} catch(Exception ex) {
+				logEntryService.log(Constants.Component.Notifier.toString(), ex.getMessage());
 			}
 		}
 		else if (object instanceof ReservationFailedDTO) {
 			ReservationFailedDTO notificationDTO = (ReservationFailedDTO) object;
-
 			Notification notification = new Notification();
 
 			notification.setReason(NotificationReason.ReservationFailed);
-			notification.setDescription("Do hot irgendwo wos ned hinghaut");
+			notification.setDescription(notificationDTO.getReason());
 			
 			notificationService.saveNotification(notification);
 		}
