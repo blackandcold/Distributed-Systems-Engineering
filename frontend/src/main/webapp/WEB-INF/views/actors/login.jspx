@@ -12,19 +12,23 @@
       </c:forEach>
     </select>-->
     
-    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_publicperson" modelAttribute="" path="/actors/loginAsPublicPerson" render="${empty dependencies}">
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_publicperson" modelAttribute="" path="/actors/loginAsPublicPerson" render="${empty dependencies}" openPane="false">
     </dse_form:create>
     
-    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_patients" modelAttribute="patient" path="/actors/loginAsPatient" render="${empty dependencies}">
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_patients" modelAttribute="patient" path="/actors/loginAsPatient" render="${empty dependencies}" openPane="false">
     	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_patient" items="${patients}" itemLabel="lastName" itemValue="id" path="patients" />
     </dse_form:create>
     
-    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_doctors" modelAttribute="doctor" path="/actors/loginAsDoctor" render="${empty dependencies}">
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_doctors" modelAttribute="doctor" path="/actors/loginAsDoctor" render="${empty dependencies}" openPane="false">
     	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_doctor" items="${doctors}" itemLabel="lastName" itemValue="id" path="doctors" />
     </dse_form:create>
 
-	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_hospitals" modelAttribute="hospital" path="/actors/loginAsHospital" render="${empty dependencies}">
+	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_hospitals" modelAttribute="hospital" path="/actors/loginAsHospital" render="${empty dependencies}" openPane="false">
     	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_hospital" items="${hospitals}" itemLabel="name" itemValue="id" path="hospitals" />
+    </dse_form:create>
+    
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_admins" modelAttribute="admin" path="/actors/loginAsAdmin" render="${empty dependencies}" openPane="false">
+    	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_admin" items="${admins}" itemLabel="name" itemValue="id" path="admins" />
     </dse_form:create>
  
 	<form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Reservations" render="${not empty dependencies}"/>

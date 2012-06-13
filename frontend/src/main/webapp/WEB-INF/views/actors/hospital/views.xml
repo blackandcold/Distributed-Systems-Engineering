@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="actors/hospital/showmenu">
+        <put-attribute name="body" value="/WEB-INF/views/actors/hospital/menu.jspx"/>
+    </definition>
+    <definition extends="default" name="actors/hospital/viewslots">
+        <put-attribute name="body" value="/WEB-INF/views/actors/hospital/slots.jspx"/>
+    </definition>
+    <definition extends="default" name="actors/hospital/viewnotifications">
+        <put-attribute name="body" value="/WEB-INF/views/actors/hospital/notifications.jspx"/>
+    </definition>
+    <definition extends="default" name="actors/hospital/manageslots">
+        <put-attribute name="body" value="/WEB-INF/views/actors/hospital/manage_slots.jspx"/>
+    </definition>
+</tiles-definitions>

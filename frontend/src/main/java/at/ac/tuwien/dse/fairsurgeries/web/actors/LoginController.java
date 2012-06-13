@@ -1,7 +1,11 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
+import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Admin;
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
+import at.ac.tuwien.dse.fairsurgeries.service.AdminService;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
@@ -31,6 +37,8 @@ public class LoginController {
 	private DoctorService doctorService;
 	@Autowired
 	private HospitalService hospitalService;
+	@Autowired
+	private AdminService adminService;
 	
 	@RequestMapping(value="/login", method = RequestMethod.GET, produces = "text/html")
 	public String showLoginView(Model uiModel) {
@@ -42,6 +50,8 @@ public class LoginController {
 		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
 		uiModel.addAttribute("hospital", new Hospital());
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("admin", new Admin());
+		uiModel.addAttribute("admins", adminService.findAllAdmins());
 		return "actors/login";
 	}
 	
@@ -60,7 +70,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/loginAsDoctor", method = RequestMethod.POST)
-	public String loginAsPatient(@ModelAttribute Doctor doctor, Model uiModel) {
+	public String loginAsDoctor(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		return "redirect:/actors/doctor/" + doctor.getId() + "/slots";
@@ -70,6 +80,13 @@ public class LoginController {
 	public String loginAsHospital(@ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		return "redirect:/actors/hospital/" + hospital.getId() + "/slots";
+		return "redirect:/actors/hospital/" + hospital.getId();
+	}
+	
+	@RequestMapping(value="/loginAsAdmin", method = RequestMethod.POST)
+	public String loginAsAdmin(@ModelAttribute Admin admin, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as admin: " + admin);
+		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		return "redirect:/actors/admin/" + admin.getId();
 	}
 }
