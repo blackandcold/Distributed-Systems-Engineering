@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
+import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 
@@ -91,5 +92,16 @@ public class OPSlotServiceImpl implements OPSlotService {
 		
 		example.setHospital(hospital);
 		return this.findByExample(example);
+	}
+	
+	public List<OPSlot> findAllFreeSlotsByHospital(Hospital hospital) {
+		List<OPSlot> slotsOfHospital = this.findByHospital(hospital);
+		List<OPSlot> matchingSlots = new ArrayList<OPSlot>(slotsOfHospital);
+		
+		for(OPSlot slot : slotsOfHospital) {
+			if(slot.getStatus().equals(OPSlotStatus.RESERVED))
+				matchingSlots.remove(slot);
+		}
+		return matchingSlots;
 	}
 }

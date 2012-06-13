@@ -23,4 +23,6 @@ public interface OPSlotService {
 	public List<OPSlot> findByDoctor(Doctor doctor);
 	public List<OPSlot> findByHospital(Hospital hospital);
 	
+	public List<OPSlot> findAllFreeSlotsByHospital(Hospital hospital);
+	
 }

@@ -2,7 +2,6 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.format.DateTimeFormat;
@@ -17,14 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
-import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
-import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
-import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @Controller
 @RequestMapping("/actors/hospital")
@@ -36,16 +31,15 @@ public class ActorHospitalController {
 	private HospitalService hospitalService;
 	@Autowired
 	private OPSlotService opSlotService;
-	@Autowired
-	private DoctorService doctorService;
-	@Autowired
-	private PatientService patientService;
 
 	
 	@RequestMapping(value = "{hospitalId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger hospitalId, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
-
+		return prepareMenu(hospitalId, uiModel);
+	}
+	
+	private String prepareMenu(BigInteger hospitalId, Model uiModel) {
 		Hospital hospital = hospitalService.findHospital(hospitalId);
 
 		if (hospital != null) {
@@ -80,54 +74,56 @@ public class ActorHospitalController {
 		opSlot.setHospital(hospital);
 		uiModel.addAttribute("opSlot", opSlot);
 		
-		logEntryService.log("GAGA", "ID: " + hospital.getId());
-		logEntryService.log("GAGA", "Name: " + hospital.getName());
-		logEntryService.log("GAGA", "ToString: " + hospital);
-		
 		List<Hospital> hospitalList = new ArrayList<Hospital>();
 		hospitalList.add(hospital);
 		uiModel.addAttribute("hospitals", hospitalList);
-		//uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-
-        //uiModel.addAttribute("OPSlot_datefrom_date_format", "dd.MM.yyyy");
-        //uiModel.addAttribute("OPSlot_dateto_date_format", "dd.MM.yyyy");
         
-        /*uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-        uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-        uiModel.addAttribute("patients", patientService.findAllPatients());
-        uiModel.addAttribute("surgerytypes", Arrays.asList(SurgeryType.values()));*/
+        uiModel.addAttribute("slotsDeleteList", opSlotService.findAllFreeSlotsByHospital(hospital));
 		
 		return "actors/hospital/manageslots";
 	}
 	
 	@RequestMapping(value = "/createslot", method = RequestMethod.POST)
-	public void createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
+	public String createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for opSlot: " + opSlot);
-		/*if(opSlot != null)
-			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot.hospital: " + opSlot.getHospital());
-		else
-			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot is freakin null");
-		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		
-		if(opSlot != null && opSlot.getHospital() != null)
-			logEntryService.log("ARSCH", "opSlot.hospital: " + opSlot.getHospital().getId());
-		else
-			logEntryService.log("ARSCH", "ist null");
-		
-		if(hospital != null)
-			logEntryService.log("FUT", "FUT " + hospital);
-		else
-			logEntryService.log("FUT", "ist null");*/
-		//opSlotService.saveOPSlot(OPSlot_)
-		
-		//opSlot.setHospital(hospital);
+
 		opSlotService.saveOPSlot(opSlot);
 		
-		//return "redirect:/actors/hospital/viewslots";
+		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
+		logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
+		
+		return "redirect:" + redirectUrl;
+	}
+	
+	@RequestMapping(value = "/deleteslot", method = RequestMethod.POST)
+	public String deleteSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . deleteSlot() for opSlot: " + opSlot);
+		
+		/*if(id == null)
+			logEntryService.log("DEL STR", "STR is null");
+		else
+			logEntryService.log("DEL STR", "STR ID=" + id);
+		
+		if(opSlot.getId() == null)
+			logEntryService.log("DEL ID", "opSlot is null");
+		else
+			logEntryService.log("DEL ID", "OPSLOT ID=" + opSlot.getId());
+		
+		if(opSlot.getHospital() == null)
+			logEntryService.log("DEL HO", "opSlot is null");
+		else
+			logEntryService.log("DEL HO", "Hospital = " + hospital);*/
+
+		//opSlotService.deleteOpSlot(opSlot);
+		opSlotService.deleteOPSlot(opSlot);
+		
+		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId();
+		logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
+		
+		return "redirect:" + redirectUrl;
 		//return "redirect:/";
-		//viewSlots(hospital, uiModel);
 	}
 }
