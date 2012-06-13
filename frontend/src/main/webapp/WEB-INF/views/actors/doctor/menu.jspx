@@ -6,15 +6,21 @@
 	<h3>I want to...</h3>
 	
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_menu_view_slots" modelAttribute="doctor" path="/actors/doctor/viewslots" render="${empty dependencies}" openPane="false">
+		<dse_field:dummy field="id" />
+		<dse_field:dummy field="firstName" />
 		<dse_field:dummy field="lastName" />
 	</dse_form:create>
 	
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_menu_view_notifications" modelAttribute="doctor" path="/actors/doctor/viewnotifications" render="${empty dependencies}" openPane="false">
+		<dse_field:dummy field="id" />
 		<dse_field:dummy field="firstName" />
+		<dse_field:dummy field="lastName" />
 	</dse_form:create>
 	
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_menu_reservations" modelAttribute="doctor" path="/actors/doctor/reservations" render="${empty dependencies}" openPane="false">
+		<dse_field:dummy field="id" />
 		<dse_field:dummy field="firstName" />
+		<dse_field:dummy field="lastName" />
 	</dse_form:create>
 	
 	<form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Reservations" render="${not empty dependencies}"/>
