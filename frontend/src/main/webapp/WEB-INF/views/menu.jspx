@@ -61,6 +61,7 @@
 		</menu:category>
 
 
+		<!--
 		<menu:category id="c_actor_public">
 			<menu:item id="i_actor_public_list_slots"
 				messageCode="global_menu_list" url="/actors/public/slots" />
@@ -96,7 +97,7 @@
 				messageCode="global_menu_list" url="/actors/admin/slots" />
 		</menu:category>
 
-
+		-->
 		<!-- Custom menu section end -->
 
 
