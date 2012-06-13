@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
-import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
-import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
@@ -36,14 +34,21 @@ public class ActorHospitalController {
 	private HospitalService hospitalService;
 	@Autowired
 	private OPSlotService opSlotService;
-	@Autowired
-	private DoctorService doctorService;
-	@Autowired
-	private PatientService patientService;
 
 	
 	@RequestMapping(value = "{hospitalId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger hospitalId, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
+		return prepareMenu(hospitalId, uiModel, null);
+	}
+	
+	@RequestMapping(value = "{hospitalId}/success", method = RequestMethod.GET)
+	public String showMenuSuccess(@PathVariable BigInteger hospitalId, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
+		return prepareMenu(hospitalId, uiModel, "Successfully finished action");
+	}
+	
+	private String prepareMenu(BigInteger hospitalId, Model uiModel, String message) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . () for ID: " + hospitalId);
 
 		Hospital hospital = hospitalService.findHospital(hospitalId);
@@ -51,6 +56,7 @@ public class ActorHospitalController {
 		if (hospital != null) {
 			
 			uiModel.addAttribute("hospital", hospital);
+			uiModel.addAttribute("userMessage", message);
 
 			return "actors/hospital/showmenu";
 		} else {
@@ -80,52 +86,26 @@ public class ActorHospitalController {
 		opSlot.setHospital(hospital);
 		uiModel.addAttribute("opSlot", opSlot);
 		
-		logEntryService.log("GAGA", "ID: " + hospital.getId());
-		logEntryService.log("GAGA", "Name: " + hospital.getName());
-		logEntryService.log("GAGA", "ToString: " + hospital);
-		
 		List<Hospital> hospitalList = new ArrayList<Hospital>();
 		hospitalList.add(hospital);
 		uiModel.addAttribute("hospitals", hospitalList);
-		//uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-
-        //uiModel.addAttribute("OPSlot_datefrom_date_format", "dd.MM.yyyy");
-        //uiModel.addAttribute("OPSlot_dateto_date_format", "dd.MM.yyyy");
-        
-        /*uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-        uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-        uiModel.addAttribute("patients", patientService.findAllPatients());
-        uiModel.addAttribute("surgerytypes", Arrays.asList(SurgeryType.values()));*/
 		
 		return "actors/hospital/manageslots";
 	}
 	
 	@RequestMapping(value = "/createslot", method = RequestMethod.POST)
-	public void createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
+	public String createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for opSlot: " + opSlot);
-		/*if(opSlot != null)
-			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot.hospital: " + opSlot.getHospital());
-		else
-			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot is freakin null");
-		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		
-		if(opSlot != null && opSlot.getHospital() != null)
-			logEntryService.log("ARSCH", "opSlot.hospital: " + opSlot.getHospital().getId());
-		else
-			logEntryService.log("ARSCH", "ist null");
-		
-		if(hospital != null)
-			logEntryService.log("FUT", "FUT " + hospital);
-		else
-			logEntryService.log("FUT", "ist null");*/
-		//opSlotService.saveOPSlot(OPSlot_)
-		
-		//opSlot.setHospital(hospital);
+
 		opSlotService.saveOPSlot(opSlot);
 		
+		String redirectUrl = "/actors/hospital/" + opSlot.getHospital().getId() + "/success";
+		logEntryService.log(Constants.Component.Frontend.toString(), "Redirecting to: " + redirectUrl);
+		
+		return "redirect:" + redirectUrl;
 		//return "redirect:/actors/hospital/viewslots";
 		//return "redirect:/";
 		//viewSlots(hospital, uiModel);
