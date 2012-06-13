@@ -1,19 +1,13 @@
+// Spring Roo 1.2.1.RELEASE [rev 6eae723] log opened at 2012-06-13 22:43:30
 project at.ac.tuwien.dse.fairsurgeries
-
-// setup jpa
 mongo setup --cloudFoundry true
-
-// create enumerations
 enum type --class ~.domain.SurgeryType
 enum constant --name Cardiology
 enum constant --name Orthopedy
 enum constant --name Eye
-
 enum type --class ~.domain.NotificationReason
 enum constant --name ReservationSuccessful
 enum constant --name DeletionSuccessful
-
-// create domain entities
 entity mongo --class ~.domain.Patient --testAutomatically
 entity mongo --class ~.domain.Doctor --testAutomatically
 entity mongo --class ~.domain.Admin --testAutomatically
@@ -23,56 +17,37 @@ entity mongo --class ~.domain.OPSlot --testAutomatically
 entity mongo --class ~.domain.Notification --testAutomatically
 entity mongo --class ~.domain.LogEntry --testAutomatically
 entity mongo --class ~.domain.Reservation
-
-// fields for Patient
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy patient --class ~.domain.Patient
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
-
-// fields for Doctor
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy doctor --class ~.domain.Doctor
 field string --fieldName firstName --notNull
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
-
-// fields for Admin
 field string --fieldName firstName --notNull --class ~.domain.Admin
 field string --fieldName lastName --notNull
 field date --fieldName dateOfBirth --type java.util.Date
-
-// fields for Hospital
 field string --fieldName name --notNull --class ~.domain.Hospital
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy hospital
-
-// fields for OPSlot
 field date --fieldName dateFrom --notNull --type java.util.Date --class ~.domain.OPSlot --dateFormat MEDIUM --timeFormat SMALL
 field date --fieldName dateTo --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat SMALL
 field enum --fieldName surgeryType --type ~.domain.SurgeryType
 field reference --fieldName patient --type ~.domain.Patient
 field reference --fieldName doctor --type ~.domain.Doctor
 field reference --fieldName hospital --type ~.domain.Hospital --notNull
-
-// fields for Notification
 field enum --fieldName reason --type ~.domain.NotificationReason --notNull --class ~.domain.Notification
 field string --fieldName description
 field reference --fieldName opSlot --type ~.domain.OPSlot
-
-// fields for LogEntry
 field string --fieldName component --notNull --class ~.domain.LogEntry
 field string --fieldName message --notNull
 field date --fieldName executionTimestamp --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat MEDIUM
-
-// fields for Reservation
 field enum --fieldName surgeryType --type ~.domain.SurgeryType --class ~.domain.Reservation
 field reference --fieldName doctor --type ~.domain.Doctor
 field reference --fieldName patient --type ~.domain.Patient
 field number --fieldName radius --type java.lang.Double
 field date --fieldName dateFrom --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat SMALL
 field date --fieldName dateTo --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat SMALL
-
-
-// add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
 repository mongo --interface ~.repository.DoctorRepository --entity ~.domain.Doctor
 repository mongo --interface ~.repository.AdminRepository --entity ~.domain.Admin
@@ -81,7 +56,6 @@ repository mongo --interface ~.repository.PublicPersonRepository --entity ~.doma
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
 repository mongo --interface ~.repository.LogEntryRepository --entity ~.domain.LogEntry
-
 service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
 service --interface ~.service.AdminService --entity ~.domain.Admin
@@ -90,14 +64,10 @@ service --interface ~.service.PublicPersonService --entity ~.domain.PublicPerson
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
-
-// Offer JSON remoting for all domain types through Spring MVC
 json all --deepSerialize
 web mvc json setup
 web mvc json all --package ~.web
-
-// Commented out in domain project
 web mvc setup
 web mvc all --package ~.web
-
 perform package
+// script --file fairsurgeries.roo

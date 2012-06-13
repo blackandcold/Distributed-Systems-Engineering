@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_at_ac_tuwien_dse_fairsurgeries_domain_Reservation" modelAttribute="reservation" path="/reservations" versionField="none" z="UTIXAn5OJ50yvegH6C8hdnuXOFY=">
+        <field:select field="surgeryType" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_surgeryType" items="${surgerytypes}" path="surgerytypes" z="6WA7VCy45NukuM2DhXLjrzMm5oU="/>
+        <field:select field="doctor" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_doctor" itemValue="id" items="${doctors}" path="/doctors" z="OJT2k5pAgRY67EXB4XIrHAxyM4k="/>
+        <field:select field="patient" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_patient" itemValue="id" items="${patients}" path="/patients" z="bFIQF27kCNsPcEVLWjbdVBR+4a4="/>
+        <field:input field="radius" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_radius" validationMessageCode="field_invalid_number" z="o7HZEXfEt500y1kXuRbyX5dTk+4="/>
+        <field:datetime dateTimePattern="${reservation_datefrom_date_format}" field="dateFrom" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateFrom" required="true" z="DvPIxMODu0IhByHmcKwt4n6m3ro="/>
+        <field:datetime dateTimePattern="${reservation_dateto_date_format}" field="dateTo" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateTo" required="true" z="g+kx+QHViBXU3rdfQIf9XRE/E7E="/>
+    </form:update>
+</div>
