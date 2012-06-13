@@ -50,12 +50,9 @@ public class HospitalController {
 			Hospital hospital = hospitalService.findAllHospitals().get(0);
 			OPSlot slot = new OPSlot();
 			
-			slot.setSurgeryType(SurgeryType.Cardiology);
 			slot.setDateFrom(Date.valueOf("2012-04-12"));
 			slot.setDateTo(Date.valueOf("2012-04-13"));
 			slot.setHospital(hospital);
-			slot.setDoctor(doctor);
-			slot.setPatient(patient);
 		
 			slotService.saveOPSlot(slot);
 		}

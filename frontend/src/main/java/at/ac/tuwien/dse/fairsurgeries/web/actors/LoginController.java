@@ -87,6 +87,7 @@ public class LoginController {
 	public String loginAsAdmin(@ModelAttribute Admin admin, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as admin: " + admin);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		return "redirect:/actors/admin/" + admin.getId();
+		
+		return "redirect:/actors/admin/slots";
 	}
 }

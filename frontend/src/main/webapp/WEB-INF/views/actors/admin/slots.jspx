@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:dse_form="urn:jsptagdir:/WEB-INF/tags/dse_form" xmlns:dse_field="urn:jsptagdir:/WEB-INF/tags/dse_form/dse_fields" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <h1>Admin Slots View</h1>
+    
+    <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots" modelAttribute="opSlotExample" path="/actors/public/slots" render="${empty dependencies}">
+    	<dse_field:select field="surgeryType" id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype" items="${surgeryTypes}" path="surgerytype" />
+    	<dse_field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital" items="${hospitals}" path="hospital" />
+    	<dse_field:select field="patient" id="c_at_ac_tuwien_dse_fairsurgeries_public_patient" items="${patients}" path="patient" />
+    	<dse_field:select field="doctor" id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor" items="${doctors}" path="doctor" />
+    	<!--<dse_field:datetime field="datefrom" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom" dateTimePattern="${OPSlot_datefrom_date_format}" />
+    	<dse_field:datetime field="dateto" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo" dateTimePattern="${OPSlot_dateto_date_format}" />
+    	-->
+    </dse_form:create>
+    
+    <form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" items="${opSlots}" >
+        <table:table data="${opSlots}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" path="/opslots" >
+            <table:column date="true" dateTimePattern="${OPSlot_datefrom_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom" property="dateFrom" />
+            <table:column date="true" dateTimePattern="${OPSlot_dateto_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo" property="dateTo" />
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType" property="surgeryType" />
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient" property="patient" />
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor" property="doctor" />
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" property="hospital" />
+        </table:table>
+    </form:list>
+</div>
