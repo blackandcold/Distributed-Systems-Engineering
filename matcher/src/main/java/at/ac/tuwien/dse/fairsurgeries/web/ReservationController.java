@@ -11,6 +11,7 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
+import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.dto.OPSlotDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationDTO;
@@ -32,33 +33,37 @@ public class ReservationController {
 	@Autowired
 	private HospitalService hospitalService;
 	@Autowired
-	private PatientService patientService;
-	@Autowired
-	private DoctorService doctorService;
-	@Autowired
 	private OPSlotService slotService;
 	@Autowired
 	private LogEntryService logEntryService;
 
 	public void handleReservation(Object message) {
+		logEntryService.clearLog();
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
-
+		logEntryService.log(Constants.Component.Matcher.toString(), "Message: " + (message == null ? "null" : message));
+		logEntryService.log(Constants.Component.Matcher.toString(), "Message Class: " + message.getClass().getSimpleName());
+		
 		try {
-			if (message instanceof ReservationDTO) {
-				ReservationDTO reservationDTO = (ReservationDTO) message;
+			if (message instanceof Reservation) {
+				Reservation reservation = (Reservation) message;
 				OPSlot foundSlot = null;
 				Patient patient = null;
 				Doctor doctor = null;
 
-				if (reservationDTO.isValid()) {
-					patient = patientService.findPatient(reservationDTO.getPatient().getId());
-					doctor = doctorService.findDoctor(reservationDTO.getDoctor().getId());
+				logEntryService.log(Constants.Component.Matcher.toString(), "Message instanceof Reservation");
+				
+				if (reservation.isValid()) {
+					patient = reservation.getPatient();
+					doctor = reservation.getDoctor();
+					
+					logEntryService.log(Constants.Component.Matcher.toString(), "Message valid");
 
 					if (patient != null && doctor != null) {
+						logEntryService.log(Constants.Component.Matcher.toString(), "Patient and Doctor != null");
 						double[] position = patient.getPosition();
-						List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservationDTO.getRadius());
-						Date dateFrom = reservationDTO.getDateFrom();
-						Date dateTo = reservationDTO.getDateTo();
+						List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservation.getRadius());
+						Date dateFrom = reservation.getDateFrom();
+						Date dateTo = reservation.getDateTo();
 
 						// search for the first matching slot of a hospital
 						// (sorted
@@ -89,7 +94,7 @@ public class ReservationController {
 				if (foundSlot != null) {
 					// Make reservation
 					{
-						SurgeryType surgeryType = reservationDTO.getSurgeryType();
+						SurgeryType surgeryType = reservation.getSurgeryType();
 
 						foundSlot.setSurgeryType(surgeryType);
 						foundSlot.setPatient(patient);
@@ -101,13 +106,13 @@ public class ReservationController {
 					// Post Notification
 					{
 						OPSlotDTO slotDTO = new OPSlotDTO(foundSlot.getId());
-						ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(reservationDTO, slotDTO);
+						ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(new ReservationDTO(reservation), slotDTO);
 
 						logEntryService.log(Constants.Component.Matcher.toString(), "Reservation successful, sending notification");
 						template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
 					}
 				} else {
-					ReservationFailedDTO notification = new ReservationFailedDTO(reservationDTO, "No Slot found.");
+					ReservationFailedDTO notification = new ReservationFailedDTO(new ReservationDTO(reservation), "No Slot found.");
 
 					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
 					template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);

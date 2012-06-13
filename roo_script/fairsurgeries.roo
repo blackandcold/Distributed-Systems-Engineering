@@ -22,6 +22,7 @@ entity mongo --class ~.domain.PublicPerson --testAutomatically
 entity mongo --class ~.domain.OPSlot --testAutomatically
 entity mongo --class ~.domain.Notification --testAutomatically
 entity mongo --class ~.domain.LogEntry --testAutomatically
+entity mongo --class ~.domain.Reservation
 
 // fields for Patient
 field set --fieldName opSlots --type ~.domain.OPSlot --cardinality ONE_TO_MANY --mappedBy patient --class ~.domain.Patient
@@ -62,6 +63,15 @@ field string --fieldName component --notNull --class ~.domain.LogEntry
 field string --fieldName message --notNull
 field date --fieldName executionTimestamp --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat MEDIUM
 
+// fields for Reservation
+field enum --fieldName surgeryType --type ~.domain.SurgeryType --class ~.domain.Reservation
+field reference --fieldName doctor --type ~.domain.Doctor
+field reference --fieldName patient --type ~.domain.Patient
+field number --fieldName radius --type java.lang.Double
+field date --fieldName dateFrom --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat SMALL
+field date --fieldName dateTo --notNull --type java.util.Date --dateFormat MEDIUM --timeFormat SMALL
+
+
 // add layer support
 repository mongo --interface ~.repository.PatientRepository --entity ~.domain.Patient
 repository mongo --interface ~.repository.DoctorRepository --entity ~.domain.Doctor
@@ -71,6 +81,7 @@ repository mongo --interface ~.repository.PublicPersonRepository --entity ~.doma
 repository mongo --interface ~.repository.OPSlotRepository --entity ~.domain.OPSlot
 repository mongo --interface ~.repository.NotificationRepository --entity ~.domain.Notification
 repository mongo --interface ~.repository.LogEntryRepository --entity ~.domain.LogEntry
+repository mongo --interface ~.repository.ReservationRepository --entity ~.domain.Reservation
 
 service --interface ~.service.PatientService --entity ~.domain.Patient
 service --interface ~.service.DoctorService --entity ~.domain.Doctor
@@ -80,6 +91,7 @@ service --interface ~.service.PublicPersonService --entity ~.domain.PublicPerson
 service --interface ~.service.OPSlotService --entity ~.domain.OPSlot
 service --interface ~.service.NotificationService --entity ~.domain.Notification
 service --interface ~.service.LogEntryService --entity ~.domain.LogEntry
+service --interface ~.service.ReservationService --entity ~.domain.Reservation
 
 // Offer JSON remoting for all domain types through Spring MVC
 json all --deepSerialize

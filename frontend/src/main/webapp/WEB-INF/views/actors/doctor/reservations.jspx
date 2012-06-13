@@ -17,12 +17,12 @@
 
 	<dse_form:create
 		id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_reservations"
-		modelAttribute="doctor" path="/actors/doctor/doreservation"
+		modelAttribute="reservation" path="/actors/doctor/doreservation"
 		render="${empty dependencies}">
 
 		<dse_field:select field="doctor"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" itemValue="id" disabled="true" path="patient" />
+			items="${doctors}" itemValue="id" path="patient" />
 
 		<dse_field:select field="patient"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Reservation" items="${reservations}" z="xp/MK/demy41qm/fH3CVN4GDMgA=">
+        <table:table data="${reservations}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_Reservation" path="/reservations" z="UwQO/WgmdQmm2pdLUVhfAGQTV3w=">
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_surgeryType" property="surgeryType" z="Q3hy6bb/nboJT3hqmJPy1DKX2tc="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_doctor" property="doctor" z="1inVBjLCvYDhoqdDPH85DgsCBRk="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_patient" property="patient" z="nWwO+HFq9d1bJOoiJE47wefTT8M="/>
+            <table:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_radius" property="radius" z="C59Q/620fdwiwCDHfaq9Lm7Yxco="/>
+            <table:column date="true" dateTimePattern="${reservation_datefrom_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateFrom" property="dateFrom" z="6EieLnP+cHI05Vh41i+EmAc1LDA="/>
+            <table:column date="true" dateTimePattern="${reservation_dateto_date_format}" id="c_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateTo" property="dateTo" z="65qUrCo8ZLmMC+aI3NSnpsmt5X0="/>
+        </table:table>
+    </page:list>
+</div>

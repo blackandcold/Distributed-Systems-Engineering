@@ -1,5 +1,6 @@
 package at.ac.tuwien.dse.fairsurgeries.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,9 +21,10 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooMongoEntity
 @RooJson(deepSerialize = true)
-public class Doctor {
+public class Doctor implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="doctor")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="doctor")
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();
 
     @NotNull

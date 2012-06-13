@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_at_ac_tuwien_dse_fairsurgeries_domain_LogEntry" object="${logentry}" path="/logentrys" z="osU+QjcCAbZk8asDOldJ4IwQfw8=">
+        <field:display field="component" id="s_at_ac_tuwien_dse_fairsurgeries_domain_LogEntry_component" object="${logentry}" z="84nzUJt1i+2ysK/p4V3dtefHiiM="/>
+        <field:display field="message" id="s_at_ac_tuwien_dse_fairsurgeries_domain_LogEntry_message" object="${logentry}" z="2Yz403gy09nKhCtFVmjxXC/l4dI="/>
+        <field:display date="true" dateTimePattern="${logEntry_executiontimestamp_date_format}" field="executionTimestamp" id="s_at_ac_tuwien_dse_fairsurgeries_domain_LogEntry_executionTimestamp" object="${logentry}" z="XMN0IXd23SU74BQEvdspC6oQP/0="/>
+    </page:show>
+</div>

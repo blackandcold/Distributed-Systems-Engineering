@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_at_ac_tuwien_dse_fairsurgeries_domain_Reservation" object="${reservation}" path="/reservations" z="OxG3ePvynSjRzY6umYViTI4ZVMQ=">
+        <field:display field="surgeryType" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_surgeryType" object="${reservation}" z="o7ObX5Vz89t/GMdjtxoeq0xnB0E="/>
+        <field:display field="doctor" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_doctor" object="${reservation}" z="Hl2DqOXhYM/9CwwiLVIPNlD1kwU="/>
+        <field:display field="patient" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_patient" object="${reservation}" z="TuQ2Mv5H9bf/XJfEhffA6ycIFCE="/>
+        <field:display field="radius" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_radius" object="${reservation}" z="0wDdpQWrN5myrAtSb0ikQ2iQ1qg="/>
+        <field:display date="true" dateTimePattern="${reservation_datefrom_date_format}" field="dateFrom" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateFrom" object="${reservation}" z="NHFUi1sdq5I0etFYGgpGWFsE0OI="/>
+        <field:display date="true" dateTimePattern="${reservation_dateto_date_format}" field="dateTo" id="s_at_ac_tuwien_dse_fairsurgeries_domain_Reservation_dateTo" object="${reservation}" z="6MFGkAXCjD/4p2fDZZxdYTzhwZA="/>
+    </page:show>
+</div>
