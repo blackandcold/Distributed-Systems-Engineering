@@ -1,8 +1,5 @@
 package at.ac.tuwien.dse.fairsurgeries.web;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,34 +29,35 @@ public class NotificationController {
 	public void handleNotification(Object object) {
 		logEntryService.log(Constants.Component.Notifier.toString(), "Starting handleNotification()");
 		logEntryService.log(Constants.Component.Notifier.toString(), "Notification is of type " + object.getClass().getSimpleName());
-		
-		if (object instanceof ReservationSuccessfulDTO) {
-			try {
+
+		try {
+			if (object instanceof ReservationSuccessfulDTO) {
+
 				ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
 				OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
-	
+
 				if (slot != null) {
 					Notification notification = new Notification();
-	
+
 					notification.setReason(NotificationReason.ReservationSuccessful);
 					notification.setDescription("Slot was reserved sucessfully");
 					notification.setOpSlot(slot);
-					
+
 					notificationService.saveNotification(notification);
 				}
-			} catch(Exception ex) {
-				logEntryService.log(Constants.Component.Notifier.toString(), ex.getMessage());
-			}
-		}
-		else if (object instanceof ReservationFailedDTO) {
-			ReservationFailedDTO notificationDTO = (ReservationFailedDTO) object;
-			Notification notification = new Notification();
+			} else if (object instanceof ReservationFailedDTO) {
+				ReservationFailedDTO notificationDTO = (ReservationFailedDTO) object;
+				Notification notification = new Notification();
 
-			notification.setReason(NotificationReason.ReservationFailed);
-			notification.setDescription(notificationDTO.getReason());
-			
-			notificationService.saveNotification(notification);
+				notification.setReason(NotificationReason.ReservationFailed);
+				notification.setDescription(notificationDTO.getReason());
+
+				notificationService.saveNotification(notification);
+			}
+
+			logEntryService.log(Constants.Component.Notifier.toString(), "Finished handleNotification()");
+		} catch (Exception ex) {
+			logEntryService.log(Constants.Component.Notifier.toString(), ex.getMessage());
 		}
-		logEntryService.log(Constants.Component.Notifier.toString(), "Finished handleNotification()");
 	}
 }
