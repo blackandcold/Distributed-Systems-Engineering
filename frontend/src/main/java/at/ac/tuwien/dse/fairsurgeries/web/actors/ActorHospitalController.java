@@ -79,7 +79,7 @@ public class ActorHospitalController {
 		OPSlot opSlot = new OPSlot();
 		opSlot.setHospital(hospital);
 		uiModel.addAttribute("opSlot", opSlot);
-		//uiModel.addAttribute("opSlots", opSlotService.findByHospital(hospital));
+		uiModel.addAttribute("hospitals", Arrays.asList(hospital));
 		
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
         uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
@@ -96,20 +96,30 @@ public class ActorHospitalController {
 	}
 	
 	@RequestMapping(value = "/createslot", method = RequestMethod.POST)
-	public void createSlot(@ModelAttribute Hospital hospital, @ModelAttribute OPSlot opSlot, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for hospital: " + hospital);
-		logEntryService.log(Constants.Component.Frontend.toString(), "opSlot: " + opSlot);
+	public void createSlot(@ModelAttribute OPSlot opSlot, @ModelAttribute Hospital hospital, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlot() for opSlot: " + opSlot);
 		if(opSlot != null)
 			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot.hospital: " + opSlot.getHospital());
 		else
 			logEntryService.log(Constants.Component.Frontend.toString(), "opSlot is freakin null");
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
+		if(opSlot != null && opSlot.getHospital() != null)
+			logEntryService.log("ARSCH", "opSlot.hospital: " + opSlot.getHospital().getId());
+		else
+			logEntryService.log("ARSCH", "ist null");
+		
+		if(hospital != null)
+			logEntryService.log("FUT", "FUT " + hospital);
+		else
+			logEntryService.log("FUT", "ist null");
 		//opSlotService.saveOPSlot(OPSlot_)
 		
 		//opSlot.setHospital(hospital);
 		opSlotService.saveOPSlot(opSlot);
 		
 		//return "redirect:/actors/hospital/viewslots";
-		viewSlots(hospital, uiModel);
+		//return "redirect:/";
+		//viewSlots(hospital, uiModel);
 	}
 }

@@ -28,7 +28,7 @@
     </dse_form:create>
     
     <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_login_admins" modelAttribute="admin" path="/actors/loginAsAdmin" render="${empty dependencies}" openPane="false">
-    	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_admin" items="${admins}" itemLabel="name" itemValue="id" path="admins" />
+    	<dse_field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_login_admin" items="${admins}" itemLabel="lastName" itemValue="id" path="admins" />
     </dse_form:create>
  
 	<form:dependency dependencies="${dependencies}" id="d_at_ac_tuwien_dse_fairsurgeries_domain_Reservations" render="${not empty dependencies}"/>

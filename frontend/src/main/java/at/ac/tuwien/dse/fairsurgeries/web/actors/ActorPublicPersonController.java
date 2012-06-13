@@ -2,6 +2,7 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
@@ -50,6 +52,19 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
 		uiModel.addAttribute("patients", patientService.findAllPatients());
+		
+		List<OPSlot> slots = opSlotService.findAllOPSlots();
+		for(OPSlot slot : slots) {
+			Hospital hospital = slot.getHospital();
+			String insert;
+			if(hospital == null)
+				insert = "FUCKITNULL";
+			else
+			{
+				insert = hospital.toString();
+			}
+			logEntryService.log("FUCK YOU", "From: " + slot.getDateFrom() + " To: " + slot.getDateTo() + " Hospital: " + insert);
+		}
 		
 		uiModel.addAttribute("opSlotExample", new OPSlot());
 		return "actors/public/slots";
