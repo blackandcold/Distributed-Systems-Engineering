@@ -34,10 +34,10 @@
 
 		<field:input field="radius"
 			id="c_at_ac_tuwien_dse_fairsurgeries_doctor_reservation_radius" />
-		<dse_field:datetime field="dateFrom"
+		<field:datetime field="dateFrom"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
 			dateTimePattern="${OPSlot_datefrom_date_format}" />
-		<dse_field:datetime field="dateTo"
+		<field:datetime field="dateTo"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
 			dateTimePattern="${OPSlot_dateto_date_format}" />
 
