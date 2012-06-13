@@ -66,7 +66,7 @@ public class LoginController {
 	public String loginAsPatient(@ModelAttribute Patient patient, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as patient: " + patient);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		return "redirect:/actors/patient/" + patient.getId() + "/slots";
+		return "redirect:/actors/patient/" + patient.getId();
 	}
 	
 	@RequestMapping(value="/loginAsDoctor", method = RequestMethod.POST)
@@ -87,6 +87,7 @@ public class LoginController {
 	public String loginAsAdmin(@ModelAttribute Admin admin, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as admin: " + admin);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		return "redirect:/actors/admin/" + admin.getId();
+		
+		return "redirect:/actors/admin/slots";
 	}
 }

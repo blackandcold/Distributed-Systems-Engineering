@@ -1,22 +1,21 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
-import java.io.PrintWriter;
 import java.math.BigInteger;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
+import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
+import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
-import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
+import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @Controller
@@ -24,43 +23,53 @@ import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 public class ActorPatientController {
 
 	@Autowired
+	private LogEntryService logEntryService;
+	@Autowired
+	private HospitalService hospitalService;
+	@Autowired
+	private OPSlotService opSlotService;
+	@Autowired
+	private DoctorService doctorService;
+	@Autowired
 	private PatientService patientService;
 
-	@Autowired
-	private NotificationService notificationService;
-
-	@Autowired
-	private LogEntryService logEntryService;
-
-	@RequestMapping(value = "{patientId}/slots", method = RequestMethod.GET, produces = "text/html")
-	public String listSlots(@PathVariable BigInteger patientId, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient.listSlots() for ID: " + patientId);
+	
+	@RequestMapping(value = "{patientId}", method = RequestMethod.GET)
+	public String showMenu(@PathVariable BigInteger patientId, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . () for ID: " + patientId);
 
 		Patient patient = patientService.findPatient(patientId);
 
 		if (patient != null) {
-			uiModel.addAttribute("heading", "Slots of Patient " + patient.getLastName());
-			uiModel.addAttribute("slots", patient.getOpSlots());
+			uiModel.addAttribute("patient", patient);
 
-			return "actors/public/slots";
+			return "actors/patient/showmenu";
 		} else {
 			return "redirect:/resourceNotFound";
 		}
 	}
 	
-	@RequestMapping(value = "{patientId}/test", method = RequestMethod.GET, produces = "text/html")
-	public void test(@PathVariable BigInteger patientId, HttpServletResponse response) throws Exception {
-		PrintWriter out = response.getWriter();
+	@RequestMapping(value = "/viewslots", method = RequestMethod.POST)
+	public String viewSlots(@ModelAttribute Patient patient, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . viewSlots() for patient: " + patient);
+		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
+		/*if (patient != null) {
+			uiModel.addAttribute("heading", "Slots of Patient " + patient.getLastName());
+			uiModel.addAttribute("slots", patient.getOpSlots());
 
-		out.println("Patient id is " + patientId);
+			return "actors/public/slots";
+		}*/
+		
+		return "actors/patient/viewslots";
 	}
-
-	@RequestMapping(value = "/notifications", method = RequestMethod.GET, produces = "text/html")
-	public String listNotifications(Model uiModel, BindingResult binding) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . listNotifications()");
-		uiModel.addAttribute("heading", "List all Notifications (private)");
-		uiModel.addAttribute("notifications", notificationService.findAllNotifications());
-		return "actors/public/notifications";
+	
+	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)
+	public String viewNotifications(@ModelAttribute Patient patient, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . viewNotifications() for patient: " + patient);
+		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
+		return "actors/patient/viewnotifications";
 	}
 
 }

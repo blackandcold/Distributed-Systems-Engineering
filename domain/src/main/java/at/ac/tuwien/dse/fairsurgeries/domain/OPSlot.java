@@ -40,4 +40,13 @@ public class OPSlot {
     @NotNull
     @ManyToOne
     private Hospital hospital;
+    
+    
+    public String getStatus() {
+    	if (this.patient != null) {
+    		return "reserved";
+    	} else {
+    		return "free";
+    	}
+    }
 }
