@@ -7,9 +7,9 @@
     
     <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots" modelAttribute="opSlotExample" path="/actors/public/slots" render="${empty dependencies}">
     	<dse_field:select field="surgeryType" id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype" items="${surgeryTypes}" path="surgerytype" />
-    	<dse_field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital" items="${hospitals}" path="hospital" />
-    	<dse_field:select field="patient" id="c_at_ac_tuwien_dse_fairsurgeries_public_patient" items="${patients}" path="patient" />
-    	<dse_field:select field="doctor" id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor" items="${doctors}" path="doctor" />
+    	<dse_field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital" items="${hospitals}" itemValue="id" path="hospital" />
+    	<dse_field:select field="patient" id="c_at_ac_tuwien_dse_fairsurgeries_public_patient" items="${patients}" itemValue="id" path="patient" />
+    	<dse_field:select field="doctor" id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor" items="${doctors}" itemValue="id" path="doctor" />
     	<field:datetime field="dateFrom" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom" dateTimePattern="${OPSlot_datefrom_date_format}" />
     	<field:datetime field="dateTo" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo" dateTimePattern="${OPSlot_dateto_date_format}" />	
     </dse_form:create>
