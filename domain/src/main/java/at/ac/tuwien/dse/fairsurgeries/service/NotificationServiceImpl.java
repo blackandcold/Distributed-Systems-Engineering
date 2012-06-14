@@ -25,6 +25,6 @@ public class NotificationServiceImpl implements NotificationService {
 				continue;
 			}
 		}
-		return allNotifications;
+		return matchingNotifications;
 	}
 }
