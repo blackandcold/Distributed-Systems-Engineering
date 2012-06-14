@@ -44,6 +44,7 @@ public class LoginController {
 	public String showLoginView(Model uiModel) {
 		logEntryService.clearLog();
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . showLoginView()");
+		
 		uiModel.addAttribute("patient", new Patient());
 		uiModel.addAttribute("patients", patientService.findAllPatients());
 		uiModel.addAttribute("doctor", new Doctor());
@@ -52,6 +53,7 @@ public class LoginController {
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		uiModel.addAttribute("admin", new Admin());
 		uiModel.addAttribute("admins", adminService.findAllAdmins());
+		
 		return "actors/login";
 	}
 	
@@ -59,6 +61,7 @@ public class LoginController {
 	public String loginAsPublicPerson(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as public person");
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
 		return "redirect:/actors/public/slots";
 	}
 	
@@ -66,6 +69,7 @@ public class LoginController {
 	public String loginAsPatient(@ModelAttribute Patient patient, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as patient: " + patient);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
 		return "redirect:/actors/patient/" + patient.getId();
 	}
 	
@@ -73,6 +77,7 @@ public class LoginController {
 	public String loginAsDoctor(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
 		return "redirect:/actors/doctor/" + doctor.getId();
 	}
 	
@@ -80,6 +85,7 @@ public class LoginController {
 	public String loginAsHospital(@ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
 		return "redirect:/actors/hospital/" + hospital.getId();
 	}
 	
@@ -88,6 +94,6 @@ public class LoginController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as admin: " + admin);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
-		return "redirect:/actors/admin/slots";
+		return "redirect:/actors/public/slots";
 	}
 }

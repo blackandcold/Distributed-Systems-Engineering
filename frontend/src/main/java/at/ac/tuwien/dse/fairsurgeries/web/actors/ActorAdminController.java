@@ -49,7 +49,7 @@ public class ActorAdminController {
 		uiModel.addAttribute("patients", patientService.findAllPatients());
 		
 		uiModel.addAttribute("opSlotExample", new OPSlot());
-		return "actors/admin/slots";
+		return "actors/public/slots";
 	}
 	
 	@RequestMapping(value="/slots", method = RequestMethod.POST, produces = "text/html")
@@ -62,7 +62,7 @@ public class ActorAdminController {
 		uiModel.addAttribute("patients", patientService.findAllPatients());
 		
 		uiModel.addAttribute("opSlotExample", opSlot);
-		return "actors/admin/slots";
+		return "actors/public/slots";
 	}
 	
 }

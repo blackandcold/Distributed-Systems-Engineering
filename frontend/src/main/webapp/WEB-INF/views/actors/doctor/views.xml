@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="actors/doctor/showmenu">
-        <put-attribute name="body" value="/WEB-INF/views/actors/doctor/menu.jspx"/>
-    </definition>
-    <definition extends="default" name="actors/doctor/viewslots">
-        <put-attribute name="body" value="/WEB-INF/views/actors/doctor/slots.jspx"/>
-    </definition>
-    <definition extends="default" name="actors/doctor/viewnotifications">
-        <put-attribute name="body" value="/WEB-INF/views/actors/doctor/notifications.jspx"/>
-    </definition>
-    <definition extends="default" name="actors/doctor/reservations">
-        <put-attribute name="body" value="/WEB-INF/views/actors/doctor/reservations.jspx"/>
-    </definition>
+	<definition extends="default" name="actors/doctor/showmenu">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/doctor/menu.jspx" />
+	</definition>
+	<definition extends="default" name="actors/doctor/viewslots">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/doctor/slots.jspx" />
+	</definition>
+	<definition extends="default" name="actors/doctor/viewnotifications">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/doctor/notifications.jspx" />
+	</definition>
+	<definition extends="default" name="actors/doctor/reservations">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/doctor/reservations.jspx" />
+	</definition>
 </tiles-definitions>
