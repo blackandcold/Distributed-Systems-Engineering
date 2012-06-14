@@ -4,7 +4,7 @@
     <definition extends="default" name="actors/hospital/showmenu">
         <put-attribute name="body" value="/WEB-INF/views/actors/hospital/menu.jspx"/>
     </definition>
-    <definition extends="default" name="actors/hospital/viewslots">
+    <definition extends="default" name="actors/hospital/slots">
         <put-attribute name="body" value="/WEB-INF/views/actors/hospital/slots.jspx"/>
     </definition>
     <definition extends="default" name="actors/hospital/viewnotifications">
