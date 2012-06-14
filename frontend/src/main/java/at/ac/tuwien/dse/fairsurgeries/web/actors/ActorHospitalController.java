@@ -68,8 +68,7 @@ public class ActorHospitalController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . viewNotifications() for hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
-		//TODO change to findNotificationsByHospital(hospital);
-		List<Notification> notifications = notificationService.findAllNotifications();
+		List<Notification> notifications = notificationService.findByHospital(hospital);
 		uiModel.addAttribute("notifications", notifications);
 		
 		return "actors/hospital/viewnotifications";
