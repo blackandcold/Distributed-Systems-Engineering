@@ -10,5 +10,5 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 @RooService(domainTypes = { at.ac.tuwien.dse.fairsurgeries.domain.Notification.class })
 public interface NotificationService {
 	
-	//public List<Notification> findByHospital(Hospital hospital);
+	public List<Notification> findByHospital(Hospital hospital);
 }
