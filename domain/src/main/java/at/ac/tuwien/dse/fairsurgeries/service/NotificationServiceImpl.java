@@ -20,7 +20,11 @@ public class NotificationServiceImpl implements NotificationService {
 				matchingNotifications.remove(notification);
 				continue;
 			}
-			if(!notification.getOpSlot().getHospital().equals(hospital)) {
+			if(notification.getOpSlot().getHospital().getId() == null) {
+				matchingNotifications.remove(notification);
+				continue;
+			}
+			if(!notification.getOpSlot().getHospital().getId().equals(hospital.getId())) {
 				matchingNotifications.remove(notification);
 				continue;
 			}
