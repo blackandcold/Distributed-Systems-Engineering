@@ -94,6 +94,6 @@ public class LoginController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting LoginController . login() as admin: " + admin);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
-		return "redirect:/actors/public/slots";
+		return "redirect:/actors/admin/slots";
 	}
 }

@@ -4,56 +4,62 @@
 	xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
 	xmlns:dse_form="urn:jsptagdir:/WEB-INF/tags/dse_form"
 	xmlns:dse_field="urn:jsptagdir:/WEB-INF/tags/dse_form/dse_fields"
-	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+	xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<h1>Admin Slots View</h1>
+	<h1>SlotView of Admin ${admin}</h1>
 
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
-		modelAttribute="opSlotExample" path="/actors/public/slots"
+		modelAttribute="slotFilter" path="/actors/admin/slots"
 		render="${empty dependencies}">
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
 			items="${surgeryTypes}" path="surgerytype" />
 		<dse_field:select field="hospital"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
-			items="${hospitals}" path="hospital" />
-		<dse_field:select field="patient"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
-			items="${patients}" path="patient" />
+			items="${hospitals}" itemValue="id" path="hospital" />
 		<dse_field:select field="doctor"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" path="doctor" />
-		<!--<dse_field:datetime field="datefrom" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom" dateTimePattern="${OPSlot_datefrom_date_format}" />
-    	<dse_field:datetime field="dateto" id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo" dateTimePattern="${OPSlot_dateto_date_format}" />
-    	-->
+			items="${doctors}" itemValue="id" path="doctor" />
+		<dse_field:select field="patient"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
+			items="${patients}" itemValue="id" path="patient" />
+		<field:datetime field="dateFrom"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
+			dateTimePattern="${dateFormat}" />
+		<field:datetime field="dateTo"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
+			dateTimePattern="${dateFormat}" />
 	</dse_form:create>
 
 	<form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
 		items="${opSlots}">
-		<table:table data="${opSlots}"
-			id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" path="/opslots">
-			<table:column date="true"
-				dateTimePattern="${OPSlot_datefrom_date_format}"
+		<dse_field:table data="${opSlots}"
+			id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" create="false"
+			update="false" delete="false" show="false" path="/opslots">
+			<table:column date="true" dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom"
 				property="dateFrom" />
-			<table:column date="true"
-				dateTimePattern="${OPSlot_dateto_date_format}"
+			<table:column date="true" dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo"
 				property="dateTo" />
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType"
 				property="surgeryType" />
 			<table:column
-				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient"
-				property="patient" />
-			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor"
 				property="doctor" />
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital"
 				property="hospital" />
-		</table:table>
+			<table:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient"
+				property="patient" />
+			<table:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_status"
+				property="status" />
+		</dse_field:table>
 	</form:list>
 </div>
