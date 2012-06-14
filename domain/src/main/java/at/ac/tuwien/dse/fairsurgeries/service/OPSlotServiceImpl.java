@@ -20,6 +20,10 @@ public class OPSlotServiceImpl implements OPSlotService {
 	LogEntryService logentryService;
 
 	public List<OPSlot> findByExample(OPSlot slot) {
+		return findByExample(slot, null);
+	}
+	
+	public List<OPSlot> findByExample(OPSlot slot, OPSlotStatus status) {
 		List<OPSlot> slots = oPSlotRepository.findAll();
 		List<OPSlot> matchingSlots = new ArrayList<OPSlot>(slots);
 
@@ -61,6 +65,11 @@ public class OPSlotServiceImpl implements OPSlotService {
 				}
 
 				if (type != null && (s.getSurgeryType() == null || !s.getSurgeryType().equals(type))) {
+					matchingSlots.remove(s);
+					continue;
+				}
+				
+				if (status != null && !s.getStatus().equals(status)) {
 					matchingSlots.remove(s);
 					continue;
 				}
