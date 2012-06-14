@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
+import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
+import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 
 @Controller
@@ -31,6 +33,8 @@ public class ActorHospitalController {
 	private HospitalService hospitalService;
 	@Autowired
 	private OPSlotService opSlotService;
+	@Autowired
+	private NotificationService notificationService;
 
 	
 	@RequestMapping(value = "{hospitalId}", method = RequestMethod.GET)
@@ -63,6 +67,11 @@ public class ActorHospitalController {
 	public String viewNotifications(@ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . viewNotifications() for hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
+		//TODO change to findNotificationsByHospital(hospital);
+		List<Notification> notifications = notificationService.findAllNotifications();
+		uiModel.addAttribute("notifications", notifications);
+		
 		return "actors/hospital/viewnotifications";
 	}
 	

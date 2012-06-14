@@ -5,4 +5,11 @@
     
 	<h3>View notifications for hospital <c:out value="${hospital.name}" /></h3>
 	
+	<page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Notification" items="${notifications}" z="PeVrQ2VavRkwXfnR/0dZ1u24Ndw=">
+        <field:table data="${notifications}" id="l_at_ac_tuwien_dse_fairsurgeries_domain_Notification" path="/notifications" create="false" update="false" delete="false">
+            <field:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_reason" property="reason"/>
+            <field:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_description" property="description"/>
+            <field:column id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_opSlot" property="opSlot"/>
+        </field:table>
+    </page:list>
 </div>
