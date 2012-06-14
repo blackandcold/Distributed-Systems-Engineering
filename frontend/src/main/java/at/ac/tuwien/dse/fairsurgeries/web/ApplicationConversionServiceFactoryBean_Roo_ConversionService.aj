@@ -57,7 +57,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Admin, String> ApplicationConversionServiceFactoryBean.getAdminToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Admin, java.lang.String>() {
             public String convert(Admin admin) {
-                return new StringBuilder().append(admin.getFirstName()).append(" ").append(admin.getLastName()).append(" ").append(admin.getDateOfBirth()).toString();
+                return new StringBuilder().append(admin.getFirstName()).append(" ").append(admin.getLastName()).toString();
             }
         };
     }
@@ -81,7 +81,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Doctor, String> ApplicationConversionServiceFactoryBean.getDoctorToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Doctor, java.lang.String>() {
             public String convert(Doctor doctor) {
-                return new StringBuilder().append(doctor.getFirstName()).append(" ").append(doctor.getLastName()).append(" ").append(doctor.getDateOfBirth()).toString();
+                return new StringBuilder().append(doctor.getFirstName()).append(" ").append(doctor.getLastName()).toString();
             }
         };
     }
@@ -177,7 +177,8 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<OPSlot, String> ApplicationConversionServiceFactoryBean.getOPSlotToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.OPSlot, java.lang.String>() {
             public String convert(OPSlot oPSlot) {
-                return new StringBuilder().append(oPSlot.getDateFrom()).append(" ").append(oPSlot.getDateTo()).toString();
+                //return new StringBuilder().append(oPSlot.getDateFrom()).append(" ").append(oPSlot.getDateTo()).toString();
+            	return new StringBuilder().append(oPSlot.toString()).toString();
             }
         };
     }
@@ -201,7 +202,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Patient, String> ApplicationConversionServiceFactoryBean.getPatientToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<at.ac.tuwien.dse.fairsurgeries.domain.Patient, java.lang.String>() {
             public String convert(Patient patient) {
-                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).append(" ").append(patient.getDateOfBirth()).toString();
+                return new StringBuilder().append(patient.getFirstName()).append(" ").append(patient.getLastName()).toString();
             }
         };
     }
