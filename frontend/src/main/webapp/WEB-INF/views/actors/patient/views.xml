@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="actors/patient/showmenu">
-        <put-attribute name="body" value="/WEB-INF/views/actors/patient/menu.jspx"/>
-    </definition>
-    <definition extends="default" name="actors/patient/slots">
-        <put-attribute name="body" value="/WEB-INF/views/actors/patient/slots.jspx"/>
-    </definition>
-    <definition extends="default" name="actors/patient/viewnotifications">
-        <put-attribute name="body" value="/WEB-INF/views/actors/patient/notifications.jspx"/>
-    </definition>
+	<definition extends="default" name="actors/patient/showmenu">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/patient/menu.jspx" />
+	</definition>
+	<definition extends="default" name="actors/patient/slots">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/patient/slots.jspx" />
+	</definition>
+	<definition extends="default" name="actors/patient/notifications">
+		<put-attribute name="body"
+			value="/WEB-INF/views/actors/patient/notifications.jspx" />
+	</definition>
 
 </tiles-definitions>

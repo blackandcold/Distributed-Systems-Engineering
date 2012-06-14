@@ -9,7 +9,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/actors/doctor/slots.jspx" />
 	</definition>
-	<definition extends="default" name="actors/doctor/viewnotifications">
+	<definition extends="default" name="actors/doctor/notifications">
 		<put-attribute name="body"
 			value="/WEB-INF/views/actors/doctor/notifications.jspx" />
 	</definition>

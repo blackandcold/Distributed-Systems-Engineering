@@ -2,6 +2,7 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 
@@ -17,15 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
+import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
-import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
+import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 import at.ac.tuwien.dse.fairsurgeries.web.MessageController;
@@ -46,6 +48,9 @@ public class ActorDoctorController {
 	private DoctorService doctorService;
 	@Autowired
 	private PatientService patientService;
+	@Autowired
+	private NotificationService notificationService;
+	
 
 	@RequestMapping(value = "{doctorId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger doctorId, Model uiModel) {
@@ -79,12 +84,15 @@ public class ActorDoctorController {
 		return "actors/doctor/slots";
 	}
 
-	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)
-	public String viewNotifications(@ModelAttribute Doctor doctor, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . viewNotifications() for doctor: " + doctor);
+	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
+	public String listNotifications(@ModelAttribute Doctor doctor, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor. viewNotifications() for doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 
-		return "actors/doctor/viewnotifications";
+		List<Notification> notifications = notificationService.findByDoctor(doctor);
+		uiModel.addAttribute("notifications", notifications);
+
+		return "actors/doctor/notifications";
 	}
 
 	@RequestMapping(value = "/manageslots", method = RequestMethod.POST)

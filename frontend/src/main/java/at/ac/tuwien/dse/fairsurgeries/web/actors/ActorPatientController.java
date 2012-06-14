@@ -2,6 +2,7 @@ package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
 import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
@@ -23,6 +25,7 @@ import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
+import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
@@ -40,6 +43,8 @@ public class ActorPatientController {
 	private DoctorService doctorService;
 	@Autowired
 	private PatientService patientService;
+	@Autowired
+	private NotificationService notificationService;
 
 	
 	@RequestMapping(value = "{patientId}", method = RequestMethod.GET)
@@ -75,12 +80,15 @@ public class ActorPatientController {
 		return "actors/patient/slots";
 	}
 	
-	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)
-	public String viewNotifications(@ModelAttribute Patient patient, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . viewNotifications() for patient: " + patient);
+	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
+	public String listNotifications(@ModelAttribute Patient patient, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient. viewNotifications() for patient: " + patient);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
-		
-		return "actors/patient/viewnotifications";
+
+		List<Notification> notifications = notificationService.findByPatient(patient);
+		uiModel.addAttribute("notifications", notifications);
+
+		return "actors/patient/notifications";
 	}
 	
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {

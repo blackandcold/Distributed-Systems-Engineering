@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
-    
-	<h3>View notifications for patient <c:out value="${patient.firstName}" /> <c:out value="${patient.lastName}" /></h3>
-	
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+	xmlns:dse_field="urn:jsptagdir:/WEB-INF/tags/dse_form/dse_fields"
+	xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:page="urn:jsptagdir:/WEB-INF/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<h3>
+		View notifications for patient
+		<c:out value="${patient.firstName}" />
+		<c:out value="${patient.lastName}" />
+	</h3>
+
+	<page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Notification"
+		items="${notifications}" z="PeVrQ2VavRkwXfnR/0dZ1u24Ndw=">
+		<dse_field:table data="${notifications}"
+			id="l_at_ac_tuwien_dse_fairsurgeries_domain_Notification"
+			path="/notifications" create="false" update="false" delete="false"
+			show="false">
+			<field:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_reason"
+				property="reason" />
+			<field:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_description"
+				property="description" />
+			<field:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_Notification_opSlot"
+				property="opSlot" />
+		</dse_field:table>
+	</page:list>
+
 </div>
