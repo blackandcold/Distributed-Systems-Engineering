@@ -9,10 +9,10 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<h1>Slots of ${headline}</h1>
+	<h1>Public Person Slot View</h1>
 
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
-		modelAttribute="opSlotExample" path="/actors/public/slots"
+		modelAttribute="slotFilter" path="/actors/public/slots"
 		render="${empty dependencies}">
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
@@ -20,18 +20,15 @@
 		<dse_field:select field="hospital"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
 			items="${hospitals}" itemValue="id" path="hospital" />
-		<dse_field:select field="patient"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
-			items="${patients}" itemValue="id" path="patient" />
 		<dse_field:select field="doctor"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
 			items="${doctors}" itemValue="id" path="doctor" />
 		<field:datetime field="dateFrom"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
-			dateTimePattern="${OPSlot_datefrom_date_format}" />
+			dateTimePattern="${dateFormat}" />
 		<field:datetime field="dateTo"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
-			dateTimePattern="${OPSlot_dateto_date_format}" />
+			dateTimePattern="${dateFormat}" />
 	</dse_form:create>
 
 	<form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
@@ -40,21 +37,16 @@
 			id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" create="false"
 			update="false" delete="false" show="false" path="/opslots">
 			<table:column date="true"
-				dateTimePattern="${OPSlot_datefrom_date_format}"
+				dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom"
 				property="dateFrom" />
 			<table:column date="true"
-				dateTimePattern="${OPSlot_dateto_date_format}"
+				dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo"
 				property="dateTo" />
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType"
 				property="surgeryType" />
-			<c:if test="${showPatientName == true}">
-				<table:column
-					id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient"
-					property="patient" />
-			</c:if>
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor"
 				property="doctor" />
