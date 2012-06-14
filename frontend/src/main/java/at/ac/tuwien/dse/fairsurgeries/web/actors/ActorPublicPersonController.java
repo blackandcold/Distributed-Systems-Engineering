@@ -45,6 +45,7 @@ public class ActorPublicPersonController {
 	public String listSlots(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlots()");
 
+		uiModel.addAttribute("headline", "Public Person");
 		uiModel.addAttribute("opSlots", opSlotService.findAllOPSlots());
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
@@ -55,19 +56,6 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("showPatientName", false);
 
-		List<OPSlot> slots = opSlotService.findAllOPSlots();
-		for (OPSlot slot : slots) {
-			Hospital hospital = slot.getHospital();
-			String insert;
-			
-			if (hospital == null)
-				insert = "(null)";
-			else {
-				insert = hospital.toString();
-			}
-			logEntryService.log(Constants.Component.Frontend.toString(), "From: " + slot.getDateFrom() + " To: " + slot.getDateTo() + " Hospital: " + insert);
-		}
-
 		return "actors/public/slots";
 	}
 
@@ -75,6 +63,7 @@ public class ActorPublicPersonController {
 	public String listFilteredSlots(@ModelAttribute OPSlot opSlot, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listFilteredSlots() example=" + opSlot);
 
+		uiModel.addAttribute("headline", "Public Person");
 		uiModel.addAttribute("opSlots", opSlotService.findByExample(opSlot));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());

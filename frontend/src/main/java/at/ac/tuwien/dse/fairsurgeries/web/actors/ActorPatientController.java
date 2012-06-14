@@ -62,6 +62,7 @@ public class ActorPatientController {
 		OPSlot filterExample = new OPSlot();
 		filterExample.setPatient(patient);
 		
+		uiModel.addAttribute("headline", "Patient " + patient.toString());
 		uiModel.addAttribute("opSlots", opSlotService.findByPatient(patient));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());

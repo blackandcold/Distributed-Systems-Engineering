@@ -27,4 +27,8 @@ public class Hospital {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="hospital")
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();
+    
+    public String toString() {
+    	return name;
+    }
 }

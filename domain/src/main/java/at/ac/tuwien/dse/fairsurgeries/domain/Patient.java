@@ -40,4 +40,8 @@ public class Patient implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "M-")
     private Date dateOfBirth;
+    
+    public String toString() {
+    	return firstName + " " + lastName;
+    }
 }

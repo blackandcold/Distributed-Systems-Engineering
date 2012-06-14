@@ -10,4 +10,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooMongoEntity
 @RooJson(deepSerialize = true)
 public class PublicPerson {
+	
+	public String toString() {
+    	return "Public Person";
+    }
 }
