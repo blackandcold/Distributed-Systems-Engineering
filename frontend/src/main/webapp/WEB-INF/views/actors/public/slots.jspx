@@ -49,7 +49,7 @@
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType"
 				property="surgeryType" />
-			<c:if test="false">
+			<c:if test="${showPatientName == true}">
 				<table:column
 					id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient"
 					property="patient" />
@@ -60,6 +60,9 @@
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital"
 				property="hospital" />
+			<table:column
+				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_status"
+				property="status" />
 		</table:table>
 	</form:list>
 </div>

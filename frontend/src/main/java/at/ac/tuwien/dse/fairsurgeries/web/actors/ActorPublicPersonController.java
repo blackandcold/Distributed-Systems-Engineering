@@ -1,10 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,11 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
-import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
-import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
+import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
+import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
+import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
 @Controller
 @RequestMapping("/actors/public")
@@ -56,6 +53,7 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("opSlotExample", new OPSlot());
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("showPatientName", false);
 
 		List<OPSlot> slots = opSlotService.findAllOPSlots();
 		for (OPSlot slot : slots) {
@@ -85,6 +83,7 @@ public class ActorPublicPersonController {
 		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("opSlotExample", opSlot);
+		uiModel.addAttribute("showPatientName", false);
 
 		return "actors/public/slots";
 	}
