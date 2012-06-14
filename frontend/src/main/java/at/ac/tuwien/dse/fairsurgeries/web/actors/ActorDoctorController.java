@@ -58,12 +58,22 @@ public class ActorDoctorController {
 		}
 	}
 
-	@RequestMapping(value = "/viewslots", method = RequestMethod.POST)
+	@RequestMapping(value = "/slots", method = RequestMethod.POST)
 	public String viewSlots(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . viewSlots() for doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 
-		return "actors/doctor/viewslots";
+		OPSlot filterExample = new OPSlot();
+		filterExample.setDoctor(doctor);
+		
+		uiModel.addAttribute("opSlots", opSlotService.findByDoctor(doctor));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("patients", patientService.findAllPatients());
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", filterExample);
+		
+		return "actors/doctor/slots";
 	}
 
 	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)

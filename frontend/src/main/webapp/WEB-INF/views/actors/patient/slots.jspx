@@ -14,6 +14,9 @@
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
 		modelAttribute="slotFilter" path="/actors/patient/slots"
 		render="${empty dependencies}">
+		<dse_field:select field="patient"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
+			items="${patients}" itemValue="id" path="patient" />
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
 			items="${surgeryTypes}" path="surgerytype" />

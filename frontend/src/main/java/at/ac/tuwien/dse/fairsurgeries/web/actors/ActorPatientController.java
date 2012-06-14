@@ -55,20 +55,15 @@ public class ActorPatientController {
 	}
 	
 	@RequestMapping(value = "/slots", method = RequestMethod.POST)
-	public String viewSlots(@ModelAttribute Patient patient, Model uiModel) {
-		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . viewSlots() for patient: " + patient);
-		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+	public String listSlots(@ModelAttribute Patient patient, @ModelAttribute OPSlot opSlot, Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . listFilteredSlots() for patient + " + patient);
+		logEntryService.log(Constants.Component.Frontend.toString(), "slot: " + (opSlot == null ? "null" : opSlot));
 
-		OPSlot filterExample = new OPSlot();
-		filterExample.setPatient(patient);
+		if (patient != null) {
+			opSlot.setPatient(patient);
+		}
 		
-		uiModel.addAttribute("opSlots", opSlotService.findByPatient(patient));
-		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		uiModel.addAttribute("patients", Arrays.asList(patient));
-		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("slotFilter", filterExample);
+		this.setupModel(uiModel, opSlot);
 
 		return "actors/patient/slots";
 	}
@@ -79,6 +74,18 @@ public class ActorPatientController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
 		return "actors/patient/viewnotifications";
+	}
+	
+	private void setupModel(Model uiModel, OPSlot slotFilter) {
+		Patient patient = slotFilter.getPatient();
+		
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("patients", Arrays.asList(patient));
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", slotFilter);
 	}
 
 }

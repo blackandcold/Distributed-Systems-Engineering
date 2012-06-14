@@ -11,6 +11,7 @@ public class NotificationServiceImpl implements NotificationService {
 	public List<Notification> findByHospital(Hospital hospital) {
 		List<Notification> allNotifications = notificationRepository.findAll();
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
+		
 		for(Notification notification:allNotifications) {
 			if(notification.getOpSlot() == null) {
 				matchingNotifications.remove(notification);
@@ -20,11 +21,7 @@ public class NotificationServiceImpl implements NotificationService {
 				matchingNotifications.remove(notification);
 				continue;
 			}
-			if(notification.getOpSlot().getHospital().getId() == null) {
-				matchingNotifications.remove(notification);
-				continue;
-			}
-			if(!notification.getOpSlot().getHospital().getId().equals(hospital.getId())) {
+			if(!notification.getOpSlot().getHospital().equals(hospital)) {
 				matchingNotifications.remove(notification);
 				continue;
 			}

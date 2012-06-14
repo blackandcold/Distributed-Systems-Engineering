@@ -5,7 +5,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/actors/doctor/menu.jspx" />
 	</definition>
-	<definition extends="default" name="actors/doctor/viewslots">
+	<definition extends="default" name="actors/doctor/slots">
 		<put-attribute name="body"
 			value="/WEB-INF/views/actors/doctor/slots.jspx" />
 	</definition>
