@@ -13,19 +13,20 @@ public class NotificationServiceImpl implements NotificationService {
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
 		
 		for(Notification notification:allNotifications) {
-			if(notification.getOpSlot() == null) {
+			if (notification.getOpSlot() == null) {
 				matchingNotifications.remove(notification);
 				continue;
 			}
-			if(notification.getOpSlot().getHospital() == null) {
+			if (notification.getOpSlot().getHospital() == null) {
 				matchingNotifications.remove(notification);
 				continue;
 			}
-			if(!notification.getOpSlot().getHospital().equals(hospital)) {
+			if (!notification.getOpSlot().getHospital().getId().equals(hospital.getId())) {
 				matchingNotifications.remove(notification);
 				continue;
 			}
 		}
+		
 		return matchingNotifications;
 	}
 }

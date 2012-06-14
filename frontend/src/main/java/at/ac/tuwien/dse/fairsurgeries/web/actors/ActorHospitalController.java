@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
@@ -74,7 +73,7 @@ public class ActorHospitalController {
 		}
 
 		String status = request.getParameter("status");
-		if(status == null || status.isEmpty())
+		if (status == null || status.isEmpty())
 			this.setupModel(uiModel, opSlot, null);
 		else
 			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
@@ -82,15 +81,15 @@ public class ActorHospitalController {
 		return "actors/hospital/slots";
 	}
 
-	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)
-	public String viewNotifications(@ModelAttribute Hospital hospital, Model uiModel) {
+	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
+	public String listNotifications(@ModelAttribute Hospital hospital, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . viewNotifications() for hospital: " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 
 		List<Notification> notifications = notificationService.findByHospital(hospital);
 		uiModel.addAttribute("notifications", notifications);
 
-		return "actors/hospital/viewnotifications";
+		return "actors/hospital/notifications";
 	}
 
 	@RequestMapping(value = "/manageslots", method = RequestMethod.POST)
