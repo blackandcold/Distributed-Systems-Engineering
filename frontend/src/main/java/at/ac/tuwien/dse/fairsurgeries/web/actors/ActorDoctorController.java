@@ -1,7 +1,6 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.math.BigInteger;
-import java.sql.Date;
 import java.util.Arrays;
 
 import org.joda.time.format.DateTimeFormat;
@@ -118,12 +117,12 @@ public class ActorDoctorController {
 	public String doReservation(@ModelAttribute Reservation reservation, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . doReservation()");
 
-		logEntryService.log("TEST", "patient: " + reservation.getPatient());
-		logEntryService.log("TEST", "doctor: " + reservation.getDoctor());
-		logEntryService.log("TEST", "type: " + reservation.getSurgeryType());
-		logEntryService.log("TEST", "radius: " + reservation.getRadius());
-		logEntryService.log("TEST", "from: " + reservation.getDateFrom());
-		logEntryService.log("TEST", "to: " + reservation.getDateTo());
+		logEntryService.log("Reservation", "patient: " + reservation.getPatient());
+		logEntryService.log("Reservation", "doctor: " + reservation.getDoctor());
+		logEntryService.log("Reservation", "type: " + reservation.getSurgeryType());
+		logEntryService.log("Reservation", "radius: " + reservation.getRadius());
+		logEntryService.log("Reservation", "from: " + reservation.getDateFrom());
+		logEntryService.log("Reservation", "to: " + reservation.getDateTo());
 		
 		if (reservation != null) {
 			MessageController.sendMessage(template, Constants.Queue.MatcherIn, reservation);

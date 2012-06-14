@@ -105,7 +105,6 @@ public class ReservationController {
 
 					// Post Notification
 					{
-						logEntryService.log(Constants.Component.Matcher.toString(), "will post success notification");
 						OPSlotDTO slotDTO = new OPSlotDTO(foundSlot.getId());
 						ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(new ReservationDTO(reservation), slotDTO);
 
@@ -113,7 +112,6 @@ public class ReservationController {
 						template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
 					}
 				} else {
-					logEntryService.log(Constants.Component.Matcher.toString(), "will post failed notification");
 					ReservationFailedDTO notification = new ReservationFailedDTO(new ReservationDTO(reservation), "No Slot found.");
 
 					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
