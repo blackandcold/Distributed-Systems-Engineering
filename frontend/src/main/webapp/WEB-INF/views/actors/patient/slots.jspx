@@ -10,29 +10,14 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<h1>Slots of Patient ${patient}</h1>
-
-	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
-		modelAttribute="slotFilter" path="/actors/patient/slots"
-		render="${empty dependencies}">
-		<dse_field:select field="patient"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
-			items="${patients}" itemValue="id" path="patient" />
-		<dse_field:select field="surgeryType"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
-			items="${surgeryTypes}" path="surgerytype" />
-		<dse_field:select field="hospital"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
-			items="${hospitals}" itemValue="id" path="hospital" />
-		<dse_field:select field="doctor"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" itemValue="id" path="doctor" />
-		<field:datetime field="dateFrom"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
-			dateTimePattern="${dateFormat}" />
-		<field:datetime field="dateTo"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
-			dateTimePattern="${dateFormat}" />
-	</dse_form:create>
+	
+	<dse_form:filter_slots
+		modelAttribute="slotFilter"
+		path="/actors/patient/slots"
+		hiddenField="patient"
+		hiddenItems="${patients}"
+		hiddenItemValue="id"
+		hiddenPath="patient" />
 
 	<form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
 		items="${opSlots}">

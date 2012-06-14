@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
+import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
@@ -61,7 +65,7 @@ public class ActorHospitalController {
 	}
 
 	@RequestMapping(value = "/slots", method = RequestMethod.POST)
-	public String listSlots(@ModelAttribute Hospital hospital, @ModelAttribute OPSlot opSlot, Model uiModel) {
+	public String listSlots(@ModelAttribute Hospital hospital, @ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . listFilteredSlots() for hospital + " + hospital);
 		logEntryService.log(Constants.Component.Frontend.toString(), "slot: " + (opSlot == null ? "null" : opSlot));
 
@@ -69,7 +73,11 @@ public class ActorHospitalController {
 			opSlot.setHospital(hospital);
 		}
 
-		this.setupModel(uiModel, opSlot);
+		String status = request.getParameter("status");
+		if(status == null || status.isEmpty())
+			this.setupModel(uiModel, opSlot, null);
+		else
+			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
 
 		return "actors/hospital/slots";
 	}
@@ -144,14 +152,16 @@ public class ActorHospitalController {
 		// return "redirect:/";
 	}
 
-	private void setupModel(Model uiModel, OPSlot slotFilter) {
+	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
 		Hospital hospital = slotFilter.getHospital();
 
-		uiModel.addAttribute("opSlots", slotService.findByExample(slotFilter));
+		uiModel.addAttribute("opSlots", slotService.findByExample(slotFilter, status));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
 		uiModel.addAttribute("hospitals", Arrays.asList(hospital));
 		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
 		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("slotFilter", slotFilter);
+		uiModel.addAttribute("status", status);
 	}
 }

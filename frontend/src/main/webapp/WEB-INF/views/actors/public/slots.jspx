@@ -10,37 +10,8 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<h1>Public Person Slot View</h1>
-
-	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
-		modelAttribute="slotFilter" path="/actors/public/slots"
-		render="${empty dependencies}">
-		<field:datetime field="dateFrom"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
-			dateTimePattern="${dateFormat}" />
-		<field:datetime field="dateTo"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
-			dateTimePattern="${dateFormat}" />
-		<dse_field:select field="surgeryType"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
-			items="${surgeryTypes}" path="surgerytype"
-			filter="true"
-			value="${slotFilter.surgeryType}" />
-		<dse_field:select field="doctor"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" itemValue="id" path="doctor"
-			filter="true"
-			value="${slotFilter.doctor.id}" />
-		<dse_field:select field="hospital"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
-			items="${hospitals}" itemValue="id" path="hospital"
-			filter="true"
-			value="${slotFilter.hospital.id}" />
-		<dse_field:select field="status" disableFormBinding="true"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_status"
-			items="${statusList}" path="status"
-			filter="true"
-			value="${status}" />
-	</dse_form:create>
+	
+	<dse_form:filter_slots modelAttribute="slotFilter" path="/actors/public/slots" />
 
 	<form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
 		items="${opSlots}">
