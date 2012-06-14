@@ -16,13 +16,19 @@
 		render="${empty dependencies}">
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
-			items="${surgeryTypes}" path="surgerytype" />
+			items="${surgeryTypes}" path="surgerytype"
+			filter="true"
+			value="${slotFilter.surgeryType}" />
 		<dse_field:select field="hospital"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
-			items="${hospitals}" itemValue="id" path="hospital" />
+			items="${hospitals}" itemValue="id" path="hospital"
+			filter="true"
+			value="${slotFilter.hospital.id}" />
 		<dse_field:select field="doctor"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" itemValue="id" path="doctor" />
+			items="${doctors}" itemValue="id" path="doctor"
+			filter="true"
+			value="${slotFilter.doctor.id}" />
 		<field:datetime field="dateFrom"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
 			dateTimePattern="${dateFormat}" />

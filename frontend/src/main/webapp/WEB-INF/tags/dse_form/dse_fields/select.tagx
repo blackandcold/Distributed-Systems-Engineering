@@ -14,8 +14,14 @@
   <jsp:directive.attribute name="disableFormBinding" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Set to true to disable Spring form binding" />
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
+  <jsp:directive.attribute name="filter" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicates if this select is a filter select" />
+  <jsp:directive.attribute name="value" type="java.lang.String" required="false" rtexprvalue="true" description="Indicates if this field is required (default false)" />
 
   <c:if test="${empty render or render}">
+  
+  	<c:if test="${empty value}" >
+ 		<c:set var="value" value=" " />
+	</c:if>
 
     <c:if test="${empty disabled}">
       <c:set value="false" var="disabled" />
@@ -184,7 +190,14 @@
           </c:choose>
           <c:choose>
             <c:when test="${multiple == false}">
-              <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${fn:escapeXml(id)}_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+              <c:choose>
+                <c:when test="${filter}">
+              		<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${fn:escapeXml(id)}_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true, required : false, placeHolder : "Do not filter", value : "${value}"}})); </script>
+                </c:when>
+                <c:otherwise>
+                	<script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${fn:escapeXml(id)}_id', widgetType: 'dijit.form.FilteringSelect', widgetAttrs : {hasDownArrow : true}})); </script>
+                </c:otherwise>
+              </c:choose>
             </c:when>
             <!-- disabled due to http://jira.springframework.org/browse/ROO-909 <c:otherwise> <script type="text/javascript">Spring.addDecoration(new Spring.ElementDecoration({elementId : '_${field}_id', widgetType: 'dijit.form.MultiSelect', widgetAttrs : {}})); </script> </c:otherwise> -->
           </c:choose>
