@@ -54,7 +54,7 @@ public class ActorPatientController {
 		}
 	}
 	
-	@RequestMapping(value = "/viewslots", method = RequestMethod.POST)
+	@RequestMapping(value = "/slots", method = RequestMethod.POST)
 	public String viewSlots(@ModelAttribute Patient patient, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPatient . viewSlots() for patient: " + patient);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
@@ -62,18 +62,15 @@ public class ActorPatientController {
 		OPSlot filterExample = new OPSlot();
 		filterExample.setPatient(patient);
 		
-		uiModel.addAttribute("headline", "Patient " + patient.toString());
 		uiModel.addAttribute("opSlots", opSlotService.findByPatient(patient));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
 		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
 		uiModel.addAttribute("patients", Arrays.asList(patient));
-		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("opSlotExample", filterExample);
-		uiModel.addAttribute("showPatientName", false);
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", filterExample);
 
-		return "actors/public/slots";
+		return "actors/patient/slots";
 	}
 	
 	@RequestMapping(value = "/viewnotifications", method = RequestMethod.POST)

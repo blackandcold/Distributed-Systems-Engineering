@@ -9,10 +9,10 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<h1>Public Person Slot View</h1>
+	<h1>Slots of Patient ${patient}</h1>
 
 	<dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
-		modelAttribute="slotFilter" path="/actors/public/slots"
+		modelAttribute="slotFilter" path="/actors/patient/slots"
 		render="${empty dependencies}">
 		<dse_field:select field="surgeryType"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_slots_surgerytype"
@@ -20,9 +20,6 @@
 		<dse_field:select field="hospital"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_hospital"
 			items="${hospitals}" itemValue="id" path="hospital" />
-		<dse_field:select field="patient"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
-			items="${patients}" itemValue="id" path="patient" />
 		<dse_field:select field="doctor"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
 			items="${doctors}" itemValue="id" path="doctor" />
@@ -50,9 +47,6 @@
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_surgeryType"
 				property="surgeryType" />
-				<table:column
-					id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_patient"
-					property="patient" />
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_doctor"
 				property="doctor" />
