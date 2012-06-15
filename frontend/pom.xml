@@ -72,6 +72,15 @@
           <version>1.0.0.RC2</version>
       </dependency>
       
+      <!-- dependencies for rest testing, has to be befor junit! -->
+      
+      	<dependency>
+      		<groupId>com.jayway.restassured</groupId>
+      		<artifactId>rest-assured</artifactId>
+      		<version>1.6.2</version>
+      		<scope>test</scope>
+		</dependency>
+      
 		<!-- General dependencies for standard applications -->
 		<dependency>
 			<groupId>junit</groupId>
