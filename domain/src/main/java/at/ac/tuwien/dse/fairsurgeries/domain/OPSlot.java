@@ -60,6 +60,6 @@ public class OPSlot implements Serializable {
     public String toString() {
     	DateFormat format = new SimpleDateFormat("dd.MM HH:mm");
     	
-    	return (dateFrom != null ? format.format(dateFrom) : "NULL") + " - " + (dateTo != null ? format.format(dateTo) : "NULL");
+    	return (dateFrom != null ? format.format(dateFrom) : "NULL") + " - " + (dateTo != null ? format.format(dateTo) : "NULL") + " - " + hospital;
     }
 }
