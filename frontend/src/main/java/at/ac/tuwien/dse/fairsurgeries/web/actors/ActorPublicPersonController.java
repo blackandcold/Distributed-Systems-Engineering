@@ -91,10 +91,37 @@ public class ActorPublicPersonController {
     public ResponseEntity<String> showJSON(@RequestParam("example") String param, Model model) {
     	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . showJSON() param: " + param);
 
+    	List<OPSlot> opSlots;
+    	/*
+    	 * Parsing Request
+    	 * 
+    	 * rewrite to get parameter per url!!! JSON param fucks up everythin
+    	 */
+    	
+    	//JSONDeserializer<OPSlot> deserializer = new JSONDeserializer<OPSlot>();
+    	
+    	if(param != null)
+    	{
+	    	OPSlot exampleSlot = new OPSlot();
+	    	
+	    	// set properties per arguments (url parts or get parameters)
+	    	
+			logEntryService.log(Constants.Component.Frontend.toString(), "Parse request failed . showJSON() exception: " + ex.getMessage());
+			opSlots = opSlotService.findByExample(exampleSlot);
+
+    	}
+    	else
+    	{
+    		opSlots = opSlotService.findAllOPSlots();
+    	}
+    	
+    	/*
+    	 * Answere
+    	 */
+    	
     	JSONSerializer serializer = new JSONSerializer();
     	//JSONSerializer arraySerializer = new JSONSerializer().transform(new ArrayTransformer(),ArrayList.class);
-    	 
-    	List<OPSlot> opSlots = opSlotService.findAllOPSlots();
+ /*   	 
     	ArrayList<String> jsonStringList = new ArrayList<String>();
     	
     	for(OPSlot slot : opSlots)
@@ -103,8 +130,8 @@ public class ActorPublicPersonController {
     		jsonStringList.add(new JSONSerializer().serialize(slot));
     	}
     	
-    	
-        String outputJSON = serializer.serialize(jsonStringList);
+    	*/
+        String outputJSON = serializer.serialize(opSlots);
     	
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
