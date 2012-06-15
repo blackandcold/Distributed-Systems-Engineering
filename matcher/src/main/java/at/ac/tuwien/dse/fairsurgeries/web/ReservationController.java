@@ -18,12 +18,9 @@ import at.ac.tuwien.dse.fairsurgeries.dto.ReservationDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationFailedDTO;
 import at.ac.tuwien.dse.fairsurgeries.dto.ReservationSuccessfulDTO;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
-import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
 import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
-import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
-import at.ac.tuwien.dse.fairsurgeries.web.MessageController;
 
 @Controller
 public class ReservationController {

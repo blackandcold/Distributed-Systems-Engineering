@@ -153,6 +153,7 @@ public class ActorDoctorController {
 	}
 	
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
+		@SuppressWarnings("unused")
 		Doctor doctor = slotFilter.getDoctor();
 		
 		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));

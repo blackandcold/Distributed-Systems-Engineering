@@ -3,7 +3,6 @@ package at.ac.tuwien.dse.fairsurgeries.domain;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Enumerated;
@@ -16,7 +15,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.layers.repository.mongo.RooMongoEntity;
-import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooMongoEntity
