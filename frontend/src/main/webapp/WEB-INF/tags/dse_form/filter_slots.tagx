@@ -8,10 +8,16 @@
   <jsp:directive.attribute name="hiddenItems" type="java.util.Collection" required="false" rtexprvalue="true" description="The model attribute" />
   <jsp:directive.attribute name="hiddenItemValue" type="java.lang.String" required="false" rtexprvalue="true" description="The model attribute" />
   <jsp:directive.attribute name="hiddenPath" type="java.lang.String" required="false" rtexprvalue="true" description="The model attribute" />
+  <jsp:directive.attribute name="hidePatient" type="java.lang.Boolean" required="false" rtexprvalue="true" description="The model attribute" />
   
-  <c:if test="${empty hiddenField}">
-      <c:set value="notSet" var="hiddenField" />
-    </c:if>
+	<c:if test="${empty hiddenField}">
+		<c:set value="notSet" var="hiddenField" />
+	</c:if>
+	
+	<c:if test="${empty hidePatient}">
+		<c:set value="true" var="hidePatient" />
+	</c:if>
+    
   
   <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_public_slots"
 		modelAttribute="${modelAttribute}" path="${path}"
@@ -39,6 +45,12 @@
 			filter="true"
 			value="${slotFilter.hospital.id}"
 			render="${!(hiddenField=='hospital')}" />
+		<dse_field:select field="patient"
+			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
+			items="${patients}" itemValue="id" path="patient"
+			filter="true"
+			value="${slotFilter.patient.id}"
+			render="${!hidePatient}" />
 		<dse_field:select field="status" disableFormBinding="true"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_status"
 			items="${statusList}" path="status"
