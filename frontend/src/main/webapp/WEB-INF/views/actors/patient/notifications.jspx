@@ -11,6 +11,7 @@
 	<h3>
 		View notifications for patient
 		<c:out value="${patient.firstName}" />
+		<c:out value=" " />
 		<c:out value="${patient.lastName}" />
 	</h3>
 
