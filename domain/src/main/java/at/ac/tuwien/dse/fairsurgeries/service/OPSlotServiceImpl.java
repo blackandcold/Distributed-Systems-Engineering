@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
@@ -24,8 +25,9 @@ public class OPSlotServiceImpl implements OPSlotService {
 	}
 	
 	public List<OPSlot> findByExample(OPSlot slot, OPSlotStatus status) {
-		List<OPSlot> slots = oPSlotRepository.findAll();
-		List<OPSlot> matchingSlots = new ArrayList<OPSlot>(slots);
+		Sort sort = new Sort(Sort.Direction.ASC, "dateFrom", "dateTo", "surgeryType");
+		Iterable<OPSlot> slots = oPSlotRepository.findAll(sort);
+		List<OPSlot> matchingSlots = new ArrayList<OPSlot>();
 
 		logentryService.log("slot", "All slots: " + slots);
 		logentryService.log("slot", "Example: " + slot);
@@ -39,39 +41,38 @@ public class OPSlotServiceImpl implements OPSlotService {
 			SurgeryType type = slot.getSurgeryType();
 
 			for (OPSlot s : slots) {
+				boolean didMatch = true;
+				
 				if (hospital != null && (s.getHospital() == null || !s.getHospital().getId().equals(hospital.getId()))) {
-					matchingSlots.remove(s);
-					continue;
+					didMatch = false;
 				}
 
-				if (patient != null && (s.getPatient() == null || !s.getPatient().getId().equals(patient.getId()))) {
-					matchingSlots.remove(s);
-					continue;
+				else if (patient != null && (s.getPatient() == null || !s.getPatient().getId().equals(patient.getId()))) {
+					didMatch = false;
 				}
 
-				if (doctor != null && (s.getDoctor() == null || !s.getDoctor().getId().equals(doctor.getId()))) {
-					matchingSlots.remove(s);
-					continue;
+				else if (doctor != null && (s.getDoctor() == null || !s.getDoctor().getId().equals(doctor.getId()))) {
+					didMatch = false;
 				}
 
-				if (from != null && !this.isDateEqualToDate(from, s.getDateFrom())) {
-					matchingSlots.remove(s);
-					continue;
+				else if (from != null && !this.isDateEqualToDate(from, s.getDateFrom())) {
+					didMatch = false;
 				}
 
-				if (to != null && !this.isDateEqualToDate(to, s.getDateTo())) {
-					matchingSlots.remove(s);
-					continue;
+				else if (to != null && !this.isDateEqualToDate(to, s.getDateTo())) {
+					didMatch = false;
 				}
 
-				if (type != null && (s.getSurgeryType() == null || !s.getSurgeryType().equals(type))) {
-					matchingSlots.remove(s);
-					continue;
+				else if (type != null && (s.getSurgeryType() == null || !s.getSurgeryType().equals(type))) {
+					didMatch = false;
 				}
 				
-				if (status != null && !s.getStatus().equals(status)) {
-					matchingSlots.remove(s);
-					continue;
+				else if (status != null && !s.getStatus().equals(status)) {
+					didMatch = false;
+				}
+				
+				if (didMatch) {
+					matchingSlots.add(s);
 				}
 			}
 		}
