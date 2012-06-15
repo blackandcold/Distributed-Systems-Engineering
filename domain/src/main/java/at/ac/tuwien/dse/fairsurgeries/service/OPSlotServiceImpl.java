@@ -103,15 +103,10 @@ public class OPSlotServiceImpl implements OPSlotService {
 	}
 
 	public List<OPSlot> findAllFreeSlotsByHospital(Hospital hospital) {
-		List<OPSlot> slotsOfHospital = this.findByHospital(hospital);
-		List<OPSlot> matchingSlots = new ArrayList<OPSlot>(slotsOfHospital);
+		OPSlot example = new OPSlot();
 
-		for (OPSlot slot : slotsOfHospital) {
-			if (slot.getStatus().equals(OPSlotStatus.RESERVED))
-				matchingSlots.remove(slot);
-		}
-		
-		return matchingSlots;
+		example.setHospital(hospital);
+		return this.findByExample(example, OPSlotStatus.FREE);
 	}
 	
 	
