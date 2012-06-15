@@ -106,7 +106,7 @@ public class ActorPublicPersonController {
 	    	
 	    	// set properties per arguments (url parts or get parameters)
 	    	
-			logEntryService.log(Constants.Component.Frontend.toString(), "Parse request failed . showJSON() exception: " + ex.getMessage());
+			//logEntryService.log(Constants.Component.Frontend.toString(), "Parse request failed . showJSON() exception: " + ex.getMessage());
 			opSlots = opSlotService.findByExample(exampleSlot);
 
     	}

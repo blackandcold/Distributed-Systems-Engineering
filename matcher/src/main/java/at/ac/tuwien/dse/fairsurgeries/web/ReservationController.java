@@ -23,6 +23,7 @@ import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
+import at.ac.tuwien.dse.fairsurgeries.web.MessageController;
 
 @Controller
 public class ReservationController {
@@ -109,13 +110,13 @@ public class ReservationController {
 						ReservationSuccessfulDTO notification = new ReservationSuccessfulDTO(new ReservationDTO(reservation), slotDTO);
 
 						logEntryService.log(Constants.Component.Matcher.toString(), "Reservation successful, sending notification");
-						template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
+						MessageController.sendMessage(template, Constants.Queue.NotifierIn, notification);
 					}
 				} else {
 					ReservationFailedDTO notification = new ReservationFailedDTO(new ReservationDTO(reservation), "No Slot found.");
 
 					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
-					template.convertAndSend(Constants.Queue.NotifierIn.toString(), notification);
+					MessageController.sendMessage(template, Constants.Queue.NotifierIn, notification);
 				}
 			}
 
