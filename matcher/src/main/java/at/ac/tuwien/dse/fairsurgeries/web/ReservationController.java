@@ -38,7 +38,6 @@ public class ReservationController {
 	public void handleReservation(Object message) {
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
 		logEntryService.log(Constants.Component.Matcher.toString(), "Message: " + (message == null ? "null" : message));
-		logEntryService.log(Constants.Component.Matcher.toString(), "Message Class: " + message.getClass().getSimpleName());
 		
 		try {
 			if (message instanceof Reservation) {
@@ -67,7 +66,7 @@ public class ReservationController {
 						// by distance)
 						for (Hospital hospital : hospitals) {
 							logEntryService.log(Constants.Component.Matcher.toString(), "Found hospital: " + hospital);
-							List<OPSlot> slots = slotService.findByHospital(hospital);
+							List<OPSlot> slots = slotService.findAllFreeSlotsByHospital(hospital);
 							logEntryService.log(Constants.Component.Matcher.toString(), "Found slots: " + slots);
 
 							for (OPSlot slot : slots) {
