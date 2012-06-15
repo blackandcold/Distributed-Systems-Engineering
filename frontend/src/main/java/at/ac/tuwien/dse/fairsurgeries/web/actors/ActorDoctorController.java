@@ -52,6 +52,12 @@ public class ActorDoctorController {
 	private NotificationService notificationService;
 	
 
+	/**
+	 * This method logs in as as the doctor with the given id and shows the menu of possible actions if successful.
+	 * @param doctorId the id of the doctor we want to login as
+	 * @param uiModel the ui model object
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "{doctorId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger doctorId, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . () for ID: " + doctorId);
@@ -67,6 +73,14 @@ public class ActorDoctorController {
 		}
 	}
 
+	/**
+	 * This method updates the ui model to show a list of slots matching the given criteria.
+	 * @param doctor the logged in doctor
+	 * @param opSlot the example slot 
+	 * @param uiModel the ui model
+	 * @param request the request
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.POST)
 	public String listSlots(@ModelAttribute Doctor doctor, @ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . viewSlots() for doctor: " + doctor);
@@ -91,6 +105,12 @@ public class ActorDoctorController {
 		return "actors/doctor/slots";
 	}
 
+	/**
+	 * This method updates the ui model to show the list of notifications for the logged in doctor. 
+	 * @param doctor the logged in doctor
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
 	public String listNotifications(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor. viewNotifications() for doctor: " + doctor);
@@ -102,6 +122,12 @@ public class ActorDoctorController {
 		return "actors/doctor/notifications";
 	}
 
+	/**
+	 * This method updates the ui model to display all possible actions the doctor can manage
+	 * @param doctor the logged in doctor
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/manageslots", method = RequestMethod.POST)
 	public String manageSlots(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . manageSlots() for doctor: " + doctor);
@@ -114,6 +140,12 @@ public class ActorDoctorController {
 		return "actors/doctor/manageslots";
 	}
 
+	/**
+	 * This method updates the ui model to display the possibilities for "manageReservations"
+	 * @param doctor the logged in doctor
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/reservations", method = RequestMethod.POST)
 	public String manageReservation(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . manageReservations()");
@@ -130,6 +162,12 @@ public class ActorDoctorController {
 		return "actors/doctor/reservations";
 	}
 
+	/**
+	 * This method handles a reservation by posting a message into the MatcherIn-Queue.
+	 * @param reservation the reservation to post
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/doreservation", method = RequestMethod.POST, produces = "text/html")
 	public String doReservation(@ModelAttribute Reservation reservation, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . doReservation()");
@@ -150,6 +188,12 @@ public class ActorDoctorController {
 		return "redirect:" + redirectUrl;
 	}
 	
+	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * @param uiModel the ui model
+	 * @param slotFilter the example slot, used for findByExample
+	 * @param status the status of the slot
+	 */
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
 		@SuppressWarnings("unused")
 		Doctor doctor = slotFilter.getDoctor();
