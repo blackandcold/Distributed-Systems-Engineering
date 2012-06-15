@@ -11,6 +11,7 @@
 	<h3>
 		View notifications for doctor
 		<c:out value="${doctor.firstName}" />
+		<c:out value=" " />
 		<c:out value="${doctor.lastName}" />
 	</h3>
 

@@ -68,18 +68,25 @@ public class ActorDoctorController {
 	}
 
 	@RequestMapping(value = "/slots", method = RequestMethod.POST)
-	public String viewSlots(@ModelAttribute Doctor doctor, @ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
+	public String listSlots(@ModelAttribute Doctor doctor, @ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . viewSlots() for doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
-		if(doctor != null)
+		if (opSlot == null) {
+			opSlot = new OPSlot();
+		}
+		
+		if(doctor != null) {
 			opSlot.setDoctor(doctor);
+		}
 		
 		String status = request.getParameter("status");
-		if(status == null || status.isEmpty())
+		
+		if (status == null || status.isEmpty()) {
 			this.setupModel(uiModel, opSlot, null);
-		else
+		} else {
 			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
+		}
 		
 		return "actors/doctor/slots";
 	}
@@ -99,20 +106,10 @@ public class ActorDoctorController {
 	public String manageSlots(@ModelAttribute Doctor doctor, Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctor . manageSlots() for doctor: " + doctor);
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
+		
 		uiModel.addAttribute("opSlot", new OPSlot());
 		uiModel.addAttribute("opSlots", opSlotService.findByDoctor(doctor));
-
-		uiModel.addAttribute("OPSlot__datefrom_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("OPSlot__dateto_date_format", DateTimeFormat.patternForStyle("M-", LocaleContextHolder.getLocale()));
-
-		/*
-		 * uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		 * uiModel.addAttribute("hospitals",
-		 * hospitalService.findAllHospitals()); uiModel.addAttribute("patients",
-		 * patientService.findAllPatients());
-		 * uiModel.addAttribute("surgerytypes",
-		 * Arrays.asList(SurgeryType.values()));
-		 */
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 
 		return "actors/doctor/manageslots";
 	}
@@ -128,8 +125,7 @@ public class ActorDoctorController {
 		uiModel.addAttribute("reservation", reservation);
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("patients", patientService.findAllPatients());
-		uiModel.addAttribute("OPSlot_datefrom_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("OPSlot_dateto_date_format", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 
 		return "actors/doctor/reservations";
 	}
@@ -149,7 +145,9 @@ public class ActorDoctorController {
 			MessageController.sendMessage(template, Constants.Queue.MatcherIn, reservation);
 		}
 
-		return "actors/doctor/viewslots";
+		String redirectUrl = "/actors/doctor/" + reservation.getDoctor().getId();
+		
+		return "redirect:" + redirectUrl;
 	}
 	
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {

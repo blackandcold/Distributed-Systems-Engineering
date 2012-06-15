@@ -11,12 +11,16 @@
 	<form:create id="fc_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" modelAttribute="opSlot" path="/actors/hospital/createslot" render="${empty dependencies}">
         <field:datetime dateTimePattern="${OPSlot_datefrom_date_format}" field="dateFrom" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom" required="true"/>
         <field:datetime dateTimePattern="${OPSlot_dateto_date_format}" field="dateTo" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo" required="true"/>
+    	<div style="display:none">
     	<dse_field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital" items="${hospitals}" itemValue="id" path="/hospitals" />
+    	</div>
     </form:create>
     
     <dse_form:create id="fc_at_ac_tuwien_dse_fairsurgeries_delete_slots" modelAttribute="opSlot" path="/actors/hospital/deleteslot" render="${empty dependencies}">
     	<field:select field="id" id="c_at_ac_tuwien_dse_fairsurgeries_delete_slot" items="${slotsDeleteList}" itemValue="id" path="/id" />
+    	<div style="display:none">
     	<dse_field:select field="hospital" id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_hospital2" items="${hospitals}" itemValue="id" path="/hospitals" />
+    	</div>
     </dse_form:create>
     
 </div>

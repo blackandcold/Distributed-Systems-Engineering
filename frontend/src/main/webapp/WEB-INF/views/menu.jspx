@@ -47,58 +47,17 @@
 				z="mnvxypr4za1eNqrO8/rSPpLv4/U=" />
 		</menu:category>
 		<menu:category id="c_opslot" z="ehDgzHKBXHZ9IBi5pwEEOiYzDUg=">
-			<menu:item id="i_opslot_new" messageCode="global_menu_new"
-				url="/opslots?form" z="zpdObixoR1zPGzY7VX/iyX57RTI=" />
 			<menu:item id="i_opslot_list" messageCode="global_menu_list"
 				url="/opslots?page=1&amp;size=${empty param.size ? 10 : param.size}"
 				z="PuPz7/Cfj3HyHeU34RXq9unzJD4=" />
 		</menu:category>
+
 
 		<!-- Custom menu section -->
 
 		<menu:category id="c_actor_login">
 			<menu:item id="i_actor_login_go" url="/actors/login" />
 		</menu:category>
-
-
-		<!--
-		<menu:category id="c_actor_public">
-			<menu:item id="i_actor_public_list_slots"
-				messageCode="global_menu_list" url="/actors/public/slots" />
-		</menu:category>
-
-		<menu:category id="c_actor_patient">
-			<menu:item id="i_actor_patient_list_slots"
-				messageCode="global_menu_list" url="/actors/patient/slots" />
-			<menu:item id="i_actor_patient_list_notifications"
-				messageCode="global_menu_list" url="/actors/patient/notifications" />
-		</menu:category>
-
-		<menu:category id="c_actor_doctor">
-			<menu:item id="i_actor_doctor_list_slots"
-				messageCode="global_menu_list" url="/actors/doctor/slots" />
-			<menu:item id="i_actor_doctor_list_notifications"
-				messageCode="global_menu_list" url="/actors/doctor/notifications" />
-			<menu:item id="i_actor_doctor_manage_reservations"
-				messageCode="global_menu_manage" url="/actors/doctor/reservations" />
-		</menu:category>
-
-		<menu:category id="c_actor_hospital">
-			<menu:item id="i_actor_hospital_list_slots"
-				messageCode="global_menu_list" url="/actors/hospital/slots" />
-			<menu:item id="i_actor_hospital_list_notifications"
-				messageCode="global_menu_list" url="/actors/hospital/notifications" />
-			<menu:item id="i_actor_hospital_manage_slots"
-				messageCode="global_menu_manage" url="/actors/hospital/slots" />
-		</menu:category>
-
-		<menu:category id="c_actor_admin">
-			<menu:item id="i_actor_admin_list_slots"
-				messageCode="global_menu_list" url="/actors/admin/slots" />
-		</menu:category>
-
-		-->
-		<!-- Custom menu section end -->
 
 
 	</menu:menu>

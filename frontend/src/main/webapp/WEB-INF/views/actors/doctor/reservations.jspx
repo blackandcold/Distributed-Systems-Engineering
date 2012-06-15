@@ -12,6 +12,7 @@
 	<h3>
 		Make reservation for
 		<c:out value="${doctor.firstName}" />
+		<c:out value=" " />
 		<c:out value="${doctor.lastName}" />
 	</h3>
 
@@ -20,9 +21,11 @@
 		modelAttribute="reservation" path="/actors/doctor/doreservation"
 		render="${empty dependencies}">
 
-		<dse_field:select field="doctor"
-			id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
-			items="${doctors}" itemValue="id" path="patient" />
+		<div style="display: none">
+			<dse_field:select field="doctor"
+				id="c_at_ac_tuwien_dse_fairsurgeries_public_doctor"
+				items="${doctors}" itemValue="id" path="patient" />
+		</div>
 
 		<dse_field:select field="patient"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_patient"
@@ -36,10 +39,10 @@
 			id="c_at_ac_tuwien_dse_fairsurgeries_doctor_reservation_radius" />
 		<field:datetime field="dateFrom"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateFrom"
-			dateTimePattern="${OPSlot_datefrom_date_format}" />
+			dateTimePattern="${dateFormat}" />
 		<field:datetime field="dateTo"
 			id="c_at_ac_tuwien_dse_fairsurgeries_public_dateTo"
-			dateTimePattern="${OPSlot_dateto_date_format}" />
+			dateTimePattern="${dateFormat}" />
 
 	</dse_form:create>
 
