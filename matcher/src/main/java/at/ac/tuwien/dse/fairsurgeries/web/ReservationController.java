@@ -35,10 +35,17 @@ public class ReservationController {
 	@Autowired
 	private LogEntryService logEntryService;
 
+	/**
+	 * The method is executed when a Message is posted to the MatcherIn-Queue.
+	 * It excepts the message to be an instance of Reservation and then tries
+	 * to find a free slot in a hospital matching this reservation.
+	 * @param message an instance of Reservation representing the desired slot reservation
+	 */
 	public void handleReservation(Object message) {
 		logEntryService.log(Constants.Component.Matcher.toString(), "Starting handleReservation()");
 		logEntryService.log(Constants.Component.Matcher.toString(), "Message: " + (message == null ? "null" : message));
 		
+		// To be sure that we don't get an endless loop, catch all Exceptions here
 		try {
 			if (message instanceof Reservation) {
 				Reservation reservation = (Reservation) message;
@@ -55,20 +62,20 @@ public class ReservationController {
 					logEntryService.log(Constants.Component.Matcher.toString(), "Message valid");
 
 					if (patient != null && doctor != null) {
-						logEntryService.log(Constants.Component.Matcher.toString(), "Patient and Doctor != null");
+						// search all hospitals near the patient within the given radius
 						double[] position = patient.getPosition();
 						List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservation.getRadius());
 						Date dateFrom = reservation.getDateFrom();
 						Date dateTo = reservation.getDateTo();
 
 						// search for the first matching slot of a hospital
-						// (sorted
-						// by distance)
+						// (sorted by distance)
 						for (Hospital hospital : hospitals) {
-							logEntryService.log(Constants.Component.Matcher.toString(), "Found hospital: " + hospital);
 							List<OPSlot> slots = slotService.findAllFreeSlotsByHospital(hospital);
-							logEntryService.log(Constants.Component.Matcher.toString(), "Found slots: " + slots);
+							
+							logEntryService.log(Constants.Component.Matcher.toString(), "Found hospital: " + hospital);
 
+							// check all free slots of all hospitals and use the first matching one
 							for (OPSlot slot : slots) {
 								if (slot.getDateFrom().after(dateFrom) && slot.getDateTo().before(dateTo)) {
 									foundSlot = slot;
@@ -85,9 +92,9 @@ public class ReservationController {
 					}
 				}
 
-				logEntryService.log(Constants.Component.Matcher.toString(), "Found slot: " + foundSlot);
-
 				if (foundSlot != null) {
+					logEntryService.log(Constants.Component.Matcher.toString(), "Found slot: " + foundSlot);
+					
 					// Make reservation
 					{
 						SurgeryType surgeryType = reservation.getSurgeryType();
@@ -111,7 +118,7 @@ public class ReservationController {
 				} else {
 					ReservationFailedDTO notification = new ReservationFailedDTO(new ReservationDTO(reservation), "No Slot found.");
 
-					logEntryService.log(Constants.Component.Matcher.toString(), "Reservation failed, sending notification");
+					logEntryService.log(Constants.Component.Matcher.toString(), "No slot found, reservation failed.");
 					MessageController.sendMessage(template, Constants.Queue.NotifierIn, notification);
 				}
 			}

@@ -26,16 +26,23 @@ public class NotificationController {
 	@Autowired
 	private LogEntryService logEntryService;
 
+	/**
+	 * This method listens to messages posted to the NotifierIn-Queue. 
+	 * It expects the message to be an instance of ReservationSuccessfulDTO or ReservationFailedDTO
+	 * and then persists a Notification object with the given information
+	 * @param object the message posted into the queue
+	 */
 	public void handleNotification(Object object) {
 		logEntryService.log(Constants.Component.Notifier.toString(), "Starting handleNotification()");
 		logEntryService.log(Constants.Component.Notifier.toString(), "Notification is of type " + object.getClass().getSimpleName());
 
+		// To be sure that we don't get an endless loop, catch all Exceptions here 
 		try {
 			if (object instanceof ReservationSuccessfulDTO) {
-
 				ReservationSuccessfulDTO notificationDTO = (ReservationSuccessfulDTO) object;
 				OPSlot slot = slotService.findOPSlot(notificationDTO.getSlot().getId());
 
+				// If we found the given slot, persist a notification
 				if (slot != null) {
 					Notification notification = new Notification();
 
