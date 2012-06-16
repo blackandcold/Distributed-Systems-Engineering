@@ -31,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		return matchingNotifications;
 	}
-	
+
 	public List<Notification> findByDoctor(Doctor doctor) {
 		List<Notification> allNotifications = notificationRepository.findAll();
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
@@ -54,6 +54,11 @@ public class NotificationServiceImpl implements NotificationService {
 		return matchingNotifications;
 	}
 	
+	/**
+	 * Finds all notifications for the given patient
+	 * @param patient the patient
+	 * @return list of notifications
+	 */
 	public List<Notification> findByPatient(Patient patient) {
 		List<Notification> allNotifications = notificationRepository.findAll();
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
@@ -74,5 +79,12 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		
 		return matchingNotifications;
+	}
+	
+	@Override
+	public void deleteAllNotifications() {
+		for (Notification notification : this.findAllNotifications()) {
+			this.deleteNotification(notification);
+		}
 	}
 }

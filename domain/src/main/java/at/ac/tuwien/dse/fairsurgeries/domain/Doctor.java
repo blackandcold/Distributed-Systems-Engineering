@@ -23,6 +23,13 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJson(deepSerialize = true)
 public class Doctor implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public Doctor() {}
+	
+	public Doctor(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="doctor")
     private Set<OPSlot> opSlots = new HashSet<OPSlot>();

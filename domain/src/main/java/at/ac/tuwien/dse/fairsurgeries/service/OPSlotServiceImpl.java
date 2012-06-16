@@ -105,12 +105,6 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return this.findByExample(example, OPSlotStatus.FREE);
 	}
 	
-	/**
-	 * Compares two dates by comparing only the year, day of year, hour of day and minute
-	 * @param d1 first date
-	 * @param d2 second date
-	 * @return true, if these components match, false otherwise
-	 */
 	private boolean isDateEqualToDate(Date d1, Date d2) {
 		if (d1 == null && d2 == null) {
 			return true;
@@ -133,6 +127,13 @@ public class OPSlotServiceImpl implements OPSlotService {
 			return false;
 		} else {
 			return true;
+		}
+	}
+	
+	@Override
+	public void deleteAllOPSlots() {
+		for (OPSlot opSlot : this.findAllOPSlots()) {
+			this.deleteOPSlot(opSlot);
 		}
 	}
 }

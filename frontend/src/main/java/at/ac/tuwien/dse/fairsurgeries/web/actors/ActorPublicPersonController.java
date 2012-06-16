@@ -91,6 +91,7 @@ public class ActorPublicPersonController {
 	 * 
 	 */
 	
+	@SuppressWarnings("unused")
 	/**
 	 * @param dateFrom
 	 * @param dateTo

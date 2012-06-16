@@ -32,4 +32,9 @@ public interface NotificationService {
 	 * @return list of notifications
 	 */
 	public List<Notification> findByPatient(Patient patient);
+	
+	/**
+	 * Removes all notifications from the database
+	 */
+	public void deleteAllNotifications();
 }

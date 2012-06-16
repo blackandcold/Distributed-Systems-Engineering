@@ -6,7 +6,7 @@ import at.ac.tuwien.dse.fairsurgeries.domain.LogEntry;
 
 
 public class LogEntryServiceImpl implements LogEntryService {
-	
+
 	public void log(String component, String message) {
 		LogEntry entry = new LogEntry();
 		entry.setComponent(component);
@@ -15,7 +15,6 @@ public class LogEntryServiceImpl implements LogEntryService {
 		
 		this.saveLogEntry(entry);
 	}
-	
 	public void clearLog() {
 		for (LogEntry entry : this.findAllLogEntrys()) {
 			this.deleteLogEntry(entry);

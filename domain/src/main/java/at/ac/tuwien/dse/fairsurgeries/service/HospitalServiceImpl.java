@@ -9,7 +9,7 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 
 public class HospitalServiceImpl implements HospitalService {
 	private static final double DEGREES_TO_KM = 110.;
-	
+
 	public List<Hospital> findHospitalsWithinRadius(double[] position, double radius) {
 		// check for validity of parameters
 		if (position.length < 2 || radius < 0.) {
@@ -25,5 +25,12 @@ public class HospitalServiceImpl implements HospitalService {
 	
 	public List<Hospital> findHospitalsWithinRadius(double latitude, double longitude, double radius) {
 		return this.findHospitalsWithinRadius(new double[]{latitude,longitude}, radius);
+	}
+	
+	@Override
+	public void deleteAllHospitals() {
+		for (Hospital hospital : this.findAllHospitals()) {
+			this.deleteHospital(hospital);
+		}
 	}
 }

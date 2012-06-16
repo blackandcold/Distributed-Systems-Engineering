@@ -26,4 +26,9 @@ public interface HospitalService {
 	 */
 	public List<Hospital> findHospitalsWithinRadius(double latitude, double longitude, double radius);
 	
+	/**
+	 * Removes all hospitals from the database
+	 */
+	public void deleteAllHospitals();
+	
 }

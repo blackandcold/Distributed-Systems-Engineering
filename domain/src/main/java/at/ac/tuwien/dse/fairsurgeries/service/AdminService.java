@@ -4,4 +4,8 @@ import org.springframework.roo.addon.layers.service.RooService;
 
 @RooService(domainTypes = { at.ac.tuwien.dse.fairsurgeries.domain.Admin.class })
 public interface AdminService {
+	/**
+	 * Removes all admins from the database
+	 */
+	public void deleteAllAdmins();
 }
