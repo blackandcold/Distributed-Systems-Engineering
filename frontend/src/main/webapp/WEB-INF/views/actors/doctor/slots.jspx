@@ -19,7 +19,7 @@
 		items="${opSlots}">
 		<dse_field:table data="${opSlots}"
 			id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" create="false"
-			update="false" delete="false" show="false" path="/opslots">
+			update="false" delete="false" show="false" cancel="true" path="/opslots" cancelPath="/actors/doctor/cancelSlotReservation">
 			<table:column date="true" dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom"
 				property="dateFrom" />

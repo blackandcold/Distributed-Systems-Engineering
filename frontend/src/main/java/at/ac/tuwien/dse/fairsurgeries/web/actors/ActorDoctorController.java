@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
@@ -43,7 +44,7 @@ public class ActorDoctorController {
 	@Autowired
 	private HospitalService hospitalService;
 	@Autowired
-	private OPSlotService opSlotService;
+	private OPSlotService slotService;
 	@Autowired
 	private DoctorService doctorService;
 	@Autowired
@@ -134,7 +135,7 @@ public class ActorDoctorController {
 		logEntryService.log(Constants.Component.Frontend.toString(), "uiModel: " + uiModel);
 		
 		uiModel.addAttribute("opSlot", new OPSlot());
-		uiModel.addAttribute("opSlots", opSlotService.findByDoctor(doctor));
+		uiModel.addAttribute("opSlots", slotService.findByDoctor(doctor));
 		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 
 		return "actors/doctor/manageslots";
@@ -189,20 +190,45 @@ public class ActorDoctorController {
 	}
 	
 	/**
+	 * This method handles the cancelation of a reserved op slot and forwards to the menu page of a doctor.
+	 * @param id the id of the slot to cancel
+	 * @param page the page
+	 * @param size the size
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
+	@RequestMapping(value = "/cancelSlotReservation/{id}", method = RequestMethod.DELETE, produces = "text/html")
+    public String cancelSlotReservation(@PathVariable("id") BigInteger id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        OPSlot slot = slotService.findOPSlot(id);
+        Doctor doctor = slot.getDoctor();
+        
+        slot.setPatient(null);
+        slot.setDoctor(null);
+        slot.setHospital(null);
+        slot.setSurgeryType(null);
+        
+        slotService.updateOPSlot(slot);
+        uiModel.asMap().clear();
+        
+        String redirectUrl = "/actors/doctor/" + doctor.getId();
+		
+		return "redirect:" + redirectUrl;
+    }
+	
+	/**
 	 * Private method to update the ui model with the given filter criteria
 	 * @param uiModel the ui model
 	 * @param slotFilter the example slot, used for findByExample
 	 * @param status the status of the slot
 	 */
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
-		@SuppressWarnings("unused")
 		Doctor doctor = slotFilter.getDoctor();
 		
-		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
+		uiModel.addAttribute("opSlots", slotService.findByExample(slotFilter, status));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("hospitals", Arrays.asList(doctor));
+		uiModel.addAttribute("doctors", Arrays.asList(doctor));
 		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
 		uiModel.addAttribute("slotFilter", slotFilter);
 		uiModel.addAttribute("status", status);
