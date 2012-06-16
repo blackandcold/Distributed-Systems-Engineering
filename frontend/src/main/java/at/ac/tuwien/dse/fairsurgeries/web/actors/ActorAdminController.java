@@ -26,6 +26,9 @@ import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
+/**
+ * The controller managing all requests for the actor role "Admin"
+ */
 @Controller
 @RequestMapping("/actors/admin")
 public class ActorAdminController {
@@ -41,6 +44,11 @@ public class ActorAdminController {
 	@Autowired
 	private LogEntryService logEntryService;
 
+	/**
+	 * This method updates the ui model to show a list of all slots.
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.GET, produces = "text/html")
 	public String listSlots(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . listSlots()");
@@ -50,29 +58,25 @@ public class ActorAdminController {
 		return "actors/admin/slots";
 	}
 
+	/**
+	 * This method updates the ui model to show a lis of all slots matching the given criteria
+	 * @param opSlot the example slot (= filter criteria)
+	 * @param uiModel the ui model
+	 * @param request the request object
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.POST, produces = "text/html")
 	public String listFilteredSlots(@ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . listFilteredSlots() example=" + opSlot);
 
 		String status = request.getParameter("status");
-		if(status == null || status.isEmpty())
+		if (status == null || status.isEmpty()) {
 			this.setupModel(uiModel, opSlot, null);
-		else
+		} else {
 			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
+		}
 
 		return "actors/admin/slots";
-	}
-
-	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
-		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter));
-		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
-		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		uiModel.addAttribute("patients", patientService.findAllPatients());
-		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("slotFilter", slotFilter);
-		uiModel.addAttribute("status", status);
 	}
 	
 	/**
@@ -94,4 +98,21 @@ public class ActorAdminController {
 
 	}	
 	
+	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * @param uiModel the ui model
+	 * @param slotFilter the example slot, used for findByExample
+	 * @param status the status of the slot
+	 */
+	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("patients", patientService.findAllPatients());
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", slotFilter);
+		uiModel.addAttribute("status", status);
+	}
 }

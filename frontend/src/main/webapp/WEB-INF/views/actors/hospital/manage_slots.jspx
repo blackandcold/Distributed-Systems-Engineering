@@ -17,12 +17,10 @@
 	<form:create id="fc_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
 		modelAttribute="opSlot" path="/actors/hospital/createslot"
 		render="${empty dependencies}">
-		<field:datetime dateTimePattern="${OPSlot_datefrom_date_format}"
-			field="dateFrom"
+		<field:datetime dateTimePattern="${dateFormat}" field="dateFrom"
 			id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom"
 			required="true" />
-		<field:datetime dateTimePattern="${OPSlot_dateto_date_format}"
-			field="dateTo"
+		<field:datetime dateTimePattern="${dateFormat}" field="dateTo"
 			id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo"
 			required="true" />
 		<div style="display: none">

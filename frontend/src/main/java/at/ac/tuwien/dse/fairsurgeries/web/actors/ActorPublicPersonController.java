@@ -1,5 +1,8 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
@@ -31,10 +33,9 @@ import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import flexjson.JSONSerializer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-
+/**
+ * The controller managing all requests for the actor role "Public Person"
+ */
 @Controller
 @RequestMapping("/actors/public")
 public class ActorPublicPersonController {
@@ -48,6 +49,11 @@ public class ActorPublicPersonController {
 	@Autowired
 	private LogEntryService logEntryService;
 
+	/**
+	 * This method updates the ui model to show a list of all slots.
+	 * @param uiModel the ui model
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.GET, produces = "text/html")
 	public String listSlots(Model uiModel) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlots()");
@@ -57,27 +63,28 @@ public class ActorPublicPersonController {
 		return "actors/public/slots";
 	}
 
+	/**
+	 * This method updates the ui model to show a lis of all slots matching the given criteria
+	 * @param opSlot the example slot (= filter criteria)
+	 * @param uiModel the ui model
+	 * @param request the request object
+	 * @return identifier of the next page we want to visit
+	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.POST, produces = "text/html")
 	public String listFilteredSlots(@ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
 		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listFilteredSlots() example=" + opSlot);
 		String status = request.getParameter("status");
-		if(status == null || status.isEmpty())
+		
+		if (status == null || status.isEmpty()) {
 			this.setupModel(uiModel, opSlot, null);
-		else
+		} else {
 			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
+		}
+		
 		return "actors/public/slots";
 	}
 	
-	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
-		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
-		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
-		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("slotFilter", slotFilter);
-		uiModel.addAttribute("status", status);
-	}
+	
 	
 	/*
 	 * curl -i -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://dse_frontend.cloudfoundry.com/actors/public/listSlotsJSON/dateFrom/01-01-1980/dateTo/16-06-2012 
@@ -163,4 +170,21 @@ public class ActorPublicPersonController {
         // May be for error handling or something 
         //return new ResponseEntity<string>(headers, HttpStatus.NOT_FOUND);
     }
+	
+	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * @param uiModel the ui model
+	 * @param slotFilter the example slot, used for findByExample
+	 * @param status the status of the slot
+	 */
+	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", slotFilter);
+		uiModel.addAttribute("status", status);
+	}
 }

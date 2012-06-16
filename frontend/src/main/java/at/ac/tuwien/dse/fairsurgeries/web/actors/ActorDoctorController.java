@@ -33,6 +33,9 @@ import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 import at.ac.tuwien.dse.fairsurgeries.web.MessageController;
 
+/**
+ * The controller managing all requests for the actor role "Doctor"
+ */
 @Controller
 @RequestMapping("/actors/doctor")
 public class ActorDoctorController {
