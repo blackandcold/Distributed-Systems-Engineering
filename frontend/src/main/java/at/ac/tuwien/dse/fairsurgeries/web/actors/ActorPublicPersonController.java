@@ -1,6 +1,7 @@
 package at.ac.tuwien.dse.fairsurgeries.web.actors;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
@@ -28,6 +30,10 @@ import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import flexjson.JSONSerializer;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 @Controller
 @RequestMapping("/actors/public")
@@ -74,38 +80,63 @@ public class ActorPublicPersonController {
 	}
 	
 	/*
-	 * curl -i -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://dse_frontend.cloudfoundry.com/actors/public/slots_json?example='fuu' 
+	 * curl -i -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://dse_frontend.cloudfoundry.com/actors/public/listSlotsJSON/dateFrom/01-01-1980/dateTo/16-06-2012 
 	 * 
 	 */
 	
-	@RequestMapping(value = "/slots_json", method = RequestMethod.GET, headers = "Accept=application/json", params = {"example"})
+	/**
+	 * @param dateFrom
+	 * @param dateTo
+	 * @return Returns JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/listSlotsJSON/dateFrom/{dateFrom}/dateTo/{dateTo}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity<String> showJSON(@RequestParam("example") String param, Model model) {
-    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . showJSON() param: " + param);
+    public ResponseEntity<String> listSlotsJSON(@PathVariable String dateFrom, @PathVariable String dateTo, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlotsJSON()");
 
     	List<OPSlot> opSlots;
     	/*
     	 * Parsing Request
-    	 * 
-    	 * rewrite to get parameter per url!!! JSON param fucks up everythin
     	 */
     	
     	//JSONDeserializer<OPSlot> deserializer = new JSONDeserializer<OPSlot>();
     	
-    	if(param != null)
-    	{
-	    	OPSlot exampleSlot = new OPSlot();
-	    	
-	    	// set properties per arguments (url parts or get parameters)
-	    	
-			//logEntryService.log(Constants.Component.Frontend.toString(), "Parse request failed . showJSON() exception: " + ex.getMessage());
-			opSlots = opSlotService.findByExample(exampleSlot);
 
-    	}
-    	else
+    	OPSlot exampleSlot = new OPSlot();
+    	if(dateFrom != "")
     	{
-    		opSlots = opSlotService.findAllOPSlots();
+    		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    		Date parsedDateFrom = null;
+    		try
+    		{
+    			parsedDateFrom = (Date)formatter.parse(dateFrom);
+    		}catch(ParseException e)
+    		{
+    			
+    		}
+    		//exampleSlot.setDateFrom(parsedDateFrom);
+    		logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateFrom . listSlotsJSON(): "+dateFrom+" ");
     	}
+    	if(dateTo != "")
+    	{
+    		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    		Date parsedDateTo = null;
+    		try
+    		{
+    			parsedDateTo = (Date)formatter.parse(dateFrom);
+			}catch(ParseException e)
+			{
+				
+			}
+    		//exampleSlot.setDateTo(parsedDateTo);
+    		logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateTo . listSlotsJSON(): "+dateTo+" ");
+    	}
+    	
+    	// set properties per arguments (url parts or get parameters)
+    	
+		logEntryService.log(Constants.Component.Frontend.toString(), "Example generated . listSlotsJSON(): " + exampleSlot);
+		opSlots = opSlotService.findByExample(exampleSlot);
+
     	
     	/*
     	 * Answere
@@ -129,7 +160,7 @@ public class ActorPublicPersonController {
         headers.add("Content-Type", "application/json; charset=utf-8");
         return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
       
-        // Some Code Missing Here  
+        // May be for error handling or something 
         //return new ResponseEntity<string>(headers, HttpStatus.NOT_FOUND);
     }
 }

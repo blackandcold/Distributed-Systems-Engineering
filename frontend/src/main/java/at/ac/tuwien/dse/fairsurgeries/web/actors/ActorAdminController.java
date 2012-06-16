@@ -7,6 +7,9 @@ import javax.servlet.ServletRequest;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -71,4 +74,24 @@ public class ActorAdminController {
 		uiModel.addAttribute("slotFilter", slotFilter);
 		uiModel.addAttribute("status", status);
 	}
+	
+	/**
+	 * @param uiModel
+	 * @return returns just a http OK status
+	 */
+	@RequestMapping(value = "/reset", method = RequestMethod.GET, produces = "text/json")
+	public ResponseEntity<String> resetDatabase(Model uiModel) {
+		logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . resetDatabase() resetting all data to default dummy content");
+
+		/* TODO: Datenbank leeren */
+		
+		/* TODO: Testdaten anlegen */
+		
+		
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<String>("", headers, HttpStatus.OK);
+
+	}	
+	
 }
