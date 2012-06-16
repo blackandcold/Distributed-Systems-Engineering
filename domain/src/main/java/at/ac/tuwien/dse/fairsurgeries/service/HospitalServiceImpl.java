@@ -24,6 +24,6 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 	
 	public List<Hospital> findHospitalsWithinRadius(double latitude, double longitude, double radius) {
-		return this.findHospitalsWithinDistance(new double[]{latitude,longitude}, radius);
+		return this.findHospitalsWithinRadius(new double[]{latitude,longitude}, radius);
 	}
 }
