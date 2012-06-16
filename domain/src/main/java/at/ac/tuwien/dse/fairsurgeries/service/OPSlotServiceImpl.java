@@ -16,10 +16,22 @@ import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 
 public class OPSlotServiceImpl implements OPSlotService {
 
+	/**
+	 * Finds all op slots that match the given slot example
+	 * @param slot the example
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findByExample(OPSlot slot) {
 		return findByExample(slot, null);
 	}
 	
+	/**
+	 * Finds all op slots that match the given slot example, additionally comparing the
+	 * immutable op slot status
+	 * @param slot the example
+	 * @param status OPSlotStatus to filter
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findByExample(OPSlot slot, OPSlotStatus status) {
 		// We sort by dateFrom, dateTo and surgeryType
 		Sort sort = new Sort(Sort.Direction.ASC, "dateFrom", "dateTo", "surgeryType");
@@ -77,6 +89,11 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return matchingSlots;
 	}
 
+	/**
+	 * Finds all op slots of the given patient
+	 * @param patient the patient
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findByPatient(Patient patient) {
 		OPSlot example = new OPSlot();
 
@@ -84,6 +101,11 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return this.findByExample(example);
 	}
 
+	/**
+	 * Finds all op slots of the given doctor
+	 * @param doctor the doctor
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findByDoctor(Doctor doctor) {
 		OPSlot example = new OPSlot();
 
@@ -91,6 +113,11 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return this.findByExample(example);
 	}
 
+	/**
+	 * Finds all op slots of the given hospital
+	 * @param hospital the hospital
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findByHospital(Hospital hospital) {
 		OPSlot example = new OPSlot();
 
@@ -98,6 +125,11 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return this.findByExample(example);
 	}
 
+	/**
+	 * Finds all FREE op slots of the given hospital, i.e. all slots that have not been assigned to a patient
+	 * @param hospital the hospital
+	 * @return list of op slots
+	 */
 	public List<OPSlot> findAllFreeSlotsByHospital(Hospital hospital) {
 		OPSlot example = new OPSlot();
 
