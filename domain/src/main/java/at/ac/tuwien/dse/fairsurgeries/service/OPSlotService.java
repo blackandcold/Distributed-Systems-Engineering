@@ -62,4 +62,9 @@ public interface OPSlotService {
 	 */
 	public List<OPSlot> findAllFreeSlotsByHospital(Hospital hospital);
 	
+	/**
+	 * Removes all op slots from the database
+	 */
+	public void deleteAllOPSlots();
+	
 }

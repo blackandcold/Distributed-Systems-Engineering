@@ -10,11 +10,6 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 
 public class NotificationServiceImpl implements NotificationService {
 	
-	/**
-	 * Finds all notifications for the given hospital
-	 * @param hospital the hospital
-	 * @return list of notifications
-	 */
 	public List<Notification> findByHospital(Hospital hospital) {
 		List<Notification> allNotifications = notificationRepository.findAll();
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
@@ -36,12 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		return matchingNotifications;
 	}
-	
-	/**
-	 * Finds all notifications for the given doctor
-	 * @param doctor the doctor
-	 * @return list of notifications
-	 */
+
 	public List<Notification> findByDoctor(Doctor doctor) {
 		List<Notification> allNotifications = notificationRepository.findAll();
 		List<Notification> matchingNotifications = new ArrayList<Notification>(allNotifications);
@@ -89,5 +79,12 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		
 		return matchingNotifications;
+	}
+	
+	@Override
+	public void deleteAllNotifications() {
+		for (Notification notification : this.findAllNotifications()) {
+			this.deleteNotification(notification);
+		}
 	}
 }

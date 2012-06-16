@@ -21,6 +21,14 @@ import org.springframework.roo.addon.layers.repository.mongo.RooMongoEntity;
 @RooJson(deepSerialize = true)
 public class OPSlot implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public OPSlot() {}
+	
+	public OPSlot(Hospital hospital, Date dateFrom, Date dateTo) {
+		this.hospital = hospital;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
+	}
 
 	@NotNull
     @Temporal(TemporalType.TIMESTAMP)

@@ -26,7 +26,6 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
-import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
@@ -44,8 +43,6 @@ public class ActorDoctorController {
 	private AmqpTemplate template;
 	@Autowired
 	private LogEntryService logEntryService;
-	@Autowired
-	private HospitalService hospitalService;
 	@Autowired
 	private OPSlotService slotService;
 	@Autowired
