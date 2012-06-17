@@ -8,12 +8,12 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<h3>
+	<h1>
 		View notifications for doctor
 		<c:out value="${doctor.firstName}" />
 		<c:out value=" " />
 		<c:out value="${doctor.lastName}" />
-	</h3>
+	</h1>
 
 	<page:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_Notification"
 		items="${notifications}" z="PeVrQ2VavRkwXfnR/0dZ1u24Ndw=">

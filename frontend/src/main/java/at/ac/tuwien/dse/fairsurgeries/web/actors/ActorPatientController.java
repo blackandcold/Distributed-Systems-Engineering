@@ -39,6 +39,9 @@ import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
+/**
+ * The controller managing all requests for the actor role "Patient"
+ */
 @Controller
 @RequestMapping("/actors/patient")
 public class ActorPatientController {
@@ -56,11 +59,15 @@ public class ActorPatientController {
 	@Autowired
 	private NotificationService notificationService;
 
-	
 	/**
-	 * @param patientId the patient Id
+	 * This method logs in as as the patient with the given id and shows the
+	 * menu of possible actions if successful.
+	 * 
+	 * @param patientId
+	 *            the id of the patient we want to login as
 	 * @param uiModel
-	 * @return view identification string
+	 *            the ui model object
+	 * @return identifier of the next page we want to visit
 	 */
 	@RequestMapping(value = "{patientId}", method = RequestMethod.GET)
 	public String showMenu(@PathVariable BigInteger patientId, Model uiModel) {
@@ -76,13 +83,20 @@ public class ActorPatientController {
 			return "redirect:/resourceNotFound";
 		}
 	}
-	
+
 	/**
-	 * @param patient actual patient
-	 * @param opSlot OPSlot from view
+	 * This method updates the ui model to show a list of slots matching the
+	 * given criteria.
+	 * 
+	 * @param patient
+	 *            the logged in patient
+	 * @param opSlot
+	 *            the example slot
 	 * @param uiModel
+	 *            the ui model
 	 * @param request
-	 * @return view identification string
+	 *            the request
+	 * @return identifier of the next page we want to visit
 	 */
 	@RequestMapping(value = "/slots", method = RequestMethod.POST)
 	public String listSlots(@ModelAttribute Patient patient, @ModelAttribute OPSlot opSlot, Model uiModel, ServletRequest request) {
@@ -92,20 +106,25 @@ public class ActorPatientController {
 		if (patient != null) {
 			opSlot.setPatient(patient);
 		}
-		
+
 		String status = request.getParameter("status");
-		if(status == null || status.isEmpty())
+		if (status == null || status.isEmpty())
 			this.setupModel(uiModel, opSlot, null);
 		else
 			this.setupModel(uiModel, opSlot, OPSlotStatus.valueOf(status));
 
 		return "actors/patient/slots";
 	}
-	
+
 	/**
-	 * @param patient the actual patient
+	 * This method updates the ui model to show the list of notifications for
+	 * the logged in patient.
+	 * 
+	 * @param patient
+	 *            the logged in patient
 	 * @param uiModel
-	 * @return view identification string
+	 *            the ui model
+	 * @return identifier of the next page we want to visit
 	 */
 	@RequestMapping(value = "/notifications", method = RequestMethod.POST)
 	public String listNotifications(@ModelAttribute Patient patient, Model uiModel) {
@@ -117,15 +136,20 @@ public class ActorPatientController {
 
 		return "actors/patient/notifications";
 	}
-	
+
 	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * 
 	 * @param uiModel
-	 * @param slotFilter Filter Attributes
-	 * @param status Status of the OPSlot
+	 *            the ui model
+	 * @param slotFilter
+	 *            the example slot, used for findByExample
+	 * @param status
+	 *            the status of the slot
 	 */
 	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
 		Patient patient = slotFilter.getPatient();
-		
+
 		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
 		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
 		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));

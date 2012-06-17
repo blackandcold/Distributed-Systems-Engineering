@@ -9,7 +9,26 @@ import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 @RooService(domainTypes = { at.ac.tuwien.dse.fairsurgeries.domain.Hospital.class })
 public interface HospitalService {
 	
-	public List<Hospital> findHospitalsWithinDistance(double[] position, double radius);
+	/**
+	 * Performs a geo search for all hospitals that are within the given radius of the given position.
+	 * @param position lat/lng pair position
+	 * @param radius the search radius in km
+	 * @return a list of hospitals within the given radius
+	 */
+	public List<Hospital> findHospitalsWithinRadius(double[] position, double radius);
+	
+	/**
+	 * Performs a geo search for all hospitals that are within the given radius of the given lat/lng pair.
+	 * @param latitude the latitude of the position
+	 * @param longitude the longitude of the position
+	 * @param radius the search radius in km
+	 * @return a list of hospitals within the given radius
+	 */
 	public List<Hospital> findHospitalsWithinRadius(double latitude, double longitude, double radius);
+	
+	/**
+	 * Removes all hospitals from the database
+	 */
+	public void deleteAllHospitals();
 	
 }

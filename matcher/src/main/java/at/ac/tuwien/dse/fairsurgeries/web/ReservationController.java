@@ -64,7 +64,7 @@ public class ReservationController {
 					if (patient != null && doctor != null) {
 						// search all hospitals near the patient within the given radius
 						double[] position = patient.getPosition();
-						List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position[0], position[1], reservation.getRadius());
+						List<Hospital> hospitals = hospitalService.findHospitalsWithinRadius(position, reservation.getRadius());
 						Date dateFrom = reservation.getDateFrom();
 						Date dateTo = reservation.getDateTo();
 
@@ -103,7 +103,7 @@ public class ReservationController {
 						foundSlot.setPatient(patient);
 						foundSlot.setDoctor(doctor);
 
-						slotService.saveOPSlot(foundSlot);
+						slotService.updateOPSlot(foundSlot);
 						logEntryService.log(Constants.Component.Matcher.toString(), "Updated slot: " + foundSlot);
 					}
 

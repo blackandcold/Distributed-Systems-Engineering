@@ -15,6 +15,13 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooMongoEntity
 @RooJson(deepSerialize = true)
 public class Admin {
+	
+	public Admin() {}
+	
+	public Admin(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
     @NotNull
     private String firstName;

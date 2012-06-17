@@ -9,12 +9,12 @@
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
-	<h3>
+	<h1>
 		Make reservation for
 		<c:out value="${doctor.firstName}" />
 		<c:out value=" " />
 		<c:out value="${doctor.lastName}" />
-	</h3>
+	</h1>
 
 	<dse_form:create
 		id="fc_at_ac_tuwien_dse_fairsurgeries_doctor_reservations"

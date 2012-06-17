@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
@@ -17,21 +16,17 @@ import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 
 public class OPSlotServiceImpl implements OPSlotService {
 
-	@Autowired
-	LogEntryService logentryService;
-
 	public List<OPSlot> findByExample(OPSlot slot) {
 		return findByExample(slot, null);
 	}
 	
 	public List<OPSlot> findByExample(OPSlot slot, OPSlotStatus status) {
+		// We sort by dateFrom, dateTo and surgeryType
 		Sort sort = new Sort(Sort.Direction.ASC, "dateFrom", "dateTo", "surgeryType");
 		Iterable<OPSlot> slots = oPSlotRepository.findAll(sort);
 		List<OPSlot> matchingSlots = new ArrayList<OPSlot>();
 
-		logentryService.log("slot", "All slots: " + slots);
-		logentryService.log("slot", "Example: " + slot);
-
+		// check if everything is valid
 		if (slots != null && slot != null) {
 			Hospital hospital = slot.getHospital();
 			Patient patient = slot.getPatient();
@@ -40,6 +35,8 @@ public class OPSlotServiceImpl implements OPSlotService {
 			Date to = slot.getDateTo();
 			SurgeryType type = slot.getSurgeryType();
 
+			// we match each set criteria, and if one doesn't match we don't add the slot
+			// to our list of matching slots
 			for (OPSlot s : slots) {
 				boolean didMatch = true;
 				
@@ -77,8 +74,6 @@ public class OPSlotServiceImpl implements OPSlotService {
 			}
 		}
 
-		logentryService.log("slot", "Matching Slots: " + matchingSlots);
-
 		return matchingSlots;
 	}
 
@@ -110,7 +105,6 @@ public class OPSlotServiceImpl implements OPSlotService {
 		return this.findByExample(example, OPSlotStatus.FREE);
 	}
 	
-	
 	private boolean isDateEqualToDate(Date d1, Date d2) {
 		if (d1 == null && d2 == null) {
 			return true;
@@ -133,6 +127,13 @@ public class OPSlotServiceImpl implements OPSlotService {
 			return false;
 		} else {
 			return true;
+		}
+	}
+	
+	@Override
+	public void deleteAllOPSlots() {
+		for (OPSlot opSlot : this.findAllOPSlots()) {
+			this.deleteOPSlot(opSlot);
 		}
 	}
 }

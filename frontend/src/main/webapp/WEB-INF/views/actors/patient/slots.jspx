@@ -10,26 +10,20 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 	<h1>Slots of Patient ${patient}</h1>
-	
-	<dse_form:filter_slots
-		modelAttribute="slotFilter"
-		path="/actors/patient/slots"
-		hiddenField="patient"
-		hiddenItems="${patients}"
-		hiddenItemValue="id"
-		hiddenPath="patient" />
+
+	<dse_form:filter_slots modelAttribute="slotFilter"
+		path="/actors/patient/slots" hiddenField="patient"
+		hiddenItems="${patients}" hiddenItemValue="id" hiddenPath="patient" />
 
 	<form:list id="pl_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot"
 		items="${opSlots}">
 		<dse_field:table data="${opSlots}"
 			id="l_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot" create="false"
 			update="false" delete="false" show="false" path="/opslots">
-			<table:column date="true"
-				dateTimePattern="${dateFormat}"
+			<table:column date="true" dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateFrom"
 				property="dateFrom" />
-			<table:column date="true"
-				dateTimePattern="${dateFormat}"
+			<table:column date="true" dateTimePattern="${dateFormat}"
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_dateTo"
 				property="dateTo" />
 			<table:column
@@ -44,6 +38,6 @@
 			<table:column
 				id="c_at_ac_tuwien_dse_fairsurgeries_domain_OPSlot_status"
 				property="status" />
-			</dse_field:table>
+		</dse_field:table>
 	</form:list>
 </div>
