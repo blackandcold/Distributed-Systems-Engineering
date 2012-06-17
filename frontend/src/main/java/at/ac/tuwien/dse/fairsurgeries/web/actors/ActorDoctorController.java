@@ -10,6 +10,9 @@ import org.joda.time.format.DateTimeFormat;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,11 +20,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import flexjson.JSONSerializer;
+import flexjson.JSONDeserializer;
 
 import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
+import at.ac.tuwien.dse.fairsurgeries.domain.Patient;
 import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
@@ -269,4 +277,146 @@ public class ActorDoctorController {
 		uiModel.addAttribute("slotFilter", slotFilter);
 		uiModel.addAttribute("status", status);
 	}
+	
+	/* REST */
+	
+	
+	/**
+	 * list all notifications
+	 * 
+	 * @param doctorId 
+	 * 				the ID of the actor
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/listNotificationsJSON/{doctorId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> listNotificationsJSON(@PathVariable BigInteger doctorId, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . listNotificationsJSON()");
+
+    	Doctor doctor;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+    	if(doctorId != null)
+    		doctor = doctorService.findDoctor(doctorId);
+    	else
+            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+
+        if(doctor == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+ 
+		List<Notification> notifications = notificationService.findByDoctor(doctor);
+
+    	//Generate JSON
+    	JSONSerializer serializer = new JSONSerializer();
+        String outputJSON = serializer.serialize(notifications);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
+    }
+	
+	/**
+	 * Lists all slots for a doctor
+	 * 
+	 * @param doctorId 
+	 * 				the ID of the actor
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/listSlotsJSON/{doctorId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> listSlotsJSON(@PathVariable BigInteger doctorId, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . listSlotsJSON()");
+
+    	Doctor doctor;
+    	List<OPSlot> opSlots;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+    	if(doctorId != null)
+    		doctor = doctorService.findDoctor(doctorId);
+    	else
+            return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+
+        if(doctor == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+ 
+        OPSlot exampleSlot = new OPSlot();
+        exampleSlot.setDoctor(doctor);
+        
+        
+		opSlots = slotService.findByExample(exampleSlot);
+		
+    	//Generate JSON
+    	JSONSerializer serializer = new JSONSerializer();
+        String outputJSON = serializer.serialize(opSlots);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
+    }	
+	
+	/**
+	 * Cancels a reservation with the given id
+	 * 
+	 * @param id 
+	 * 				the ID of the slot
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/cancelSlotReservationJSON/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> cancelSlotReservationJSON(@PathVariable BigInteger id, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . cancelSlotReservationJSON()");
+
+    	Doctor doctor;
+        HttpHeaders headers = new HttpHeaders();
+        
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+		OPSlot slot = slotService.findOPSlot(id);
+		//doctor = slot.getDoctor();
+
+		slot.setPatient(null);
+		slot.setDoctor(null);
+		slot.setHospital(null);
+		slot.setSurgeryType(null);
+
+		slotService.updateOPSlot(slot);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }	
+	
+	/**
+	 * This method takes a reservation in JSON as parameter and sends a Message to the matcher.
+	 * 
+	 * @param reservation 
+	 * 				JSON entity of type Reservation
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/doSlotReservationJSON/", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> doSlotReservationJSON(@RequestParam("reservation") String reservation, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorDoctorController . doSlotReservationJSON()");
+
+        HttpHeaders headers = new HttpHeaders();
+        Reservation reservationEntitiy = new JSONDeserializer<Reservation>().deserialize( reservation );
+        
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+		if (reservation != null) {
+			MessageController.sendMessage(template, Constants.Queue.MatcherIn, reservationEntitiy);
+		}
+		else
+		{
+			return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+		}
+
+        
+    	//Output header with content
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }	
+	
 }
