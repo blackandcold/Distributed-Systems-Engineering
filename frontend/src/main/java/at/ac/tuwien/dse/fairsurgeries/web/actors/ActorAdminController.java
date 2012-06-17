@@ -40,6 +40,12 @@ import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
 import at.ac.tuwien.dse.fairsurgeries.service.PatientService;
 
+/*
+import com.jayway.restassured.RestAssured.*;
+import com.jayway.restassured.matcher.RestAssuredMatchers.*;
+import org.hamcrest.Matchers.*;
+*/
+
 /**
  * The controller managing all requests for the actor role "Admin"
  */
@@ -99,6 +105,78 @@ public class ActorAdminController {
 	}
 	
 	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * @param uiModel the ui model
+	 * @param slotFilter the example slot, used for findByExample
+	 * @param status the status of the slot
+	 */
+	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("patients", patientService.findAllPatients());
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", slotFilter);
+		uiModel.addAttribute("status", status);
+	}
+	
+	
+	/* REST */
+	
+	/**
+	 * Lists all slots
+	 *
+	 * @return Returns 
+	 * 				JSON header and content of the result
+	 */
+	@RequestMapping(value = "/listSlotsJSON/", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> listSlotsJSON(Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . listSlotsJSON()");
+
+    	List<OPSlot> opSlots;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+        OPSlot exampleSlot = new OPSlot();        
+        
+		opSlots = opSlotService.findByExample(exampleSlot);
+		
+    	//Generate JSON
+    	JSONSerializer serializer = new JSONSerializer();
+        String outputJSON = serializer.serialize(opSlots);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
+    }	
+	
+	/**
+	 * ru
+	 *
+	 * @return Returns 
+	 * 				JSON header and content of the result
+	 */
+	@RequestMapping(value = "/test", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> test(Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . test()");
+        
+    	HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+    	
+    	//String json = get("dse_frontend.cloudfoundry.com/actors/public/listSlotsJSON/dateFrom/01-01-1980/dateTo/16-06-2012").asString();
+        
+    	
+    	
+    	//Output header with content
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }	
+	
+	
+	/**
 	 * @param uiModel
 	 * @return returns just a http OK status
 	 */
@@ -154,53 +232,5 @@ public class ActorAdminController {
         return new ResponseEntity<String>("", headers, HttpStatus.OK);
 
 	}	
-	
-	/**
-	 * Private method to update the ui model with the given filter criteria
-	 * @param uiModel the ui model
-	 * @param slotFilter the example slot, used for findByExample
-	 * @param status the status of the slot
-	 */
-	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
-		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter));
-		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
-		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		uiModel.addAttribute("patients", patientService.findAllPatients());
-		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("slotFilter", slotFilter);
-		uiModel.addAttribute("status", status);
-	}
-	
-	
-	/* REST */
-	
-	/**
-	 * Lists all slots
-	 *
-	 * @return Returns 
-	 * 				JSON header and content of the result
-	 */
-	@RequestMapping(value = "/listSlotsJSON/", method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> listSlotsJSON(Model model) {
-    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorAdminController . listSlotsJSON()");
-
-    	List<OPSlot> opSlots;
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-    	
-        OPSlot exampleSlot = new OPSlot();        
-        
-		opSlots = opSlotService.findByExample(exampleSlot);
-		
-    	//Generate JSON
-    	JSONSerializer serializer = new JSONSerializer();
-        String outputJSON = serializer.serialize(opSlots);
-        
-    	//Output header with content
-        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
-    }	
 	
 }
