@@ -84,7 +84,24 @@ public class ActorPublicPersonController {
 		return "actors/public/slots";
 	}
 	
+	/**
+	 * Private method to update the ui model with the given filter criteria
+	 * @param uiModel the ui model
+	 * @param slotFilter the example slot, used for findByExample
+	 * @param status the status of the slot
+	 */
+	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
+		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
+		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
+		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
+		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
+		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
+		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
+		uiModel.addAttribute("slotFilter", slotFilter);
+		uiModel.addAttribute("status", status);
+	}
 	
+	/* REST */
 	
 	/*
 	 * curl -i -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://dse_frontend.cloudfoundry.com/actors/public/listSlotsJSON/dateFrom/01-01-1980/dateTo/16-06-2012 
@@ -114,7 +131,7 @@ public class ActorPublicPersonController {
     	
 
     	OPSlot exampleSlot = new OPSlot();
-    	if(dateFrom != "")
+    	if(dateFrom != null && dateFrom != "")
     	{
     		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     		Date parsedDateFrom = null;
@@ -128,7 +145,7 @@ public class ActorPublicPersonController {
     		//exampleSlot.setDateFrom(parsedDateFrom);
     		logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateFrom . listSlotsJSON(): "+dateFrom+" ");
     	}
-    	if(dateTo != "")
+    	if(dateTo != null && dateTo != "")
     	{
     		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     		Date parsedDateTo = null;
@@ -173,20 +190,4 @@ public class ActorPublicPersonController {
         //return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
     }
 	
-	/**
-	 * Private method to update the ui model with the given filter criteria
-	 * @param uiModel the ui model
-	 * @param slotFilter the example slot, used for findByExample
-	 * @param status the status of the slot
-	 */
-	private void setupModel(Model uiModel, OPSlot slotFilter, OPSlotStatus status) {
-		uiModel.addAttribute("opSlots", opSlotService.findByExample(slotFilter, status));
-		uiModel.addAttribute("surgeryTypes", Arrays.asList(SurgeryType.values()));
-		uiModel.addAttribute("statusList", Arrays.asList(OPSlotStatus.values()));
-		uiModel.addAttribute("hospitals", hospitalService.findAllHospitals());
-		uiModel.addAttribute("doctors", doctorService.findAllDoctors());
-		uiModel.addAttribute("dateFormat", DateTimeFormat.patternForStyle("MS", LocaleContextHolder.getLocale()));
-		uiModel.addAttribute("slotFilter", slotFilter);
-		uiModel.addAttribute("status", status);
-	}
 }

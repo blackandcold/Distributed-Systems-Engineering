@@ -160,6 +160,8 @@ public class ActorPatientController {
 		uiModel.addAttribute("slotFilter", slotFilter);
 		uiModel.addAttribute("status", status);
 	}
+	
+	/* REST */
 
 	/**
 	 * @param patientId the ID of the Patient

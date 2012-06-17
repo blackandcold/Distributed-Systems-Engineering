@@ -10,17 +10,27 @@ import javax.servlet.ServletRequest;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
+
+import at.ac.tuwien.dse.fairsurgeries.domain.Doctor;
 import at.ac.tuwien.dse.fairsurgeries.domain.Hospital;
 import at.ac.tuwien.dse.fairsurgeries.domain.Notification;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlot;
 import at.ac.tuwien.dse.fairsurgeries.domain.OPSlotStatus;
+import at.ac.tuwien.dse.fairsurgeries.domain.Reservation;
 import at.ac.tuwien.dse.fairsurgeries.domain.SurgeryType;
 import at.ac.tuwien.dse.fairsurgeries.general.Constants;
 import at.ac.tuwien.dse.fairsurgeries.service.DoctorService;
@@ -28,6 +38,7 @@ import at.ac.tuwien.dse.fairsurgeries.service.HospitalService;
 import at.ac.tuwien.dse.fairsurgeries.service.LogEntryService;
 import at.ac.tuwien.dse.fairsurgeries.service.NotificationService;
 import at.ac.tuwien.dse.fairsurgeries.service.OPSlotService;
+import at.ac.tuwien.dse.fairsurgeries.web.MessageController;
 
 /**
  * The controller managing all requests for the actor role "Hospital"
@@ -209,4 +220,135 @@ public class ActorHospitalController {
 		uiModel.addAttribute("slotFilter", slotFilter);
 		uiModel.addAttribute("status", status);
 	}
+	
+	/* REST */
+	
+	/**
+	 * list all notifications
+	 * 
+	 * @param hospitalId 
+	 * 				the ID of the actor
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/listNotificationsJSON/{hospitalId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> listNotificationsJSON(@PathVariable BigInteger hospitalId, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . listNotificationsJSON()");
+
+    	Hospital hospital;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+    	if(hospitalId != null)
+    		hospital = hospitalService.findHospital(hospitalId);
+    	else
+            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+
+        if(hospital == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+ 
+		List<Notification> notifications = notificationService.findByHospital(hospital);
+
+    	//Generate JSON
+    	JSONSerializer serializer = new JSONSerializer();
+        String outputJSON = serializer.serialize(notifications);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
+    }
+	
+	/**
+	 * Lists all slots for a actor
+	 * 
+	 * @param hospitalId 
+	 * 				the ID of the actor
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/listSlotsJSON/{hospitalId}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> listSlotsJSON(@PathVariable BigInteger hospitalId, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . listSlotsJSON()");
+
+    	Hospital hospital;
+    	List<OPSlot> opSlots;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+    	
+    	if(hospitalId != null)
+    		hospital = hospitalService.findHospital(hospitalId);
+    	else
+            return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+
+        if(hospital == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+ 
+        OPSlot exampleSlot = new OPSlot();
+        exampleSlot.setHospital(hospital);
+        
+        
+		opSlots = slotService.findByExample(exampleSlot);
+		
+    	//Generate JSON
+    	JSONSerializer serializer = new JSONSerializer();
+        String outputJSON = serializer.serialize(opSlots);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
+    }	
+	
+	/**
+	 * this method creates a slot
+	 * 
+	 * @param OPSlot 
+	 * 				JSON entity of type OPSlot
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/createSlotJSON/", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> createSlotJSON(@RequestParam("opslot") String opSlot, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . createSlotJSON()");
+
+        HttpHeaders headers = new HttpHeaders();
+        OPSlot opSlotEntity = new JSONDeserializer<OPSlot>().deserialize( opSlot );
+        
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        if(opSlotEntity == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+        else
+        	slotService.saveOPSlot(opSlotEntity);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }	
+	
+	/**
+	 * this method delets a slot
+	 * 
+	 * @param OPSlot 
+	 * 				JSON entity of type OPSlot
+	 * @return Returns 
+	 * 				JSON Header and Content of the Result
+	 */
+	@RequestMapping(value = "/deleteSlotJSON/", method = RequestMethod.POST, headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> deleteSlotJSON(@RequestParam("opslot") String opSlot, Model model) {
+    	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorHospital . deleteSlotJSON()");
+
+        HttpHeaders headers = new HttpHeaders();
+        OPSlot opSlotEntity = new JSONDeserializer<OPSlot>().deserialize( opSlot );
+        
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        if(opSlotEntity == null)
+        	return new ResponseEntity<String>(headers, HttpStatus.BAD_REQUEST);
+        else
+        	slotService.deleteOPSlot(opSlotEntity);
+        
+    	//Output header with content
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }	
 }
