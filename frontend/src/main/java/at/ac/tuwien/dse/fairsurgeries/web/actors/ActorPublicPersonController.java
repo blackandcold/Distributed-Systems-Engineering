@@ -85,8 +85,8 @@ public class ActorPublicPersonController {
 	 */
 	
 	/**
-	 * @param dateFrom
-	 * @param dateTo
+	 * @param dateFrom starting date in format dd-mm-yyyy
+	 * @param dateTo end date in format dd-mm-yyyy
 	 * @return Returns JSON Header and Content of the Result
 	 */
 	@RequestMapping(value = "/listSlotsJSON/dateFrom/{dateFrom}/dateTo/{dateTo}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -95,6 +95,9 @@ public class ActorPublicPersonController {
     	logEntryService.log(Constants.Component.Frontend.toString(), "Starting ActorPublicPersonController . listSlotsJSON()");
 
     	List<OPSlot> opSlots;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        
     	/*
     	 * Parsing Request
     	 */
@@ -112,7 +115,7 @@ public class ActorPublicPersonController {
     			parsedDateFrom = (Date)formatter.parse(dateFrom);
     		}catch(ParseException e)
     		{
-    			
+    			logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateFrom . listSlotsJSON() exception: "+e.getMessage()+" ");
     		}
     		//exampleSlot.setDateFrom(parsedDateFrom);
     		logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateFrom . listSlotsJSON(): "+dateFrom+" ");
@@ -126,9 +129,9 @@ public class ActorPublicPersonController {
     			parsedDateTo = (Date)formatter.parse(dateFrom);
 			}catch(ParseException e)
 			{
-				
+				logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateTo . listSlotsJSON() exception: "+e.getMessage()+" ");
 			}
-    		//exampleSlot.setDateTo(parsedDateTo);
+    		//exampleSlot.setDateTo(parsedDateTo); //Does not work!
     		logEntryService.log(Constants.Component.Frontend.toString(), "Parse request dateTo . listSlotsJSON(): "+dateTo+" ");
     	}
     	
@@ -156,11 +159,9 @@ public class ActorPublicPersonController {
     	*/
         String outputJSON = serializer.serialize(opSlots);
     	
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
         return new ResponseEntity<String>(outputJSON, headers, HttpStatus.OK);
       
         // May be for error handling or something 
-        //return new ResponseEntity<string>(headers, HttpStatus.NOT_FOUND);
+        //return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
     }
 }
